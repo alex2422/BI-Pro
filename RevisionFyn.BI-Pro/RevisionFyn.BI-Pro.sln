@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI-Pro.View", "RevisionFyn.BI-Pro.View\RevisionFyn.BI-Pro.View.csproj", "{1B786038-A864-4B6D-96A1-731CA3802961}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI-Pro.Model", "RevisionFyn.BI-Pro.Model\RevisionFyn.BI-Pro.Model.csproj", "{9DD38965-B7FE-41BB-BAB9-679534F72F4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI-Pro.Controller", "RevisionFyn.BI-Pro.Controller\RevisionFyn.BI-Pro.Controller.csproj", "{320269D6-89CE-4BD0-9B68-D0F41C82F36B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{1B786038-A864-4B6D-96A1-731CA3802961}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B786038-A864-4B6D-96A1-731CA3802961}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B786038-A864-4B6D-96A1-731CA3802961}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DD38965-B7FE-41BB-BAB9-679534F72F4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DD38965-B7FE-41BB-BAB9-679534F72F4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DD38965-B7FE-41BB-BAB9-679534F72F4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DD38965-B7FE-41BB-BAB9-679534F72F4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{320269D6-89CE-4BD0-9B68-D0F41C82F36B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{320269D6-89CE-4BD0-9B68-D0F41C82F36B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{320269D6-89CE-4BD0-9B68-D0F41C82F36B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{320269D6-89CE-4BD0-9B68-D0F41C82F36B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
