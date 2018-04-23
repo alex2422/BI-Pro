@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RevisionFyn.BI_Pro.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="600" Width="900">
+    <DockPanel>
+        <Frame x:Name="mainWindow" NavigationUIVisibility="Hidden"/>
+    </DockPanel>
 </Window>
