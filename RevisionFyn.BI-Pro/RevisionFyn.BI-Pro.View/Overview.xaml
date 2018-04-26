@@ -1,0 +1,17 @@
+﻿<Page x:Class="RevisionFyn.BI_Pro.View.Overview"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RevisionFyn.BI_Pro.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="900"
+      Title="Overview">
+
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIOverView.png"/>
+        <Button x:Name="MainMenuButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="MainMenuButton_Click"/>
+        <Button x:Name="StatisticsButton" Content="Button" HorizontalAlignment="Left" Margin="0,274,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="StatisticsButton_Click"/>
+
+    </Grid>
+</Page>

@@ -18,9 +18,9 @@ namespace RevisionFyn.BI_Pro.View
     /// <summary>
     /// Interaction logic for OverView.xaml
     /// </summary>
-    public partial class OverView : Page
+    public partial class Overview : Page
     {
-        public OverView()
+        public Overview()
         {
             InitializeComponent();
         }
