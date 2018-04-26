@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RevisionFyn.BI-Pro.Data\RevisionFyn.BI-Pro.Data.csproj" />
+  </ItemGroup>
+
 </Project>

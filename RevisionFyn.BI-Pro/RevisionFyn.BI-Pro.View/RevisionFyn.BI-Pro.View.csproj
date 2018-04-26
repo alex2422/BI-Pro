@@ -123,5 +123,11 @@
   <ItemGroup>
     <Resource Include="Images\UIStatisticks.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RevisionFyn.BI-Pro.Controller\RevisionFyn.BI-Pro.Controller.csproj">
+      <Project>{320269d6-89ce-4bd0-9b68-d0f41c82f36b}</Project>
+      <Name>RevisionFyn.BI-Pro.Controller</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
