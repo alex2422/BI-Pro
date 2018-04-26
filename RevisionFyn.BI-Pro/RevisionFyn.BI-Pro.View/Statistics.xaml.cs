@@ -18,9 +18,9 @@ namespace RevisionFyn.BI_Pro.View
     /// <summary>
     /// Interaction logic for Statisticks.xaml
     /// </summary>
-    public partial class Statisticks : Page
+    public partial class Statistics : Page
     {
-        public Statisticks()
+        public Statistics()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace RevisionFyn.BI_Pro.View
 
         private void OverView_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("OverView.Xaml", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("Overview.Xaml", UriKind.Relative));
         }
     }
 }

@@ -27,12 +27,12 @@ namespace RevisionFyn.BI_Pro.View
 
         private void OverViewButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("OverView.Xaml", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("Overview.Xaml", UriKind.Relative));
         }
 
         private void StatisticsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("Statisticks.Xaml", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("Statistics.Xaml", UriKind.Relative));
         }
     }
 }

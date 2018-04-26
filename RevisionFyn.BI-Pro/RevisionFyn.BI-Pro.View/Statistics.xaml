@@ -1,4 +1,4 @@
-﻿<Page x:Class="RevisionFyn.BI_Pro.View.Statisticks"
+﻿<Page x:Class="RevisionFyn.BI_Pro.View.Statistics"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:RevisionFyn.BI_Pro.View"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="Statisticks">
+      Title="Statistics">
 
     <Grid>
         <Image HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIStatisticks.png"/>

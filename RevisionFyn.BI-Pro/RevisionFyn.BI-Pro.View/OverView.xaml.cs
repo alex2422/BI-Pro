@@ -32,7 +32,7 @@ namespace RevisionFyn.BI_Pro.View
 
         private void StatisticsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("Statisticks.Xaml", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("Statistics.Xaml", UriKind.Relative));
         }
     }
 }
