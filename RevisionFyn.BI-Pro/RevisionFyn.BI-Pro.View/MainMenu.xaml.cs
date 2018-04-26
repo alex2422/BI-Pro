@@ -25,7 +25,7 @@ namespace RevisionFyn.BI_Pro.View
             InitializeComponent();
         }
 
-        private void OverViewButton_Click(object sender, RoutedEventArgs e)
+        private void OverviewButton_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("Overview.Xaml", UriKind.Relative));
         }

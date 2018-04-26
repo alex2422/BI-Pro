@@ -16,23 +16,22 @@ using System.Windows.Shapes;
 namespace RevisionFyn.BI_Pro.View
 {
     /// <summary>
-    /// Interaction logic for Statisticks.xaml
+    /// Interaction logic for Overview.xaml
     /// </summary>
-    public partial class Statistics : Page
+    public partial class Overview : Page
     {
-        public Statistics()
+        public Overview()
         {
             InitializeComponent();
         }
-
-        private void StartScreenButton_Click(object sender, RoutedEventArgs e)
+        private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("MainMenu.Xaml", UriKind.Relative));
         }
 
-        private void OverviewButton_Click(object sender, RoutedEventArgs e)
+        private void StatisticsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("Overview.Xaml", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("Statistics.Xaml", UriKind.Relative));
         }
     }
 }

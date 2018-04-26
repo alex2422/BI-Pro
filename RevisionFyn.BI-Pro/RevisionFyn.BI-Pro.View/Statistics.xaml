@@ -11,7 +11,7 @@
     <Grid>
         <Image HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIStatisticks.png"/>
         <Button x:Name="StartScreenButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="StartScreenButton_Click" Opacity="0"/>
-        <Button x:Name="OverView" Content="Button" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="OverView_Click" Opacity="0"/>
+        <Button x:Name="OverviewButton" Content="Button" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="OverviewButton_Click" Opacity="0"/>
 
     </Grid>
 </Page>
