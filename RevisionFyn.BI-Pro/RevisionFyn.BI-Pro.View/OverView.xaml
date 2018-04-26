@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:RevisionFyn.BI_Pro.View"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="OverView">
+      Title="Overview">
 
     <Grid>
         <Image HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIOverView.png"/>
