@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RevisionFyn.BI-Pro.Data\RevisionFyn.BI-Pro.Data.csproj" />
+    <ProjectReference Include="..\RevisionFyn.BI-Pro.Data\RevisionFyn.BI_Pro.Data.csproj" />
   </ItemGroup>
 
 </Project>
