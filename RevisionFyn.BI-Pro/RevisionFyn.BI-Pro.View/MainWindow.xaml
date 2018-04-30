@@ -1,11 +1,11 @@
-﻿<Window x:Class="RevisionFyn.BI_Pro.View.MainWindow"
+﻿<Window x:Name="BI_Pro" x:Class="RevisionFyn.BI_Pro.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RevisionFyn.BI_Pro.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="639" Width="900" WindowStartupLocation="CenterScreen">
+        Title="BI Pro" Height="639" Width="900" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <DockPanel>
         <Frame x:Name="mainWindow" NavigationUIVisibility="Hidden"/>
     </DockPanel>
