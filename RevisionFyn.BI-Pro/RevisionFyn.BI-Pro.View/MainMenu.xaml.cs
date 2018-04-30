@@ -34,5 +34,10 @@ namespace RevisionFyn.BI_Pro.View
         {
             this.NavigationService.Navigate(new Uri("Statistics.Xaml", UriKind.Relative));
         }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 }
