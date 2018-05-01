@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RevisionFyn.BI_Pro.Controller;
 
 namespace RevisionFyn.BI_Pro.View
 {
@@ -20,9 +21,12 @@ namespace RevisionFyn.BI_Pro.View
     /// </summary>
     public partial class MainMenu : Page
     {
+        MainMenuController controller = MainMenuController.GetInstance();
+
         public MainMenu()
         {
             InitializeComponent();
+            controller.CreateKpiElements();
         }
 
         private void OverviewButton_Click(object sender, RoutedEventArgs e)
