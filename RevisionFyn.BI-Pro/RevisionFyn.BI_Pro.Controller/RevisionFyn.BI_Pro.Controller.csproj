@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,7 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainMenuController.cs" />
+    <Compile Include="OverviewController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatisticsController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RevisionFyn.BI_Pro.Model\RevisionFyn.BI_Pro.Model.csproj">
+      <Project>{c128100b-b7c9-4ec7-b89a-8e99fdc0c689}</Project>
+      <Name>RevisionFyn.BI_Pro.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
