@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows.Controls;
 using RevisionFyn.BI_Pro.Model;
 
 namespace RevisionFyn.BI_Pro.Controller
