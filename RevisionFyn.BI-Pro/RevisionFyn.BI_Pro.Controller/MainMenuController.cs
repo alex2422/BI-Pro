@@ -32,15 +32,47 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void CreateKpiElements(Grid KpiGrid)
         {
+            #region Test data - get from database
+#if DEBUG
+            KPI KPI_1 = new KPI
+            {
+                Title = "Total dækning (+/-)",
+                Value = 304612,
+                Unit = "DKK",
+                Color = "Dodgerblue"
+            };
+            KPI KPI_2 = new KPI
+            {
+                Title = "Kunder med underdækning",
+                Value = 42,
+                Unit = "Antal",
+                Color = "Red"
+            };
+            KPI KPI_3 = new KPI
+            {
+                Title = "Gns. dækning (+/-) pr. kunde",
+                Value = 5840,
+                Unit = "DKK",
+                Color = "Black"
+            };
+
+            List<KPI> listOfKPI = new List<KPI>
+            {
+                KPI_1,
+                KPI_2,
+                KPI_3
+            };
+#endif
+            #endregion
+
             // Get this from database later
             int numberOfKPI = 3;
 
-            int space = 10;
+            int kpiDisplacement = 10;
 
             if (numberOfKPI != 0)
             {
-                KpiGrid.Background = Brushes.White;
-                KpiGrid.Children.RemoveAt(0);
+                HideDefaultKpiGrid(KpiGrid);
 
                 for (int i = 0; i < numberOfKPI; i++)
                 {
@@ -50,25 +82,25 @@ namespace RevisionFyn.BI_Pro.Controller
                         Height = 160,
                         Width = 180,
                         HorizontalAlignment = HorizontalAlignment.Left,
-                        Margin = new Thickness(space, 0, 0, 0),
-                        Background = Brushes.DodgerBlue
+                        Margin = new Thickness(kpiDisplacement, 0, 0, 0),
+                        Background = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfKPI[i].Color)
                     };
 
                     TextBlock KpiTitle = new TextBlock
                     {
                         Name = "KpiTitleTextBlock",
-                        Text = "Total dækning (+/-)",
+                        Text = listOfKPI[i].Title,
                         Foreground = Brushes.White,
                         Margin = new Thickness(10, 10, 0, 0),
                         FontSize = 17,
                         HorizontalAlignment = HorizontalAlignment.Left,
-                        TextWrapping = TextWrapping.WrapWithOverflow,
+                        TextWrapping = TextWrapping.Wrap,
                     };
 
                     Label KpiValueLabel = new Label
                     {
                         Name = "KpiValueLabel",
-                        Content = "304612",
+                        Content = listOfKPI[i].Value.ToString(),
                         Foreground = Brushes.White,
                         FontSize = 45,
                         Margin = new Thickness(4, 47, 0, 0),
@@ -78,12 +110,12 @@ namespace RevisionFyn.BI_Pro.Controller
                     TextBlock KpiUnitTextBlock = new TextBlock
                     {
                         Name = "KpiUnitTextBlock",
-                        Text = "DKK",
+                        Text = listOfKPI[i].Unit,
                         Foreground = Brushes.White,
                         Margin = new Thickness(10, 132, 0, 0),
                         FontSize = 15,
                         HorizontalAlignment = HorizontalAlignment.Left,
-                        TextWrapping = TextWrapping.WrapWithOverflow,
+                        TextWrapping = TextWrapping.Wrap,
                     };
 
                     KpiContentGrid.Children.Add(KpiTitle);
@@ -91,14 +123,18 @@ namespace RevisionFyn.BI_Pro.Controller
                     KpiContentGrid.Children.Add(KpiUnitTextBlock);
                     KpiGrid.Children.Add(KpiContentGrid);
 
-                    space = space + 226;
+                    kpiDisplacement = kpiDisplacement + 226;
                 }
             }
         }
         #endregion
 
         #region Private Methods
-
+        private void HideDefaultKpiGrid(Grid KpiGrid)
+        {
+            KpiGrid.Background = Brushes.White;
+            KpiGrid.Children.RemoveAt(0);
+        }
         #endregion
     }
 }
