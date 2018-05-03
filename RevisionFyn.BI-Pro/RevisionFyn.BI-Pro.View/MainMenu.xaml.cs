@@ -28,7 +28,8 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
             controller.CreateKpiElements(KpiGrid);
-            controller.ManageGraph();
+            var lg = new LineGraph();
+            lines.Children.Add(lg);
         }
 
         private void OverviewButton_Click(object sender, RoutedEventArgs e)

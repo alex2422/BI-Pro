@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomizeStartScreenController.cs" />
     <Compile Include="MainMenuController.cs" />
     <Compile Include="OverviewController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
