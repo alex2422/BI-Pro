@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RevisionFyn.BI_Pro.Controller;
+using InteractiveDataDisplay.WPF;
 
 namespace RevisionFyn.BI_Pro.View
 {
@@ -27,6 +28,7 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
             controller.CreateKpiElements(KpiGrid);
+            controller.ManageGraph();
         }
 
         private void OverviewButton_Click(object sender, RoutedEventArgs e)
@@ -43,5 +45,24 @@ namespace RevisionFyn.BI_Pro.View
         {
             Environment.Exit(0);
         }
+
+        private void CustomizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("CustomizeMainMenu.Xaml", UriKind.Relative));
+        }
     }
+    #region VisibilityResource
+    public class VisibilityToCheckedConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return ((Visibility)value) == Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return ((bool)value) ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+    #endregion
 }

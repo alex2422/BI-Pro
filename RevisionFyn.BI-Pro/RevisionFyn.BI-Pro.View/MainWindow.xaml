@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RevisionFyn.BI_Pro.View"
         mc:Ignorable="d"
-        Title="BI Pro" Height="639" Width="900" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="BI Pro" Height="639" Width="915" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <DockPanel>
         <Frame x:Name="mainWindow" NavigationUIVisibility="Hidden"/>
     </DockPanel>
