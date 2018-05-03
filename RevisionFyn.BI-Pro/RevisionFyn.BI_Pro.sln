@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI_Pro.Model", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI_Pro.Controller", "RevisionFyn.BI_Pro.Controller\RevisionFyn.BI_Pro.Controller.csproj", "{8B733BEB-54E8-48D5-9029-C3E3978A4009}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI_Pro.Database", "RevisionFyn.BI_Pro.Database\RevisionFyn.BI_Pro.Database.csproj", "{7DF705FD-1404-4ABE-AB20-027A84EAC0AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8B733BEB-54E8-48D5-9029-C3E3978A4009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B733BEB-54E8-48D5-9029-C3E3978A4009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B733BEB-54E8-48D5-9029-C3E3978A4009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DF705FD-1404-4ABE-AB20-027A84EAC0AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DF705FD-1404-4ABE-AB20-027A84EAC0AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DF705FD-1404-4ABE-AB20-027A84EAC0AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DF705FD-1404-4ABE-AB20-027A84EAC0AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
