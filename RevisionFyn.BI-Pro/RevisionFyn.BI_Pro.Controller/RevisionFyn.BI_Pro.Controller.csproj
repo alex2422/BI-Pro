@@ -48,6 +48,10 @@
     <Compile Include="StatisticsController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RevisionFyn.BI_Pro.Data\RevisionFyn.BI_Pro.Data.csproj">
+      <Project>{9589f55b-ddbf-4d13-a996-21f21c22715e}</Project>
+      <Name>RevisionFyn.BI_Pro.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RevisionFyn.BI_Pro.Model\RevisionFyn.BI_Pro.Model.csproj">
       <Project>{c128100b-b7c9-4ec7-b89a-8e99fdc0c689}</Project>
       <Name>RevisionFyn.BI_Pro.Model</Name>

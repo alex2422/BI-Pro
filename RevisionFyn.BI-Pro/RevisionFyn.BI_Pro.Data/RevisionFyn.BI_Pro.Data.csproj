@@ -42,5 +42,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RevisionFyn.BI_Pro.Model\RevisionFyn.BI_Pro.Model.csproj">
+      <Project>{c128100b-b7c9-4ec7-b89a-8e99fdc0c689}</Project>
+      <Name>RevisionFyn.BI_Pro.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
