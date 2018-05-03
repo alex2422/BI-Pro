@@ -13,7 +13,7 @@
         <Button x:Name="OverviewButton" Content="Button" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="OverviewButton_Click"/>
         <Button x:Name="StatisticsButton" Content="Button" HorizontalAlignment="Left" Margin="0,274,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="StatisticsButton_Click"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
-        <Grid x:Name="KpiGrid" HorizontalAlignment="Left" Height="185" Margin="208,87,0,0" VerticalAlignment="Top" Width="658" Background="DimGray">
+        <Grid x:Name="KpiGrid" HorizontalAlignment="Left" Height="185" Margin="208,81,0,0" VerticalAlignment="Top" Width="658" Background="DimGray">
             <Label x:Name="Standard" Content="Ingen KPI'er fundet" FontSize="40" Foreground="White" HorizontalAlignment="Left" Margin="149,56,0,0" VerticalAlignment="Top"/>
         </Grid>
     </Grid>

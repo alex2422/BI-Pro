@@ -26,7 +26,7 @@ namespace RevisionFyn.BI_Pro.View
         public MainMenu()
         {
             InitializeComponent();
-            controller.CreateKpiElements();
+            controller.CreateKpiElements(KpiGrid);
         }
 
         private void OverviewButton_Click(object sender, RoutedEventArgs e)
