@@ -47,12 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RevisionFyn.BI_Pro.Data\RevisionFyn.BI_Pro.Data.csproj">
-      <Project>{9589f55b-ddbf-4d13-a996-21f21c22715e}</Project>
-      <Name>RevisionFyn.BI_Pro.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
       <VersionMajor>2</VersionMajor>
