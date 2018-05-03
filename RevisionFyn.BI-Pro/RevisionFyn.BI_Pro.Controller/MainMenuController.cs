@@ -32,6 +32,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void CreateKpiElements(Grid KpiGrid)
         {
+            #region Test data - get from database
 #if DEBUG
             KPI KPI_1 = new KPI
             {
@@ -62,6 +63,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 KPI_3
             };
 #endif
+            #endregion
 
             // Get this from database later
             int numberOfKPI = 3;
