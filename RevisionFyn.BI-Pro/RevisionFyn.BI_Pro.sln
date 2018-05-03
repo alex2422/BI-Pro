@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI_Pro.Model", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI_Pro.Controller", "RevisionFyn.BI_Pro.Controller\RevisionFyn.BI_Pro.Controller.csproj", "{8B733BEB-54E8-48D5-9029-C3E3978A4009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevisionFyn.BI_Pro.Data", "RevisionFyn.BI_Pro.Data\RevisionFyn.BI_Pro.Data.csproj", "{9589F55B-DDBF-4D13-A996-21F21C22715E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{8B733BEB-54E8-48D5-9029-C3E3978A4009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B733BEB-54E8-48D5-9029-C3E3978A4009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B733BEB-54E8-48D5-9029-C3E3978A4009}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9589F55B-DDBF-4D13-A996-21F21C22715E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9589F55B-DDBF-4D13-A996-21F21C22715E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9589F55B-DDBF-4D13-A996-21F21C22715E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9589F55B-DDBF-4D13-A996-21F21C22715E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
