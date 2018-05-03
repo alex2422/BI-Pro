@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RevisionFyn.BI_Pro.Controller;
 
 namespace RevisionFyn.BI_Pro.View
 {
@@ -20,9 +21,14 @@ namespace RevisionFyn.BI_Pro.View
     /// </summary>
     public partial class CustomizeMainMenu : Page
     {
+        CustomizeStartScreenController controller = CustomizeStartScreenController.GetInstance();
         public CustomizeMainMenu()
         {
             InitializeComponent();
+            controller.CreateGraphValues();
+            controller.LoadValuesIntoComboBox(dropDown1);
+            controller.LoadValuesIntoComboBox(dropDown2);
+            controller.LoadValuesIntoComboBox(dropDown3);
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)

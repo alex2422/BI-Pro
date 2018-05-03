@@ -129,6 +129,11 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         #endregion
 
+        public void CreateGraphData()
+        {
+
+        }
+
         #region Private Methods
         private void HideDefaultKpiGrid(Grid KpiGrid)
         {
