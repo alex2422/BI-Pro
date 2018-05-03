@@ -3,16 +3,40 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d3="clr-namespace:InteractiveDataDisplay.WPF;assembly=InteractiveDataDisplay.WPF"
       xmlns:local="clr-namespace:RevisionFyn.BI_Pro.View"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
       Title="MainMenu">
+    <Page.Resources>
+        <local:VisibilityToCheckedConverter x:Key="VisibilityToCheckedConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Image HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIStartScreen.png"/>
         <Button x:Name="OverviewButton" Content="Button" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="OverviewButton_Click"/>
         <Button x:Name="StatisticsButton" Content="Button" HorizontalAlignment="Left" Margin="0,274,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="StatisticsButton_Click"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
+        <Button x:Name="CustomizeButton" Content="Button" HorizontalAlignment="Left" Margin="848,11,0,0" VerticalAlignment="Top" Width="39" Height="38" Opacity="0" Click="CustomizeButton_Click"/>
+        <d3:Chart Name="plotter" Margin="217,340,45,27">
+            <d3:Chart.Title>
+                <TextBlock HorizontalAlignment="Center" FontSize="18" Margin="0,5,0,5"></TextBlock>
+            </d3:Chart.Title>
+            <d3:Chart.LegendContent>
+                <d3:LegendItemsPanel>
+                    <d3:LegendItemsPanel.Resources>
+                        <DataTemplate x:Key="InteractiveDataDisplay.WPF.LineGraph">
+                            <StackPanel  Orientation="Horizontal">
+                                <CheckBox  IsChecked="{Binding Path=Visibility, Converter={StaticResource VisibilityToCheckedConverter}, Mode=TwoWay}" IsThreeState="False"/>
+                                <Line Width="15" Height="15" X1="0" Y1="0" X2="15" Y2="15" Stroke="{Binding Path=Stroke}" StrokeThickness="2"/>
+                                <TextBlock Margin="5,0,0,0" Text="{Binding Path=Description}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </d3:LegendItemsPanel.Resources>
+                </d3:LegendItemsPanel>
+            </d3:Chart.LegendContent>
+            <Grid Name="lines"/>
+        </d3:Chart>
         <Grid x:Name="KpiGrid" HorizontalAlignment="Left" Height="185" Margin="208,81,0,0" VerticalAlignment="Top" Width="658" Background="DimGray">
             <Label x:Name="Standard" Content="Ingen KPI'er fundet" FontSize="40" Foreground="White" HorizontalAlignment="Left" Margin="149,56,0,0" VerticalAlignment="Top"/>
         </Grid>

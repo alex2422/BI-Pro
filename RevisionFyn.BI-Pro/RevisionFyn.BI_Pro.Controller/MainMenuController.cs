@@ -125,6 +125,10 @@ namespace RevisionFyn.BI_Pro.Controller
                 }
             }
         }
+        public void ManageGraph()
+        {
+
+        }
         #endregion
 
         #region Private Methods
