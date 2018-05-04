@@ -26,9 +26,9 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
             controller.CreateGraphValues();
-            controller.LoadValuesIntoComboBox(dropDown1);
-            controller.LoadValuesIntoComboBox(dropDown2);
-            controller.LoadValuesIntoComboBox(dropDown3);
+            controller.LoadValuesIntoCompanyComboBox(dropDownComp1);
+            controller.LoadValuesIntoCompanyComboBox(dropDownComp2);
+            controller.LoadValuesIntoCompanyComboBox(dropDownComp3);
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
@@ -49,6 +49,24 @@ namespace RevisionFyn.BI_Pro.View
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void dropDownComp1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            controller.LoadValuesIntoCompanyStartYearBox(dropDownStartYear1, dropDownComp1);
+            controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear1, dropDownComp1);
+        }
+
+        private void dropDownComp3_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            controller.LoadValuesIntoCompanyStartYearBox(dropDownStartYear2, dropDownComp2);
+            controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear2, dropDownComp2);
+        }
+
+        private void dropDownComp2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            controller.LoadValuesIntoCompanyStartYearBox(dropDownStartYear3, dropDownComp3);
+            controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear3, dropDownComp1);
         }
     }
 }

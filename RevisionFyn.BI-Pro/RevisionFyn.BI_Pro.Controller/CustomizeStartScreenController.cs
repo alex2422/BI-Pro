@@ -49,7 +49,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 Years = Comp2Years,
                 Coverages = Comp2Coverage,
                 x = Comp2Years.ToArray(),
-                y = Comp1Coverage.ToArray()
+                y = Comp2Coverage.ToArray()
             };
             Company Comp3 = new Company
             {
@@ -59,19 +59,49 @@ namespace RevisionFyn.BI_Pro.Controller
                 Years = Comp3Years, 
                 Coverages = Comp3Coverage,
                 x = Comp3Years.ToArray(),
-                y = Comp1Coverage.ToArray()
+                y = Comp3Coverage.ToArray()
             };
             companies.Add(Comp1);
             companies.Add(Comp2);
             companies.Add(Comp3);
         }
-        public void LoadValuesIntoComboBox(ComboBox comboBox)
+        public void LoadValuesIntoCompanyComboBox(ComboBox comboBox)
         {
-            foreach (Company Comp in companies)
+            //    foreach (Company Comp in companies)
+            //    {
+            //        if (!comboBox.Items.Contains(Comp.CompanyName))
+            //        {
+            //            comboBox.Items.Add(Comp.CompanyName);
+            //        }
+            //    }
+            comboBox.ItemsSource = companies;
+            comboBox.DisplayMemberPath = "CompanyName";
+        }
+        public void LoadValuesIntoCompanyStartYearBox(ComboBox comboBox, ComboBox companyBox)
+        {
+            if (companyBox.SelectedItem != null)
             {
-                if (!comboBox.Items.Contains(Comp.CompanyName))
+                Company comp = (Company)companyBox.SelectedItem;
+                for (int i = 0; i < comp.x.Length; i++)
                 {
-                    comboBox.Items.Add(Comp.CompanyName);
+                    if (!comboBox.Items.Contains(comp.x[i]))
+                    {
+                        comboBox.Items.Add(comp.x[i]);
+                    }
+                }
+            }
+        }
+        public void LoadValuesIntoCompanyEndYearBox(ComboBox comboBox, ComboBox companyBox)
+        {
+            if (companyBox.SelectedItem != null)
+            {
+                Company comp = (Company)companyBox.SelectedItem;
+                for (int i = 0; i < comp.x.Length; i++)
+                {
+                    if (!comboBox.Items.Contains(comp.x[i]))
+                    {
+                        comboBox.Items.Add(comp.x[i]);
+                    }
                 }
             }
         }
