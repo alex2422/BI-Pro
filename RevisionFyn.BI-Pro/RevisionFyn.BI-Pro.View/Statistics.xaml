@@ -13,5 +13,12 @@
         <Button x:Name="StartScreenButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="StartScreenButton_Click" Opacity="0"/>
         <Button x:Name="OverviewButton" Content="Button" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="OverviewButton_Click" Opacity="0"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
+        <ListBox x:Name="ListOfCompaniesToBeChosen" HorizontalAlignment="Left" Height="229" Margin="226,126,0,0" VerticalAlignment="Top" Width="213" SelectionChanged="ListOfCompaniesToBeChosen_SelectionChanged"/>
+        <ListBox x:Name="ListOfChosenCompanies" HorizontalAlignment="Left" Height="229" Margin="647,126,0,0" VerticalAlignment="Top" Width="213" RenderTransformOrigin="0.06,0.527" SelectionChanged="ListOfChosenCompanies_SelectionChanged"/>
+        <Button x:Name="ButtonAdd" Content="--&gt;" HorizontalAlignment="Left" Margin="505,152,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="ButtonAdd_Click"/>
+        <Button x:Name="ButtonRemove" Content="&lt;--" HorizontalAlignment="Left" Margin="505,226,0,0" VerticalAlignment="Top" Width="80" Height="22" Click="ButtonRemove_Click"/>
+        <Button x:Name="ButtonTest" Content="test" HorizontalAlignment="Left" Margin="505,539,0,0" VerticalAlignment="Top" Width="75" Click="ButtonTest_Click"/>
+        <ComboBox x:Name="ComboStartYear" HorizontalAlignment="Left" Margin="226,408,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="ComboEndYear" HorizontalAlignment="Left" Margin="647,408,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboEndYear_SelectionChanged"/>
     </Grid>
 </Page>
