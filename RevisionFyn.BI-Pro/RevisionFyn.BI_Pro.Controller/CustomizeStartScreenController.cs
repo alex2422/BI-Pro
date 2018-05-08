@@ -10,7 +10,7 @@ namespace RevisionFyn.BI_Pro.Controller
 {
     public class CustomizeStartScreenController
     {
-        List<Company> companies = new List<Company>();
+        public List<Company> companies = new List<Company>();
         private static CustomizeStartScreenController controllerInstance;
         private CustomizeStartScreenController()
         { }
@@ -22,6 +22,19 @@ namespace RevisionFyn.BI_Pro.Controller
             }
 
             return controllerInstance;
+        }
+        public void CreateYearsArray()
+        {
+            List<double> placeHolder = new List<double>();
+            for (int company = 0; company < companies.Count; company++)
+            {
+                placeHolder.Clear();
+                for (int i = companies[company].CompanyStartYear; i < companies[company].CompanyEndYear; i++)
+                {
+                    placeHolder.Add(i);
+                }
+                companies[company].x = placeHolder.ToArray();
+            }  
         }
         public void CreateGraphValues()
         {
@@ -38,7 +51,6 @@ namespace RevisionFyn.BI_Pro.Controller
                 CompanyEndYear = 2017,
                 Years = Comp1Years,
                 Coverages = Comp1Coverage,
-                x = Comp1Years.ToArray(),
                 y = Comp1Coverage.ToArray()
             };
             Company Comp2 = new Company
@@ -48,7 +60,6 @@ namespace RevisionFyn.BI_Pro.Controller
                 CompanyEndYear = 2017,
                 Years = Comp2Years,
                 Coverages = Comp2Coverage,
-                x = Comp2Years.ToArray(),
                 y = Comp2Coverage.ToArray()
             };
             Company Comp3 = new Company
@@ -58,9 +69,9 @@ namespace RevisionFyn.BI_Pro.Controller
                 CompanyEndYear = 2017,
                 Years = Comp3Years, 
                 Coverages = Comp3Coverage,
-                x = Comp3Years.ToArray(),
                 y = Comp3Coverage.ToArray()
             };
+            companies.Clear();
             companies.Add(Comp1);
             companies.Add(Comp2);
             companies.Add(Comp3);
