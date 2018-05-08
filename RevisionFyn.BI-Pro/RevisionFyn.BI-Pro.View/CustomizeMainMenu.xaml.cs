@@ -78,7 +78,7 @@ namespace RevisionFyn.BI_Pro.View
             {
                 controller.CastSelectedListViewItem((sender as ListView).SelectedItem);
 
-                controller.LoadListViewValuesToChangeable(TitleTextBox, UnitTextBox, ColorComboBox);
+                controller.LoadListViewValuesToChangeable(TitleTextBox, UnitTextBox, ColorComboBox, IsActiveCheckBox);
             }
         }
     }

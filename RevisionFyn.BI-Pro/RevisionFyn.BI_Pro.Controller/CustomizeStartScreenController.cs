@@ -71,10 +71,21 @@ namespace RevisionFyn.BI_Pro.Controller
             KpiInstance = (KPI)selectedItem;
         }
 
-        public void LoadListViewValuesToChangeable(TextBox TitleTextBox, TextBox UnitTextBox, ComboBox ColorComboBox)
+        public void LoadListViewValuesToChangeable(TextBox TitleTextBox, TextBox UnitTextBox, ComboBox ColorComboBox, CheckBox IsActiveCheckBox)
         {
             TitleTextBox.Text = KpiInstance.Title;
             UnitTextBox.Text = KpiInstance.Unit;
+            // string s = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
+
+            if (KpiInstance.IsActive)
+            {
+                IsActiveCheckBox.IsChecked = true;
+            }
+            else
+            {
+                IsActiveCheckBox.IsChecked = false;
+            }
+            
         }
         #endregion
 
