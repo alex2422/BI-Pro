@@ -69,5 +69,10 @@ namespace RevisionFyn.BI_Pro.View
             controller.LoadValuesIntoCompanyStartYearBox(dropDownStartYear3, dropDownComp3);
             controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear3, dropDownComp3);
         }
+
+        private void KpiListVIew_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

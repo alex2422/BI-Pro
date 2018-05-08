@@ -21,16 +21,13 @@ namespace RevisionFyn.BI_Pro.View
     /// </summary>
     public partial class Statistics : Page
     {
-        StatisticsController controller;
+        
 
         public Statistics()
         {
             InitializeComponent();
 
-            controller = StatisticsController.GetInstance(ListOfCompaniesToBeChosen,ListOfChosenCompanies);
-            controller.ComboBoxYear();
-            controller.LoadIntoComoBox(ComboStartYear);
-            controller.LoadIntoComoBox(ComboEndYear);
+            
         }
 
         private void StartScreenButton_Click(object sender, RoutedEventArgs e)
@@ -48,39 +45,6 @@ namespace RevisionFyn.BI_Pro.View
             Environment.Exit(0);
         }
 
-        private void ButtonTest_Click(object sender, RoutedEventArgs e)
-        {
-            controller.ButtonTest(ListOfCompaniesToBeChosen);
-            
-        }
-
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            controller.ButtonAdd();
-
-            
-        }
-
-        private void ListOfChosenCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ButtonRemove_Click(object sender, RoutedEventArgs e)
-        {
-            controller.ButtonRemove();
-        }
-
-
-
-        private void ListOfCompaniesToBeChosen_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ComboEndYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        
     }
 }

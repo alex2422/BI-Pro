@@ -9,10 +9,17 @@
       Title="Overview">
 
     <Grid>
-        <Image HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIOverView.png"/>
+        <Image HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIOverView.png" RenderTransformOrigin="0.39,0.377"/>
         <Button x:Name="MainMenuButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="MainMenuButton_Click"/>
         <Button x:Name="StatisticsButton" Content="Button" HorizontalAlignment="Left" Margin="0,274,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="StatisticsButton_Click"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
+        <ListBox x:Name="ListBoxCompaniesToBeChosen" HorizontalAlignment="Left" Height="220" Margin="252,126,0,0" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.478,0.538"/>
+        <ListBox x:Name="ListBoxChosenCampanies" HorizontalAlignment="Left" Height="220" Margin="660,126,0,0" VerticalAlignment="Top" Width="197"/>
+        <Button x:Name="ButtonAdd" Content="Add" HorizontalAlignment="Left" Margin="501,166,0,0" VerticalAlignment="Top" Width="103" Height="32" Click="ButtonAdd_Click"/>
+        <Button x:Name="ButtonRemove" Content="Remove" HorizontalAlignment="Left" Margin="501,259,0,0" VerticalAlignment="Top" Width="103" Height="25" Click="ButtonRemove_Click"/>
+        <Button x:Name="ButtonTest" Content="Test" HorizontalAlignment="Left" Margin="501,554,0,0" VerticalAlignment="Top" Width="103" Height="36" Click="ButtonTest_Click"/>
+        <ComboBox x:Name="ComboBoxStartYear" HorizontalAlignment="Left" Margin="252,399,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="ComboBoxEndYear" HorizontalAlignment="Left" Margin="660,399,0,0" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Page>
