@@ -14,14 +14,56 @@
         <Button x:Name="StatisticsButton" Content="Button" HorizontalAlignment="Left" Margin="0,274,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="StatisticsButton_Click"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
         <Button x:Name="MainMenuButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="MainMenuButton_Click"/>
-        <ComboBox x:Name="dropDownComp1" HorizontalAlignment="Left" Margin="250,350,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="dropDownComp1_SelectionChanged"/>
-        <ComboBox x:Name="dropDownComp2" HorizontalAlignment="Left" Margin="250,377,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="dropDownComp2_SelectionChanged"/>
-        <ComboBox x:Name="dropDownComp3" HorizontalAlignment="Left" Margin="250,404,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="dropDownComp3_SelectionChanged"/>
-        <ComboBox x:Name="dropDownStartYear1" HorizontalAlignment="Left" Margin="417,350,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownStartYear2" HorizontalAlignment="Left" Margin="417,377,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownStartYear3" HorizontalAlignment="Left" Margin="417,404,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownEndYear1" HorizontalAlignment="Left" Margin="537,350,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownEndYear2" HorizontalAlignment="Left" Margin="537,377,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownEndYear3" HorizontalAlignment="Left" Margin="537,404,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="dropDownComp1" HorizontalAlignment="Left" Margin="250,428,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="dropDownComp1_SelectionChanged"/>
+        <ComboBox x:Name="dropDownComp2" HorizontalAlignment="Left" Margin="250,455,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="dropDownComp2_SelectionChanged"/>
+        <ComboBox x:Name="dropDownComp3" HorizontalAlignment="Left" Margin="250,482,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="dropDownComp3_SelectionChanged"/>
+        <ComboBox x:Name="dropDownStartYear1" HorizontalAlignment="Left" Margin="417,428,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="dropDownStartYear2" HorizontalAlignment="Left" Margin="417,455,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="dropDownStartYear3" HorizontalAlignment="Left" Margin="417,482,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="dropDownEndYear1" HorizontalAlignment="Left" Margin="537,428,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="dropDownEndYear2" HorizontalAlignment="Left" Margin="537,455,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="dropDownEndYear3" HorizontalAlignment="Left" Margin="537,482,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Tilpas KPI'er" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="206,73,0,0" VerticalAlignment="Top" Width="662"/>
+        <ListView x:Name="KpiListVIew" HorizontalAlignment="Left" Height="220" Margin="206,121,0,0" VerticalAlignment="Top" Width="406" MouseUp="KpiListVIew_MouseUp">
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Titel" Width="140" DisplayMemberBinding="{Binding Title}"/>
+                    <GridViewColumn Header="Enhed" Width="110" DisplayMemberBinding="{Binding Unit}"/>
+                    <GridViewColumn Header="Farve" Width="80" DisplayMemberBinding="{Binding Color}"/>
+                    <GridViewColumn Header="Aktiv" Width="60" DisplayMemberBinding="{Binding IsActive}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid HorizontalAlignment="Left" Height="220" Margin="628,121,0,0" VerticalAlignment="Top" Width="240">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="28" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Titel:"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Enhed:"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Farve:"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Data:"/>
+            <Label Grid.Row="4" Grid.Column="0" Content="Aktiv:"/>
+            <TextBox x:Name="TitleTextBox" Grid.Column="1" Grid.Row="0" Margin="3,3,16,3" />
+            <TextBox x:Name="UnitTextBox" Grid.Column="1" Grid.Row="1" Margin="3,3,16,3" />
+            <ComboBox x:Name="ColorComboBox" Grid.Column="1" Grid.Row="2" Margin="3,3,16,3" />
+            <ComboBox x:Name="DataComboBox" Grid.Column="1" Grid.Row="3" Margin="3,3,16,3" />
+            <CheckBox x:Name="IsActiveCheckBox" Grid.Column="1" Grid.Row="4" Margin="5" />
+            <Button x:Name="SaveKpiButton" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="0,15,110,-9" Content="Gem"  />
+            <Button x:Name="DeleteKpiButton" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="0,15,16,-9" Content="Slet"  />
+        </Grid>
     </Grid>
 </Page>

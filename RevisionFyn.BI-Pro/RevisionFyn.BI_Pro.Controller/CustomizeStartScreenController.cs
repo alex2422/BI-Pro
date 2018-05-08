@@ -10,10 +10,23 @@ namespace RevisionFyn.BI_Pro.Controller
 {
     public class CustomizeStartScreenController
     {
+        #region Variables
         public List<Company> companies = new List<Company>();
         private static CustomizeStartScreenController controllerInstance;
+        #endregion
+
+        #region Constructor
         private CustomizeStartScreenController()
         { }
+        #endregion
+
+        #region Public Methods
+
+        #region KPI
+
+        #endregion
+         
+        #region Statistics
         public static CustomizeStartScreenController GetInstance()
         {
             if (controllerInstance == null)
@@ -34,7 +47,7 @@ namespace RevisionFyn.BI_Pro.Controller
                     placeHolder.Add(i);
                 }
                 companies[company].x = placeHolder.ToArray();
-            }  
+            }
         }
         public void CreateGraphValues()
         {
@@ -67,7 +80,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 CompanyName = "Firma3",
                 CompanyStartYear = 2012,
                 CompanyEndYear = 2017,
-                Years = Comp3Years, 
+                Years = Comp3Years,
                 Coverages = Comp3Coverage,
                 y = Comp3Coverage.ToArray()
             };
@@ -116,5 +129,12 @@ namespace RevisionFyn.BI_Pro.Controller
                 }
             }
         }
+        #endregion
+
+        #endregion
+
+        #region Private Methods
+
+        #endregion
     }
 }
