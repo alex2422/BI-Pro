@@ -13,6 +13,7 @@ namespace RevisionFyn.BI_Pro.Controller
         #region Variables
         public List<Company> companies = new List<Company>();
         private static CustomizeStartScreenController controllerInstance;
+        public KPI KpiInstance { get; set; }
         #endregion
 
         #region Constructor
@@ -23,9 +24,60 @@ namespace RevisionFyn.BI_Pro.Controller
         #region Public Methods
 
         #region KPI
+        public List<KPI> ListOfKpiFromDB()
+        {
+            KPI KPI_1 = new KPI
+            {
+                Title = "Total dækning (+/-)",
+                Value = 304612,
+                Unit = "DKK",
+                Color = "Dodgerblue",
+                IsActive = true
+            };
+            KPI KPI_2 = new KPI
+            {
+                Title = "Kunder med underdækning",
+                Value = 42,
+                Unit = "Antal",
+                Color = "Red",
+                IsActive = true
+            };
+            KPI KPI_3 = new KPI
+            {
+                Title = "Gns. dækning (+/-) pr. kunde",
+                Value = 5840,
+                Unit = "DKK",
+                Color = "Black",
+                IsActive = false
+            };
 
+            List<KPI> listOfKPI = new List<KPI>
+            {
+                KPI_1,
+                KPI_2,
+                KPI_3
+            };
+
+            return listOfKPI;
+        }
+
+        public void SetKpiListViewSource(ListView KpiListView)
+        {
+            KpiListView.ItemsSource = ListOfKpiFromDB();
+        }
+
+        public void CastSelectedListViewItem(object selectedItem)
+        {
+            KpiInstance = (KPI)selectedItem;
+        }
+
+        public void LoadListViewValuesToChangeable(TextBox TitleTextBox, TextBox UnitTextBox, ComboBox ColorComboBox)
+        {
+            TitleTextBox.Text = KpiInstance.Title;
+            UnitTextBox.Text = KpiInstance.Unit;
+        }
         #endregion
-         
+
         #region Statistics
         public static CustomizeStartScreenController GetInstance()
         {

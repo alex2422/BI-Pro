@@ -25,11 +25,13 @@ namespace RevisionFyn.BI_Pro.View
         public CustomizeMainMenu()
         {
             InitializeComponent();
+            controller.SetKpiListViewSource(KpiListVIew);
             controller.CreateGraphValues();
             controller.CreateYearsArray();
             controller.LoadValuesIntoCompanyComboBox(dropDownComp1);
             controller.LoadValuesIntoCompanyComboBox(dropDownComp2);
             controller.LoadValuesIntoCompanyComboBox(dropDownComp3);
+            ColorComboBox.ItemsSource = typeof(Colors).GetProperties();
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
@@ -70,9 +72,14 @@ namespace RevisionFyn.BI_Pro.View
             controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear3, dropDownComp3);
         }
 
-        private void KpiListVIew_MouseUp(object sender, MouseButtonEventArgs e)
+        private void KpiListVIew_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if ((sender as ListView).SelectedItem != null)
+            {
+                controller.CastSelectedListViewItem((sender as ListView).SelectedItem);
 
+                controller.LoadListViewValuesToChangeable(TitleTextBox, UnitTextBox, ColorComboBox);
+            }
         }
     }
 }

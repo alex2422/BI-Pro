@@ -24,7 +24,7 @@
         <ComboBox x:Name="dropDownEndYear2" HorizontalAlignment="Left" Margin="537,455,0,0" VerticalAlignment="Top" Width="75"/>
         <ComboBox x:Name="dropDownEndYear3" HorizontalAlignment="Left" Margin="537,482,0,0" VerticalAlignment="Top" Width="75"/>
         <Label Content="Tilpas KPI'er" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="206,73,0,0" VerticalAlignment="Top" Width="662"/>
-        <ListView x:Name="KpiListVIew" HorizontalAlignment="Left" Height="220" Margin="206,121,0,0" VerticalAlignment="Top" Width="406" MouseUp="KpiListVIew_MouseUp">
+        <ListView x:Name="KpiListVIew" HorizontalAlignment="Left" Height="220" Margin="206,121,0,0" VerticalAlignment="Top" Width="406" SelectionChanged="KpiListVIew_SelectionChanged">
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -59,7 +59,16 @@
             <Label Grid.Row="4" Grid.Column="0" Content="Aktiv:"/>
             <TextBox x:Name="TitleTextBox" Grid.Column="1" Grid.Row="0" Margin="3,3,16,3" />
             <TextBox x:Name="UnitTextBox" Grid.Column="1" Grid.Row="1" Margin="3,3,16,3" />
-            <ComboBox x:Name="ColorComboBox" Grid.Column="1" Grid.Row="2" Margin="3,3,16,3" />
+            <ComboBox x:Name="ColorComboBox" Grid.Column="1" Grid.Row="2" Margin="3,3,16,3">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <ComboBox x:Name="DataComboBox" Grid.Column="1" Grid.Row="3" Margin="3,3,16,3" />
             <CheckBox x:Name="IsActiveCheckBox" Grid.Column="1" Grid.Row="4" Margin="5" />
             <Button x:Name="SaveKpiButton" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="0,15,110,-9" Content="Gem"  />
