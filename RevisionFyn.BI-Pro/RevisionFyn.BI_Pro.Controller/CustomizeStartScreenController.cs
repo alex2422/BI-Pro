@@ -38,9 +38,6 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         public void CreateGraphValues()
         {
-            List<double> Comp3Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
-            List<double> Comp2Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
-            List<double> Comp1Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
             List<double> Comp1Coverage = new List<double>() { 120, 150, -200, -90, -10, 30 };
             List<double> Comp2Coverage = new List<double>() { 110, 140, -210, -100, -20, 20 };
             List<double> Comp3Coverage = new List<double>() { 50, 0, -50, 0, -5, -30 };
@@ -49,7 +46,6 @@ namespace RevisionFyn.BI_Pro.Controller
                 CompanyName = "Firma1",
                 CompanyStartYear = 2012,
                 CompanyEndYear = 2017,
-                Years = Comp1Years,
                 Coverages = Comp1Coverage,
                 y = Comp1Coverage.ToArray()
             };
@@ -58,7 +54,6 @@ namespace RevisionFyn.BI_Pro.Controller
                 CompanyName = "Firma2",
                 CompanyStartYear = 2012,
                 CompanyEndYear = 2017,
-                Years = Comp2Years,
                 Coverages = Comp2Coverage,
                 y = Comp2Coverage.ToArray()
             };
@@ -67,7 +62,6 @@ namespace RevisionFyn.BI_Pro.Controller
                 CompanyName = "Firma3",
                 CompanyStartYear = 2012,
                 CompanyEndYear = 2017,
-                Years = Comp3Years, 
                 Coverages = Comp3Coverage,
                 y = Comp3Coverage.ToArray()
             };
