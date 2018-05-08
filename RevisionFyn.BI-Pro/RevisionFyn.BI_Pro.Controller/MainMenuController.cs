@@ -7,7 +7,7 @@ using RevisionFyn.BI_Pro.Model;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
-//using InteractiveDataDisplay.WPF;
+using InteractiveDataDisplay.WPF;
 
 namespace RevisionFyn.BI_Pro.Controller
 {
@@ -21,12 +21,12 @@ namespace RevisionFyn.BI_Pro.Controller
         { }
 
         #region Public Methods
-        //public void CreateGraph(Grid graphGrid)
-        //{
-        //    LineGraph lg = new LineGraph();
-        //    graphGrid.Children.Add(lg);
-        //    lg.StrokeThickness = 2;
-        //}
+        public void CreateGraph(Grid graphGrid)
+        {
+            LineGraph lg = new LineGraph();
+            graphGrid.Children.Add(lg);
+            lg.StrokeThickness = 2;
+        }
 
         public static MainMenuController GetInstance()
         {
