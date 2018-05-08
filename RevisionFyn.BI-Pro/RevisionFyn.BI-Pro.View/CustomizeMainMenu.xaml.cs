@@ -74,5 +74,10 @@ namespace RevisionFyn.BI_Pro.View
         {
 
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.SaveChangesGraph();
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace RevisionFyn.BI_Pro.Controller
     {
         #region Variables
         private static MainMenuController controllerInstance;
+        public List<Company> companies = new List<Company>();
         #endregion
 
         private MainMenuController()
@@ -23,9 +24,21 @@ namespace RevisionFyn.BI_Pro.Controller
         #region Public Methods
         public void CreateGraph(Grid graphGrid)
         {
-            LineGraph lg = new LineGraph();
-            graphGrid.Children.Add(lg);
-            lg.StrokeThickness = 2;
+            CustomizeStartScreenController cssc = CustomizeStartScreenController.GetInstance();
+            companies=cssc.companies;
+            if (companies.Count <= 0)
+            {
+                companies = cssc.companies;
+            }
+            foreach (var company in companies)
+            {
+                LineGraph lg = new LineGraph();
+                graphGrid.Children.Add(lg);
+                lg.Description = company.CompanyName;
+                lg.Stroke = Brushes.Red;
+                lg.StrokeThickness = 2;
+                lg.Plot(company.x, company.y);
+            }
         }
 
         public static MainMenuController GetInstance()

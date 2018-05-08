@@ -42,18 +42,23 @@ namespace RevisionFyn.BI_Pro.Controller
             for (int company = 0; company < companies.Count; company++)
             {
                 placeHolder.Clear();
-                for (int i = companies[company].CompanyStartYear; i < companies[company].CompanyEndYear; i++)
+                for (int i = companies[company].CompanyStartYear - 1; i < companies[company].CompanyEndYear; i++)
                 {
                     placeHolder.Add(i);
                 }
                 companies[company].x = placeHolder.ToArray();
             }
         }
+
+        public void SaveChangesGraph()
+        {
+
+        }
         public void CreateGraphValues()
         {
-            List<double> Comp1Coverage = new List<double>() { 120, 150, -200, -90, -10, 30 };
+            List<double> Comp1Coverage = new List<double>() { 120, 150, -200, -90, -10, -30};
             List<double> Comp2Coverage = new List<double>() { 110, 140, -210, -100, -20, 20 };
-            List<double> Comp3Coverage = new List<double>() { 50, 0, -50, 0, -5, -30 };
+            List<double> Comp3Coverage = new List<double>() { 50, 0, -50, 0, -5, -30};
             Company Comp1 = new Company
             {
                 CompanyName = "Firma1",
