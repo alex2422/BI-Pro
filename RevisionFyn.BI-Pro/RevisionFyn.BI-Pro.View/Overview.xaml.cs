@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RevisionFyn.BI_Pro.Controller;
 
 namespace RevisionFyn.BI_Pro.View
 {
@@ -20,9 +21,15 @@ namespace RevisionFyn.BI_Pro.View
     /// </summary>
     public partial class Overview : Page
     {
+        OverviewController controller;
         public Overview()
         {
             InitializeComponent();
+
+            controller = OverviewController.GetInstance(ListBoxCompaniesToBeChosen, ListBoxChosenCampanies);
+            controller.ComboBoxYear();
+            controller.LoadIntoComoBox(ComboBoxStartYear);
+            controller.LoadIntoComoBox(ComboBoxEndYear);
         }
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -37,6 +44,41 @@ namespace RevisionFyn.BI_Pro.View
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void ButtonTest_Click(object sender, RoutedEventArgs e)
+        {
+            controller.ButtonTest(ListBoxCompaniesToBeChosen);
+
+        }
+
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            controller.ButtonAdd();
+
+
+        }
+
+        private void ListOfChosenCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ButtonRemove_Click(object sender, RoutedEventArgs e)
+        {
+            controller.ButtonRemove();
+        }
+
+
+
+        private void ListOfCompaniesToBeChosen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ComboEndYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
