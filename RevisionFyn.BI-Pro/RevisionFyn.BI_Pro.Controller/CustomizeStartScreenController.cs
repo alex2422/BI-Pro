@@ -38,9 +38,9 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         public void CreateGraphValues()
         {
-            //List<double> Comp3Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
-            //List<double> Comp2Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
-            //List<double> Comp1Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
+            List<double> Comp3Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
+            List<double> Comp2Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
+            List<double> Comp1Years = new List<double>() { 2012, 2013, 2014, 2015, 2016, 2017 };
             List<double> Comp1Coverage = new List<double>() { 120, 150, -200, -90, -10, 30 };
             List<double> Comp2Coverage = new List<double>() { 110, 140, -210, -100, -20, 20 };
             List<double> Comp3Coverage = new List<double>() { 50, 0, -50, 0, -5, -30 };

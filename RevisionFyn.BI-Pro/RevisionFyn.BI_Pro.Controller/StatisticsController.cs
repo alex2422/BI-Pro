@@ -87,7 +87,6 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         #endregion
 
-
         #region Private methods
 
         #endregion

@@ -7,7 +7,7 @@ using RevisionFyn.BI_Pro.Model;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
-using InteractiveDataDisplay.WPF;
+//using InteractiveDataDisplay.WPF;
 
 namespace RevisionFyn.BI_Pro.Controller
 {
@@ -21,12 +21,13 @@ namespace RevisionFyn.BI_Pro.Controller
         { }
 
         #region Public Methods
-        public void CreateGraph(Grid graphGrid)
-        {
-            LineGraph lg = new LineGraph();
-            graphGrid.Children.Add(lg);
-            lg.StrokeThickness = 2;
-        }
+        //public void CreateGraph(Grid graphGrid)
+        //{
+        //    LineGraph lg = new LineGraph();
+        //    graphGrid.Children.Add(lg);
+        //    lg.StrokeThickness = 2;
+        //}
+
         public static MainMenuController GetInstance()
         {
             if (controllerInstance == null)
@@ -90,7 +91,8 @@ namespace RevisionFyn.BI_Pro.Controller
                         Width = 180,
                         HorizontalAlignment = HorizontalAlignment.Left,
                         Margin = new Thickness(kpiDisplacement, 0, 0, 0),
-                        Background = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfKPI[i].Color)
+                        Background = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfKPI[i].Color),
+                        ToolTip = listOfKPI[i].Title
                     };
 
                     TextBlock KpiTitle = new TextBlock
@@ -101,7 +103,8 @@ namespace RevisionFyn.BI_Pro.Controller
                         Margin = new Thickness(10, 10, 0, 0),
                         FontSize = 17,
                         HorizontalAlignment = HorizontalAlignment.Left,
-                        TextWrapping = TextWrapping.Wrap,
+                        TextWrapping = TextWrapping.NoWrap,
+                        TextTrimming = TextTrimming.CharacterEllipsis
                     };
 
                     Label KpiValueLabel = new Label
@@ -122,7 +125,8 @@ namespace RevisionFyn.BI_Pro.Controller
                         Margin = new Thickness(10, 132, 0, 0),
                         FontSize = 15,
                         HorizontalAlignment = HorizontalAlignment.Left,
-                        TextWrapping = TextWrapping.Wrap,
+                        TextWrapping = TextWrapping.NoWrap,
+                        TextTrimming = TextTrimming.CharacterEllipsis
                     };
 
                     KpiContentGrid.Children.Add(KpiTitle);
