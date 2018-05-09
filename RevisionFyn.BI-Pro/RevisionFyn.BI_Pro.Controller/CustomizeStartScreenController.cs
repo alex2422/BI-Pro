@@ -153,16 +153,16 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         public void LoadValuesIntoCompanyComboBox(ComboBox comboBox)
         {
-            //    foreach (Company Comp in companies)
-            //    {
-            //        if (!comboBox.Items.Contains(Comp.CompanyName))
-            //        {
-            //            comboBox.Items.Add(Comp.CompanyName);
-            //        }
-            //    }
             comboBox.ItemsSource = companies;
             comboBox.DisplayMemberPath = "CompanyName";
         }
+
+        public void LoadColoursIntoCompanyComboBox(ComboBox comboBox)
+        {
+            comboBox.ItemsSource = companies;
+            comboBox.DisplayMemberPath = "CompanyName";
+        }
+
         public void LoadValuesIntoCompanyStartYearBox(ComboBox comboBox, ComboBox companyBox)
         {
             if (companyBox.SelectedItem != null)

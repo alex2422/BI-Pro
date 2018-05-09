@@ -32,6 +32,9 @@ namespace RevisionFyn.BI_Pro.View
             controller.LoadValuesIntoCompanyComboBox(dropDownComp2);
             controller.LoadValuesIntoCompanyComboBox(dropDownComp3);
             ColorComboBox.ItemsSource = typeof(Colors).GetProperties();
+            dropDownColour1.ItemsSource = typeof(Colors).GetProperties();
+            dropDownColour2.ItemsSource = typeof(Colors).GetProperties();
+            dropDownColour3.ItemsSource = typeof(Colors).GetProperties();
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)

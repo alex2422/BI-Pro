@@ -14,5 +14,6 @@ namespace RevisionFyn.BI_Pro.Model
         public List<double> Coverages;
         public double[] x;
         public double[] y;
+        public string colour;
     }
 }
