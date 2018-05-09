@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace RevisionFyn.BI_Pro.Controller
         public List<Company> companies = new List<Company>();
         private static CustomizeStartScreenController controllerInstance;
         public KPI KpiInstance { get; set; }
+        public StoredProcedureController StoredProcedureController { get; set; }
         #endregion
 
         #region Constructor
@@ -22,6 +24,15 @@ namespace RevisionFyn.BI_Pro.Controller
         #endregion
 
         #region Public Methods
+        public static CustomizeStartScreenController GetInstance()
+        {
+            if (controllerInstance == null)
+            {
+                controllerInstance = new CustomizeStartScreenController();
+            }
+
+            return controllerInstance;
+        }
 
         #region KPI
         public List<KPI> ListOfKpiFromDB()
@@ -75,8 +86,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             TitleTextBox.Text = KpiInstance.Title;
             UnitTextBox.Text = KpiInstance.Unit;
-            // string s = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
-
+            
             if (KpiInstance.IsActive)
             {
                 IsActiveCheckBox.IsChecked = true;
@@ -87,18 +97,26 @@ namespace RevisionFyn.BI_Pro.Controller
             }
             
         }
+
+        public void AddSystemKpiToDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
+        {
+            if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
+            {
+                StoredProcedureController = new StoredProcedureController();
+
+                string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
+                int colorIndex = ColorComboBox.SelectedIndex;
+
+                MessageBox.Show(StoredProcedureController.C_AddSystemKPI(kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Angiv venligst titel, enhed og farve", "Mangler information", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         #endregion
 
         #region Statistics
-        public static CustomizeStartScreenController GetInstance()
-        {
-            if (controllerInstance == null)
-            {
-                controllerInstance = new CustomizeStartScreenController();
-            }
-
-            return controllerInstance;
-        }
         public void CreateYearsArray()
         {
             List<double> placeHolder = new List<double>();

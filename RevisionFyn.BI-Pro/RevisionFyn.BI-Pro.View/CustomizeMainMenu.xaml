@@ -74,7 +74,7 @@
             <CheckBox x:Name="IsActiveCheckBox" Grid.Column="1" Grid.Row="4" Margin="5" />
             <Button x:Name="SaveKpiButton" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="0,15,110,-9" Content="Gem"  />
             <Button x:Name="DeleteKpiButton" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="0,15,16,-9" Content="Slet"  />
-            <Button x:Name="AddKpiButton" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" MinWidth="80" Margin="0,29,16,-23" Content="Tilføj ny KPI" Width="174"  />
+            <Button x:Name="AddKpiButton" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" MinWidth="80" Margin="0,29,16,-23" Content="Tilføj ny KPI" Width="174" Click="AddKpiButton_Click"  />
         </Grid>
         <Button x:Name="SaveButton" Content="Gem Ændringer" HorizontalAlignment="Left" Margin="768,484,0,0" VerticalAlignment="Top" Width="100" Click="SaveButton_Click"/>
         <ComboBox x:Name="dropDownColour1" HorizontalAlignment="Left" Margin="628,428,0,0" VerticalAlignment="Top" Width="75">

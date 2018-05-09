@@ -22,6 +22,7 @@ namespace RevisionFyn.BI_Pro.View
     public partial class CustomizeMainMenu : Page
     {
         CustomizeStartScreenController controller = CustomizeStartScreenController.GetInstance();
+
         public CustomizeMainMenu()
         {
             InitializeComponent();
@@ -88,6 +89,11 @@ namespace RevisionFyn.BI_Pro.View
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             controller.SaveChangesGraph();
+        }
+
+        private void AddKpiButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.AddSystemKpiToDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox, IsActiveCheckBox.IsChecked.ToString());
         }
     }
 }
