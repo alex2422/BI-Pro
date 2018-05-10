@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace RevisionFyn.BI_Pro.Database
 {
@@ -205,6 +206,56 @@ namespace RevisionFyn.BI_Pro.Database
                 }
             }
             return result;
+        }
+
+        public List<Company> GetCompanies()
+        {
+            List<Company> companies = new List<Company>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getClient = new SqlCommand("sp_GetClient", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = getClient.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string clientID = reader["ClientID"].ToString();
+                            string clientName = reader["ClientName"].ToString();
+                            string mainEmployee = reader["MainEmployee"].ToString();
+                            string startYear = reader["SartYear"].ToString();
+
+                            Int32.TryParse(clientID, out int convertedClientID);
+                            
+
+                            companies.Add(new Company()
+                            {
+                                CompanyID = convertedClientID,
+                                CompanyName = clientName,
+                                CompanyStartYear = Convert.ToInt32(startYear),
+                                MainEmployee = new Employee
+                                {
+                                    EmployeeID = Convert.ToInt32(mainEmployee),
+                                }
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return companies;
+            }
+
         }
         #endregion
     }

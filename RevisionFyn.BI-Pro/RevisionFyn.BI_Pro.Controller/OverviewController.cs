@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using RevisionFyn.BI_Pro.Database;
+using RevisionFyn.BI_Pro.Model;
 
 namespace RevisionFyn.BI_Pro.Controller
 {
@@ -43,13 +45,14 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ButtonTest(ListBox companies)
         {
+            StoredProcedure sp = new StoredProcedure();
+            companies.ItemsSource = sp.GetCompanies(); //dette skulle gerne virke :D
+            //dummyData.Add("Mærsk");
+            //dummyData.Add("FiskeTorvet");
+            //dummyData.Add("Guby");
+            //dummyData.Add("Grillen");
 
-            dummyData.Add("Mærsk");
-            dummyData.Add("FiskeTorvet");
-            dummyData.Add("Guby");
-            dummyData.Add("Grillen");
-
-            companies.ItemsSource = dummyData;
+            //companies.ItemsSource = dummyData;
         }
 
         public void ButtonAdd()
