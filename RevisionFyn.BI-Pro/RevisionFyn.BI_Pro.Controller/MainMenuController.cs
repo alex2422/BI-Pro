@@ -16,11 +16,66 @@ namespace RevisionFyn.BI_Pro.Controller
         #region Variables
         private static MainMenuController controllerInstance;
         public List<Company> companies = new List<Company>();
+        List<double> hourValues = new List<double>() { 0.25, 0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75 };
+        List<Company> listOfCompanies;
         #endregion
 
         private MainMenuController()
         { }
+        #region CreateMockData
+        public void GenerateCompany()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Company company = new Company();
+                company.CompanyName = "Firma "+(i+1);
+                company.CompanyID = i;
+                Random randomNumberGenerator = new Random();
+                int startYearGen = randomNumberGenerator.Next(2000, 2014);
+                company.CompanyStartYear = startYearGen;
+                DateTime thisDay = DateTime.Today;
+                company.CompanyEndYear = Convert.ToInt32(thisDay.ToString("d").Split('/')[3])-1;
+                company.MainEmployee = new Employee
+                {
+                    Hours = hourValues[randomNumberGenerator.Next(0, hourValues.Count - 1)],
+                    EmployeeID = randomNumberGenerator.Next(1, 20)
+                };
+                for (int yeari = company.CompanyStartYear-1; yeari < company.CompanyEndYear; i++)
+                {
+                    company.years.Add(yeari);
+                }
+                foreach (var year in company.years)
+                {
+                    AccountCard accCard = new AccountCard();
+                    accCard.CaseID = company.CompanyID+' '+-+' '+year;
+                    accCard.MainEmployee = company.MainEmployee;
+                    accCard.Year = year;
+                    int otherEmps = randomNumberGenerator.Next(2, 5);
+                    for (int i2 = 0; i2 < otherEmps; i2++)
+                    {
+                        Employee emp;
+                        do
+                        {
+                            emp = new Employee
+                            {
+                                Hours = hourValues[randomNumberGenerator.Next(0, hourValues.Count - 1)],
+                                EmployeeID = randomNumberGenerator.Next(1, 20)
+                            };
+                        } while (emp.EmployeeID != accCard.MainEmployee.EmployeeID);
+                        accCard.otherEmployees.Add(emp);
+                    }
+                    accCard.NumberOfTasks = randomNumberGenerator.Next(8, 25);
+                    accCard.InvoicePrice = randomNumberGenerator.Next(2000, 6000);
+                    accCard.TotalConsumption = randomNumberGenerator.Next(5500, 27000);
+                }
+                listOfCompanies.Add(company);
+            }
+            foreach (var comapny in listOfCompanies)
+            {
 
+            }
+        }
+        #endregion
         #region Public Methods
         public void CreateGraph(Grid graphGrid)
         {

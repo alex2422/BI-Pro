@@ -8,13 +8,28 @@ using System.Threading.Tasks;
 
 namespace RevisionFyn.BI_Pro.Model
 {
-    class Employee
+    public class Employee
     {
         #region Variables
+        private static Employee employeeInstance;
         public double Hours { get; set; }
         public int EmployeeID { get; set; }
 
-        public List<int> employeeID = new List<int>();
+        #endregion
+
+        #region Private methods
+
+        #endregion
+
+        #region Public methods
+        public static Employee GetInstance()
+        {
+            if (employeeInstance == null)
+            {
+                employeeInstance = new Employee();
+            }
+            return employeeInstance;
+        }
 
         #endregion
     }
