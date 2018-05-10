@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using RevisionFyn.BI_Pro.Model;
+using RevisionFyn.BI_Pro.Database;
 
 namespace RevisionFyn.BI_Pro.Controller
 {
@@ -15,7 +16,6 @@ namespace RevisionFyn.BI_Pro.Controller
         public List<Company> companies = new List<Company>();
         private static CustomizeStartScreenController controllerInstance;
         public KPI KpiInstance { get; set; }
-        public StoredProcedureController StoredProcedureController { get; set; }
         #endregion
 
         #region Constructor
@@ -102,12 +102,12 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
             {
-                StoredProcedureController = new StoredProcedureController();
+                StoredProcedure sp = new StoredProcedure();
 
                 string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
                 int colorIndex = ColorComboBox.SelectedIndex;
 
-                MessageBox.Show(StoredProcedureController.C_AddSystemKPI(kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(sp.AddSystemKPI(kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
