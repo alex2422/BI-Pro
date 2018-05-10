@@ -240,7 +240,11 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 CompanyID = convertedClientID,
                                 CompanyName = clientName,
-                                CompanyStartYear = time,
+                                CompanyStartYear = Convert.ToInt32(startYear),
+                                MainEmployee = new Employee
+                                {
+                                    EmployeeID = Convert.ToInt32(mainEmployee),
+                                }
                             });
                         }
                     }

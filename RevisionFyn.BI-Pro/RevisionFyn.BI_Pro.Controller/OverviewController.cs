@@ -45,13 +45,14 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ButtonTest(ListBox companies)
         {
-          
-            dummyData.Add("Mærsk");
-            dummyData.Add("FiskeTorvet");
-            dummyData.Add("Guby");
-            dummyData.Add("Grillen");
+            StoredProcedure sp = new StoredProcedure();
+            companies.ItemsSource = sp.GetCompanies(); //dette skulle gerne virke :D
+            //dummyData.Add("Mærsk");
+            //dummyData.Add("FiskeTorvet");
+            //dummyData.Add("Guby");
+            //dummyData.Add("Grillen");
 
-            companies.ItemsSource = dummyData;
+            //companies.ItemsSource = dummyData;
         }
 
         public void ButtonAdd()
