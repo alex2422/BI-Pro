@@ -39,7 +39,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             StoredProcedure sp = new StoredProcedure();
 
-            KpiListView.ItemsSource = sp.GetSystemKPI();
+            KpiListView.ItemsSource = sp.GetKPI();
         }
 
         public void CastSelectedListViewItem(object selectedItem)
@@ -64,7 +64,7 @@ namespace RevisionFyn.BI_Pro.Controller
             }    
         }
 
-        public void AddSystemKpiToDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
+        public void AddKpiToDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox)
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
             {
@@ -73,7 +73,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
                 int colorIndex = ColorComboBox.SelectedIndex;
 
-                MessageBox.Show(sp.AddSystemKPI(kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(sp.AddKPI(kpiTitle, kpiUnit, kpiColor, colorIndex), "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
@@ -81,7 +81,7 @@ namespace RevisionFyn.BI_Pro.Controller
             }
         }
 
-        public void UpdateSystemKpiInDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
+        public void UpdateKpiInDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
             {
@@ -90,7 +90,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
                 int colorIndex = ColorComboBox.SelectedIndex;
 
-                MessageBox.Show(sp.UpdateSystemKPI(KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(sp.UpdateKPI(KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
@@ -98,13 +98,13 @@ namespace RevisionFyn.BI_Pro.Controller
             }
         }
 
-        public void DeleteSystemKpiFromDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox)
+        public void DeleteKpiFromDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox)
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
             {
                 StoredProcedure sp = new StoredProcedure();
 
-                MessageBox.Show(sp.DeleteSystemKPI(KpiInstance.ID), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(sp.DeleteKPI(KpiInstance.ID), "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {

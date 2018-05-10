@@ -16,7 +16,7 @@ namespace RevisionFyn.BI_Pro.Database
 
         #region Stored procedures - KPI
 
-        public string AddSystemKPI(string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, string isActive)
+        public string AddKPI(string kpiTitle, string kpiUnit, string kpiColor, int colorIndex)
         {
             string result = "";
 
@@ -35,7 +35,6 @@ namespace RevisionFyn.BI_Pro.Database
                     addSystemKpiCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
                     addSystemKpiCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
                     addSystemKpiCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
-                    addSystemKpiCmd.Parameters.Add(new SqlParameter("@IsActiveInput", isActive));
                     addSystemKpiCmd.ExecuteNonQuery();
 
                     result = "Succes: KPI'en er nu tilføjet";
@@ -49,7 +48,7 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
-        public string UpdateSystemKPI(int kpiID, string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, string isActive)
+        public string UpdateKPI(int kpiID, string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, string isActive)
         {
             string result = "";
 
@@ -83,7 +82,7 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
-        public string DeleteSystemKPI(int kpiID)
+        public string DeleteKPI(int kpiID)
         {
             string result = "";
 
@@ -112,7 +111,7 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
-        public List<KPI> GetSystemKPI()
+        public List<KPI> GetKPI()
         {
             List<KPI> result = new List<KPI>();
 
