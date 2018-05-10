@@ -81,7 +81,7 @@ namespace RevisionFyn.BI_Pro.Controller
             }
         }
 
-        public void UpdateSystemKPI(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
+        public void UpdateSystemKpiInDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
             {
@@ -95,6 +95,20 @@ namespace RevisionFyn.BI_Pro.Controller
             else
             {
                 MessageBox.Show("Angiv venligst titel, enhed og farve", "Mangler information", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void DeleteSystemKpiFromDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox)
+        {
+            if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
+            {
+                StoredProcedure sp = new StoredProcedure();
+
+                MessageBox.Show(sp.DeleteSystemKPI(KpiInstance.ID), "", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Vælg venligst en KPI", "Mangler information", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         #endregion

@@ -94,11 +94,18 @@ namespace RevisionFyn.BI_Pro.View
         private void AddKpiButton_Click(object sender, RoutedEventArgs e)
         {
             controller.AddSystemKpiToDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox, IsActiveCheckBox.IsChecked.ToString());
+            controller.SetKpiListViewSource(KpiListVIew);
         }
 
         private void SaveKpiButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.UpdateSystemKPI(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox, IsActiveCheckBox.IsChecked.ToString());
+            controller.UpdateSystemKpiInDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox, IsActiveCheckBox.IsChecked.ToString());
+            controller.SetKpiListViewSource(KpiListVIew);
+        }
+
+        private void DeleteKpiButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.DeleteSystemKpiFromDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox);
             controller.SetKpiListViewSource(KpiListVIew);
         }
     }

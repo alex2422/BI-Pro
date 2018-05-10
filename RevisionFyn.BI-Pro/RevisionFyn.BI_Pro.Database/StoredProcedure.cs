@@ -83,6 +83,35 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
+        public string DeleteSystemKPI(int kpiID)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand deleteSystemKpiCmd = new SqlCommand("sp_DeleteSystemKPI", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    deleteSystemKpiCmd.Parameters.Add(new SqlParameter("@ID", kpiID));
+                    deleteSystemKpiCmd.ExecuteNonQuery();
+
+                    result = "Succes: KPI'en er nu slettet";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+
+            return result;
+        }
+
         public List<KPI> GetSystemKPI()
         {
             List<KPI> result = new List<KPI>();
