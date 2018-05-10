@@ -22,14 +22,20 @@ namespace RevisionFyn.BI_Pro.View
     public partial class CustomizeMainMenu : Page
     {
         CustomizeStartScreenController controller = CustomizeStartScreenController.GetInstance();
+
         public CustomizeMainMenu()
         {
             InitializeComponent();
+            controller.SetKpiListViewSource(KpiListVIew);
             controller.CreateGraphValues();
             controller.CreateYearsArray();
             controller.LoadValuesIntoCompanyComboBox(dropDownComp1);
             controller.LoadValuesIntoCompanyComboBox(dropDownComp2);
             controller.LoadValuesIntoCompanyComboBox(dropDownComp3);
+            ColorComboBox.ItemsSource = typeof(Colors).GetProperties();
+            dropDownColour1.ItemsSource = typeof(Colors).GetProperties();
+            dropDownColour2.ItemsSource = typeof(Colors).GetProperties();
+            dropDownColour3.ItemsSource = typeof(Colors).GetProperties();
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
@@ -68,6 +74,39 @@ namespace RevisionFyn.BI_Pro.View
         {
             controller.LoadValuesIntoCompanyStartYearBox(dropDownStartYear3, dropDownComp3);
             controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear3, dropDownComp3);
+        }
+
+        private void KpiListVIew_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as ListView).SelectedItem != null)
+            {
+                controller.CastSelectedListViewItem((sender as ListView).SelectedItem);
+
+                controller.LoadListViewValuesToChangeable(TitleTextBox, UnitTextBox, ColorComboBox, IsActiveCheckBox);
+            }
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.SaveChangesGraph();
+        }
+
+        private void AddKpiButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.AddKpiToDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox);
+            controller.SetKpiListViewSource(KpiListVIew);
+        }
+
+        private void SaveKpiButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.UpdateKpiInDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox, IsActiveCheckBox.IsChecked.ToString());
+            controller.SetKpiListViewSource(KpiListVIew);
+        }
+
+        private void DeleteKpiButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.DeleteKpiFromDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox);
+            controller.SetKpiListViewSource(KpiListVIew);
         }
     }
 }
