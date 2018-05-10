@@ -80,6 +80,23 @@ namespace RevisionFyn.BI_Pro.Controller
                 MessageBox.Show("Angiv venligst titel, enhed og farve", "Mangler information", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public void UpdateSystemKPI(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
+        {
+            if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
+            {
+                StoredProcedure sp = new StoredProcedure();
+
+                string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
+                int colorIndex = ColorComboBox.SelectedIndex;
+
+                MessageBox.Show(sp.UpdateSystemKPI(KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Angiv venligst titel, enhed og farve", "Mangler information", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         #endregion
 
         #region Statistics

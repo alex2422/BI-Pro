@@ -72,7 +72,7 @@
             </ComboBox>
             <ComboBox x:Name="DataComboBox" Grid.Column="1" Grid.Row="3" Margin="3,3,16,3" />
             <CheckBox x:Name="IsActiveCheckBox" Grid.Column="1" Grid.Row="4" Margin="5" />
-            <Button x:Name="SaveKpiButton" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="0,15,110,-9" Content="Gem"  />
+            <Button x:Name="SaveKpiButton" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="0,15,110,-9" Content="Gem" Click="SaveKpiButton_Click"  />
             <Button x:Name="DeleteKpiButton" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" MinWidth="80" Margin="0,15,16,-9" Content="Slet"  />
             <Button x:Name="AddKpiButton" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" MinWidth="80" Margin="0,29,16,-23" Content="Tilføj ny KPI" Width="174" Click="AddKpiButton_Click"  />
         </Grid>

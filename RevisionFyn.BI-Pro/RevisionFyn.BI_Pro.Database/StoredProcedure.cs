@@ -14,6 +14,8 @@ namespace RevisionFyn.BI_Pro.Database
     {
         private static string connectionString = "Server = EALSQL1.eal.local; Database = DB2017_C07; User Id = USER_C07; Password = SesamLukOp_07";
 
+        #region Stored procedures - KPI
+
         public string AddSystemKPI(string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, string isActive)
         {
             string result = "";
@@ -37,6 +39,40 @@ namespace RevisionFyn.BI_Pro.Database
                     addSystemKpiCmd.ExecuteNonQuery();
 
                     result = "Succes: KPI'en er nu tilføjet";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+
+            return result;
+        }
+
+        public string UpdateSystemKPI(int kpiID, string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, string isActive)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand updateSystemKpiCmd = new SqlCommand("sp_UpdateSystemKPI", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    updateSystemKpiCmd.Parameters.Add(new SqlParameter("@ID", kpiID));
+                    updateSystemKpiCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
+                    updateSystemKpiCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
+                    updateSystemKpiCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
+                    updateSystemKpiCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
+                    updateSystemKpiCmd.Parameters.Add(new SqlParameter("@IsActiveInput", isActive));
+                    updateSystemKpiCmd.ExecuteNonQuery();
+
+                    result = "Succes: KPI'en er nu opdateret";
                 }
                 catch (SqlException e)
                 {
@@ -94,17 +130,18 @@ namespace RevisionFyn.BI_Pro.Database
                                 Unit = kpiUnit,
                                 Color = kpiColor,
                                 ColorIndex = convertedColorIndex,
-                                IsActive =  isActive
+                                IsActive = isActive
                             });
                         }
                     }
                 }
                 catch (SqlException e)
                 {
-                    MessageBox.Show(e.Message,"Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             return result;
         }
+        #endregion
     }
 }
