@@ -35,46 +35,11 @@ namespace RevisionFyn.BI_Pro.Controller
         }
 
         #region KPI
-        public List<KPI> ListOfKpiFromDB()
-        {
-            KPI KPI_1 = new KPI
-            {
-                Title = "Total dækning (+/-)",
-                Value = 304612,
-                Unit = "DKK",
-                Color = "Dodgerblue",
-                IsActive = true
-            };
-            KPI KPI_2 = new KPI
-            {
-                Title = "Kunder med underdækning",
-                Value = 42,
-                Unit = "Antal",
-                Color = "Red",
-                IsActive = true
-            };
-            KPI KPI_3 = new KPI
-            {
-                Title = "Gns. dækning (+/-) pr. kunde",
-                Value = 5840,
-                Unit = "DKK",
-                Color = "Black",
-                IsActive = false
-            };
-
-            List<KPI> listOfKPI = new List<KPI>
-            {
-                KPI_1,
-                KPI_2,
-                KPI_3
-            };
-
-            return listOfKPI;
-        }
-
         public void SetKpiListViewSource(ListView KpiListView)
         {
-            KpiListView.ItemsSource = ListOfKpiFromDB();
+            StoredProcedure sp = new StoredProcedure();
+
+            KpiListView.ItemsSource = sp.GetSystemKPI();
         }
 
         public void CastSelectedListViewItem(object selectedItem)
@@ -86,6 +51,8 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             TitleTextBox.Text = KpiInstance.Title;
             UnitTextBox.Text = KpiInstance.Unit;
+
+            ColorComboBox.SelectedIndex = KpiInstance.ColorIndex;
             
             if (KpiInstance.IsActive)
             {

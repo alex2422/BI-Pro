@@ -14,6 +14,7 @@ namespace RevisionFyn.BI_Pro.Model
         public string Data { get; set; }
         public string Unit { get; set; }
         public string Color { get; set; }
+        public int ColorIndex { get; set; }
         public bool IsActive { get; set; }
     }
 }
