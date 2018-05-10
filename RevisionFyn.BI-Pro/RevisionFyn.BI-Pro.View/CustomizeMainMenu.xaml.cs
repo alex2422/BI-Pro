@@ -27,6 +27,7 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
             controller.SetKpiListViewSource(KpiListVIew);
+            controller.AdjustInitalButtons(SaveKpiButton, DeleteKpiButton, AddKpiButton);
             controller.CreateGraphValues();
             controller.CreateYearsArray();
             controller.LoadValuesIntoCompanyComboBox(dropDownComp1);
@@ -83,6 +84,7 @@ namespace RevisionFyn.BI_Pro.View
                 controller.CastSelectedListViewItem((sender as ListView).SelectedItem);
 
                 controller.LoadListViewValuesToChangeable(TitleTextBox, UnitTextBox, ColorComboBox, IsActiveCheckBox);
+                controller.AdjustButtonsAfterSelection(SaveKpiButton, DeleteKpiButton, AddKpiButton);
             }
         }
 
@@ -105,7 +107,7 @@ namespace RevisionFyn.BI_Pro.View
 
         private void DeleteKpiButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.DeleteKpiFromDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox);
+            controller.DeleteKpiFromDB();
             controller.SetKpiListViewSource(KpiListVIew);
         }
     }

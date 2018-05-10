@@ -64,6 +64,21 @@ namespace RevisionFyn.BI_Pro.Controller
             }    
         }
 
+        public void AdjustInitalButtons(Button SaveKpiButton, Button DeleteKpiButton, Button AddKpiButton)
+        {
+            AddKpiButton.Margin = new Thickness(0,15,16,-9);
+            AddKpiButton.SetValue(Grid.RowProperty, 5);
+        }
+
+        public void AdjustButtonsAfterSelection(Button SaveKpiButton, Button DeleteKpiButton, Button AddKpiButton)
+        {
+            AddKpiButton.Margin = new Thickness(0,29,16,-23);
+            AddKpiButton.SetValue(Grid.RowProperty, 6);
+
+            SaveKpiButton.Visibility = Visibility.Visible;
+            DeleteKpiButton.Visibility = Visibility.Visible;
+        }
+
         public void AddKpiToDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox)
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
@@ -90,7 +105,21 @@ namespace RevisionFyn.BI_Pro.Controller
                 string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
                 int colorIndex = ColorComboBox.SelectedIndex;
 
-                MessageBox.Show(sp.UpdateKPI(KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (isActive == "True")
+                {
+                    if (!MaximumNumberOfActiveKpiReached())
+                    {
+                        MessageBox.Show(sp.UpdateKPI(KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Det maksimale antal af aktive KPI'er er 3", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(sp.UpdateKPI(KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             else
             {
@@ -98,17 +127,15 @@ namespace RevisionFyn.BI_Pro.Controller
             }
         }
 
-        public void DeleteKpiFromDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox)
+        public void DeleteKpiFromDB()
         {
-            if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
+            MessageBoxResult deleteConfirmation = MessageBox.Show("Er du sikker på du vil slette denne KPI?", "Bekræft sletning", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (deleteConfirmation == MessageBoxResult.Yes)
             {
                 StoredProcedure sp = new StoredProcedure();
 
                 MessageBox.Show(sp.DeleteKPI(KpiInstance.ID), "", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                MessageBox.Show("Vælg venligst en KPI", "Mangler information", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         #endregion
@@ -211,7 +238,19 @@ namespace RevisionFyn.BI_Pro.Controller
         #endregion
 
         #region Private Methods
+        private bool MaximumNumberOfActiveKpiReached()
+        {
+            StoredProcedure sp = new StoredProcedure();
 
+            int numberOfActiveKPI = sp.CountActiveKPI();
+
+            if (numberOfActiveKPI < 3 && numberOfActiveKPI != -1)
+            {
+                return false;
+            }
+            
+            return true;
+        }
         #endregion
     }
 }
