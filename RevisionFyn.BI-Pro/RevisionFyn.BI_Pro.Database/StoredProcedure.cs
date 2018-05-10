@@ -57,8 +57,10 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getSystemKpiCmd = new SqlCommand("sp_GetSystemKPI", con);
-                    getSystemKpiCmd.CommandType = CommandType.StoredProcedure;
+                    SqlCommand getSystemKpiCmd = new SqlCommand("sp_GetSystemKPI", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
 
                     SqlDataReader reader = getSystemKpiCmd.ExecuteReader();
 
@@ -76,15 +78,13 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(kpiID, out int convertedKpiID);
                             Int32.TryParse(colorIndex, out int convertedColorIndex);
 
-                            bool convertedIsActive;
-
-                            if (isActive == "False")
+                            if (isActive == "True")
                             {
-                                convertedIsActive = false;
+                                isActive = "Ja";
                             }
                             else
                             {
-                                convertedIsActive = true;
+                                isActive = "Nej";
                             }
 
                             result.Add(new KPI()
@@ -94,7 +94,7 @@ namespace RevisionFyn.BI_Pro.Database
                                 Unit = kpiUnit,
                                 Color = kpiColor,
                                 ColorIndex = convertedColorIndex,
-                                IsActive =  convertedIsActive
+                                IsActive =  isActive
                             });
                         }
                     }

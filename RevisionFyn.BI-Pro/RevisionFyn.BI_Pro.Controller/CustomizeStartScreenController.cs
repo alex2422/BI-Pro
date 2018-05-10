@@ -54,15 +54,14 @@ namespace RevisionFyn.BI_Pro.Controller
 
             ColorComboBox.SelectedIndex = KpiInstance.ColorIndex;
             
-            if (KpiInstance.IsActive)
+            if (KpiInstance.IsActive == "Ja")
             {
                 IsActiveCheckBox.IsChecked = true;
             }
             else
             {
                 IsActiveCheckBox.IsChecked = false;
-            }
-            
+            }    
         }
 
         public void AddSystemKpiToDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
