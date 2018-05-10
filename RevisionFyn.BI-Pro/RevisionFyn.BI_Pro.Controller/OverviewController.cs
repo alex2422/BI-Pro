@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using RevisionFyn.BI_Pro.Database;
+using RevisionFyn.BI_Pro.Model;
 
 namespace RevisionFyn.BI_Pro.Controller
 {
@@ -43,7 +45,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ButtonTest(ListBox companies)
         {
-
+          
             dummyData.Add("Mærsk");
             dummyData.Add("FiskeTorvet");
             dummyData.Add("Guby");
