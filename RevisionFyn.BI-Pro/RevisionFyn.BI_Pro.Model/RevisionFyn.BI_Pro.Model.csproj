@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountCard.cs" />
     <Compile Include="Company.cs" />
+    <Compile Include="Employee.cs" />
     <Compile Include="ExcelExport.cs" />
     <Compile Include="GraphData.cs" />
     <Compile Include="KPI.cs" />

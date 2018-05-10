@@ -20,7 +20,43 @@ namespace RevisionFyn.BI_Pro.Controller
 
         private MainMenuController()
         { }
-
+        #region CreateMockData
+        public void GenerateCompany()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Company company = new Company();
+                company.CompanyName = "Firma "+(i+1);
+                company.CompanyID = i;
+                Random randomNumberGenerator = new Random();
+                int startYearGen = randomNumberGenerator.Next(2000, 2014);
+                company.CompanyStartYear = startYearGen;
+                DateTime thisDay = DateTime.Today;
+                company.CompanyEndYear = Convert.ToInt32(thisDay.ToString("d").Split('/')[3])-1;
+                company.MainEmployee = new Employee;
+                for (int yeari = company.CompanyStartYear-1; yeari < company.CompanyEndYear; i++)
+                {
+                    company.years.Add(yeari);
+                }
+                foreach (var year in company.years)
+                {
+                    AccountCard accCard = new AccountCard();
+                    accCard.CaseID = company.CompanyID+' '+-+' '+year;
+                    accCard.MainEmployee = company.MainEmployee;
+                    int otherEmps = randomNumberGenerator.Next(2, 5);
+                    for (int i2 = 0; i2 < otherEmps; i2++)
+                    {
+                        Employee emp;
+                        do
+                        {
+                            emp = new Employee;
+                        } while (emp != accCard.MainEmployee);
+                        accCard.otherEmployees.Add(emp);
+                    }
+                }
+            }
+        }
+        #endregion
         #region Public Methods
         public void CreateGraph(Grid graphGrid)
         {
