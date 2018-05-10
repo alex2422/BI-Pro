@@ -18,20 +18,15 @@ namespace RevisionFyn.BI_Pro.Model
         #endregion
 
         #region Private methods
-        private Employee(double hours, int employeeID)
-        {
-            Hours = hours;
-            EmployeeID = employeeID;
-        }
 
         #endregion
 
         #region Public methods
-        public static Employee GetInstance(double hours, int employeeID)
+        public static Employee GetInstance()
         {
             if (employeeInstance == null)
             {
-                employeeInstance = new Employee(hours, employeeID);
+                employeeInstance = new Employee();
             }
             return employeeInstance;
         }

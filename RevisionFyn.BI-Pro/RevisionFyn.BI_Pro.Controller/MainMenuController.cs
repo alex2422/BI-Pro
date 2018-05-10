@@ -33,7 +33,10 @@ namespace RevisionFyn.BI_Pro.Controller
                 company.CompanyStartYear = startYearGen;
                 DateTime thisDay = DateTime.Today;
                 company.CompanyEndYear = Convert.ToInt32(thisDay.ToString("d").Split('/')[3])-1;
-                company.MainEmployee = new Employee;
+                company.MainEmployee = new Employee()
+                {
+
+                };
                 for (int yeari = company.CompanyStartYear-1; yeari < company.CompanyEndYear; i++)
                 {
                     company.years.Add(yeari);
@@ -49,7 +52,7 @@ namespace RevisionFyn.BI_Pro.Controller
                         Employee emp;
                         do
                         {
-                            emp = new Employee;
+                            emp = new Employee();
                         } while (emp != accCard.MainEmployee);
                         accCard.otherEmployees.Add(emp);
                     }
