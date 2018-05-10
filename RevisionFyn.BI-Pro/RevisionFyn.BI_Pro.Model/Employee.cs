@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RevisionFyn.BI_Pro.Model
 {
-    class Employee
+    public class Employee
     {
         #region Variables
         private static Employee employeeInstance;
