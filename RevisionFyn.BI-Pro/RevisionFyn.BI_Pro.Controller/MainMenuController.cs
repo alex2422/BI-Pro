@@ -47,7 +47,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 foreach (var year in company.years)
                 {
                     AccountCard accCard = new AccountCard();
-                    accCard.CaseID = company.CompanyID+' '+-+' '+year;
+                    accCard.CaseID = company.CompanyID+" - "+year;
                     accCard.MainEmployee = company.MainEmployee;
                     accCard.Year = year;
                     int otherEmps = randomNumberGenerator.Next(2, 5);
@@ -67,6 +67,8 @@ namespace RevisionFyn.BI_Pro.Controller
                     accCard.NumberOfTasks = randomNumberGenerator.Next(8, 25);
                     accCard.InvoicePrice = randomNumberGenerator.Next(2000, 6000);
                     accCard.TotalConsumption = randomNumberGenerator.Next(5500, 27000);
+                    accCard.CompanyName = company.CompanyName;
+                    accCard.CompanyID = company.CompanyID;
                 }
                 listOfCompanies.Add(company);
             }
