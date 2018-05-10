@@ -15,5 +15,6 @@ namespace RevisionFyn.BI_Pro.Model
         public double[] x;
         public double[] y;
         public string colour;
+        public int CompanyID;
     }
 }
