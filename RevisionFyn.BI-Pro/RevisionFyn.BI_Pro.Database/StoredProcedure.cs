@@ -257,6 +257,44 @@ namespace RevisionFyn.BI_Pro.Database
             }
 
         }
+        public List<Employee> getEmployee()
+        {
+            List<Employee> Employee = new List<Employee>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getEmployee = new SqlCommand("sp_´GetEmployee", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    SqlDataReader reader = getEmployee.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string employeeID = reader["EmployeeID"].ToString();
+
+                            Int32.TryParse(employeeID, out int convertedEmployeeID);
+
+                            Employee.Add(new Employee()
+                            {
+                                EmployeeID = convertedEmployeeID,
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return Employee;
+            }
+        }
         #endregion
     }
 }
