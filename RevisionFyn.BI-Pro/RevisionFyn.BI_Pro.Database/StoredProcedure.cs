@@ -207,6 +207,56 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
+        #endregion
+
+        #region Stored procedures - Statistics
+        public List<StatisticsType> GetActiveStatisticsType()
+        {
+            List<StatisticsType> result = new List<StatisticsType>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetStatisticsType", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string statisticsTypeID = reader["StatisticsTypeID"].ToString();
+                            string typeName = reader["Name"].ToString();
+                            string typeExternalSource = reader["ExternalSource"].ToString();
+                            string isActive = reader["IsActive"].ToString();
+
+                            Int32.TryParse(statisticsTypeID, out int convertedStatisticsTypeID);
+                            Boolean.TryParse(isActive, out bool convertedIsActive);
+
+                            result.Add(new StatisticsType()
+                            {
+                                ID = convertedStatisticsTypeID,
+                                Name = typeName,
+                                ExternalSource = typeExternalSource,
+                                IsActive = convertedIsActive
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+        #endregion
 
         public List<Company> GetCompanies()
         {
@@ -234,7 +284,7 @@ namespace RevisionFyn.BI_Pro.Database
                             string startYear = reader["SartYear"].ToString();
 
                             Int32.TryParse(clientID, out int convertedClientID);
-                            
+
 
                             companies.Add(new Company()
                             {
@@ -277,7 +327,7 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string employeeID = reader["EmployeeID"].ToString(); 
+                            string employeeID = reader["EmployeeID"].ToString();
 
                             Int32.TryParse(employeeID, out int convertedEmployeeID);
 
@@ -364,6 +414,5 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
-        #endregion
     }
 }

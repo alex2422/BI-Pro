@@ -21,13 +21,12 @@ namespace RevisionFyn.BI_Pro.View
     /// </summary>
     public partial class Statistics : Page
     {
+        StatisticsController controller = StatisticsController.GetInstance();
         
-
         public Statistics()
         {
             InitializeComponent();
-
-            
+            controller.LoadStatisticsTypeButtonsOnPanel(StatisticsTypeStackPanel);
         }
 
         private void StartScreenButton_Click(object sender, RoutedEventArgs e)
@@ -43,8 +42,6 @@ namespace RevisionFyn.BI_Pro.View
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
-        }
-
-        
+        }   
     }
 }
