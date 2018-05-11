@@ -335,6 +335,35 @@ namespace RevisionFyn.BI_Pro.Database
                 return listBalance;
             }
         }
+        public string AddClient(int clientID, string clientName, int startYear, Employee mainEmployee)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand addClient = new SqlCommand("sp_AddClient", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    addClient.Parameters.Add(new SqlParameter("@ClientID", clientID));
+                    addClient.Parameters.Add(new SqlParameter("@ClientName", clientName));
+                    addClient.Parameters.Add(new SqlParameter("@StartYear", startYear));
+                    addClient.Parameters.Add(new SqlParameter("@MainEmployee", mainEmployee));
+
+                    result = "Succes: Klienten er nu tilføjet";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+            return result;
+        }
         #endregion
     }
 }
