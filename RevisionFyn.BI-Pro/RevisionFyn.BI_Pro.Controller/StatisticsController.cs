@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +33,7 @@ namespace RevisionFyn.BI_Pro.Controller
             return controllerInstance;
         }
 
-        public void LoadStatisticsTypeButtonsOnPanel(StackPanel statisticsTypeStackPanel)
+        public void InitializeStep1(StackPanel StatisticsTypeStackPanel)
         {
             StoredProcedure sp = new StoredProcedure();
             List<StatisticsType> activeStatisticsType = sp.GetActiveStatisticsType();
@@ -50,20 +50,39 @@ namespace RevisionFyn.BI_Pro.Controller
 
                 typeChooseButton.Click += TypeChooseButton_Click;
 
-                statisticsTypeStackPanel.Children.Add(typeChooseButton);
+                StatisticsTypeStackPanel.Children.Add(typeChooseButton);
             }
         }
 
+        public void InitializeStep2(ListBox DefaultCompaniesListBox)
+        {
+            StoredProcedure sp = new StoredProcedure();
+
+            List<Company> listOfCompanies = sp.GetCompanies();
+
+            foreach (Company c in listOfCompanies)
+            {
+                DefaultCompaniesListBox.Items.Add(c.CompanyName);
+            }
+        }
+
+        public void MoveItemsToListBox(ListBox ToAddListBox, ListBox ToRemoveListBox)
+        {
+            if (ToRemoveListBox.SelectedItem != null)
+            {
+                ToAddListBox.Items.Add(ToRemoveListBox.SelectedValue);
+                ToRemoveListBox.Items.Remove(ToRemoveListBox.SelectedValue);
+            } 
+        }
+        #endregion
+
+        #region Private methods
         private void TypeChooseButton_Click(object sender, RoutedEventArgs e)
         {
             Button statisticsTypeSender = (Button)sender;
 
             MessageBox.Show(statisticsTypeSender.Name);
         }
-        #endregion
-
-        #region Private methods
-
         #endregion
     }
 }

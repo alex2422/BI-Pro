@@ -13,8 +13,15 @@
         <Button x:Name="StartScreenButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="StartScreenButton_Click" Opacity="0"/>
         <Button x:Name="OverviewButton" Content="Button" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="OverviewButton_Click" Opacity="0"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
-        <Grid x:Name="ChooseStatisticsTypeGrid" HorizontalAlignment="Left" Height="474" Margin="193,126,0,0" VerticalAlignment="Top" Width="697">
+        <Grid x:Name="Step1Grid" HorizontalAlignment="Left" Height="474" Margin="193,126,0,0" VerticalAlignment="Top" Width="697" Visibility="Hidden">
             <StackPanel x:Name="StatisticsTypeStackPanel" HorizontalAlignment="Left" Height="285" Margin="168,92,0,0" VerticalAlignment="Top" Width="326"/>
+        </Grid>
+        <Grid x:Name="Step2Grid" HorizontalAlignment="Left" Height="474" Margin="193,126,0,0" VerticalAlignment="Top" Width="697">
+            <ListBox x:Name="DefaultCompaniesListBox" HorizontalAlignment="Left" Height="230" Margin="48,193,0,0" VerticalAlignment="Top" Width="217" SelectionMode="Extended"/>
+            <ListBox x:Name="SelectedCompanesListBox" HorizontalAlignment="Left" Height="230" Margin="406,193,0,0" VerticalAlignment="Top" Width="217" SelectionMode="Extended"/>
+            <Button x:Name="AddSelectedCompaniesButton" Content=">" HorizontalAlignment="Left" Margin="298,276,0,0" VerticalAlignment="Top" Width="75" Click="AddSelectedCompaniesButton_Click"/>
+            <Button x:Name="RemoveSelectedCompaniesButton" Content="&lt;" HorizontalAlignment="Left" Margin="298,327,0,0" VerticalAlignment="Top" Width="75" Click="RemoveSelectedCompaniesButton_Click"/>
+            <ComboBox HorizontalAlignment="Left" Margin="180,72,0,0" VerticalAlignment="Top" Width="300"/>
         </Grid>
     </Grid>
 </Page>

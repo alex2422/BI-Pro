@@ -26,7 +26,8 @@ namespace RevisionFyn.BI_Pro.View
         public Statistics()
         {
             InitializeComponent();
-            controller.LoadStatisticsTypeButtonsOnPanel(StatisticsTypeStackPanel);
+            //controller.InitializeStep1(StatisticsTypeStackPanel);
+            controller.InitializeStep2(DefaultCompaniesListBox);
         }
 
         private void StartScreenButton_Click(object sender, RoutedEventArgs e)
@@ -42,6 +43,16 @@ namespace RevisionFyn.BI_Pro.View
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
-        }   
+        }
+
+        private void AddSelectedCompaniesButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.MoveItemsToListBox(SelectedCompanesListBox, DefaultCompaniesListBox);
+        }
+
+        private void RemoveSelectedCompaniesButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.MoveItemsToListBox(DefaultCompaniesListBox, SelectedCompanesListBox);
+        }
     }
 }

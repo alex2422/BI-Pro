@@ -281,7 +281,7 @@ namespace RevisionFyn.BI_Pro.Database
                             string clientID = reader["ClientID"].ToString();
                             string clientName = reader["ClientName"].ToString();
                             string mainEmployee = reader["MainEmployee"].ToString();
-                            string startYear = reader["SartYear"].ToString();
+                            string startYear = reader["StartYear"].ToString();
 
                             Int32.TryParse(clientID, out int convertedClientID);
 
@@ -290,11 +290,11 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 CompanyID = convertedClientID,
                                 CompanyName = clientName,
-                                CompanyStartYear = Convert.ToInt32(startYear),
-                                MainEmployee = new Employee
-                                {
-                                    EmployeeID = Convert.ToInt32(mainEmployee),
-                                }
+                                //CompanyStartYear = Convert.ToInt32(startYear),
+                                //MainEmployee = new Employee
+                                //{
+                                //    EmployeeID = Convert.ToInt32(mainEmployee),
+                                //}
                             });
                         }
                     }
