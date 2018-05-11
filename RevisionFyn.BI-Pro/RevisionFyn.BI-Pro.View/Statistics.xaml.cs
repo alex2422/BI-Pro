@@ -26,8 +26,8 @@ namespace RevisionFyn.BI_Pro.View
         public Statistics()
         {
             InitializeComponent();
-            //controller.InitializeStep1(StatisticsTypeStackPanel);
-            controller.InitializeStep2(DefaultCompaniesListBox);
+            //controller.LoadStep1(StatisticsTypeStackPanel);
+            controller.LoadStep2(DefaultCompaniesListBox, StatisticsCalculationComboBox);
         }
 
         private void StartScreenButton_Click(object sender, RoutedEventArgs e)

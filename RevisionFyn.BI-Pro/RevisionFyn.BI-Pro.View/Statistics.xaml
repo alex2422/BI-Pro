@@ -21,7 +21,7 @@
             <ListBox x:Name="SelectedCompanesListBox" HorizontalAlignment="Left" Height="230" Margin="406,193,0,0" VerticalAlignment="Top" Width="217" SelectionMode="Extended"/>
             <Button x:Name="AddSelectedCompaniesButton" Content=">" HorizontalAlignment="Left" Margin="298,276,0,0" VerticalAlignment="Top" Width="75" Click="AddSelectedCompaniesButton_Click"/>
             <Button x:Name="RemoveSelectedCompaniesButton" Content="&lt;" HorizontalAlignment="Left" Margin="298,327,0,0" VerticalAlignment="Top" Width="75" Click="RemoveSelectedCompaniesButton_Click"/>
-            <ComboBox HorizontalAlignment="Left" Margin="180,72,0,0" VerticalAlignment="Top" Width="300"/>
+            <ComboBox x:Name="StatisticsCalculationComboBox" HorizontalAlignment="Left" Margin="180,72,0,0" VerticalAlignment="Top" Width="193"/>
         </Grid>
     </Grid>
 </Page>

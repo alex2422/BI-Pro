@@ -33,32 +33,24 @@ namespace RevisionFyn.BI_Pro.Controller
             return controllerInstance;
         }
 
-        public void InitializeStep1(StackPanel StatisticsTypeStackPanel)
+        public void LoadStep1(StackPanel StatisticsTypeStackPanel)
         {
             StoredProcedure sp = new StoredProcedure();
-            List<StatisticsType> activeStatisticsType = sp.GetActiveStatisticsType();
-
-            foreach (StatisticsType st in activeStatisticsType)
-            {
-                Button typeChooseButton = new Button
-                {
-                    Name = String.Format("TypeChooseButton{0}Button", st.ID),
-                    Content = st.Name,
-                    Margin = new Thickness(10),
-                    FontSize = 30,
-                };
-
-                typeChooseButton.Click += TypeChooseButton_Click;
-
-                StatisticsTypeStackPanel.Children.Add(typeChooseButton);
-            }
+            
+            LoadButtonsIntoStackPanel(StatisticsTypeStackPanel, sp.GetActiveStatisticsType());
         }
 
-        public void InitializeStep2(ListBox DefaultCompaniesListBox)
+        public void LoadStep2(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)
         {
             StoredProcedure sp = new StoredProcedure();
 
+            List<StatisticsCalculation> listOfActiveCalculations = sp.GetActiveStatisticsCalculation();
             List<Company> listOfCompanies = sp.GetCompanies();
+
+            foreach (StatisticsCalculation sc in listOfActiveCalculations)
+            {
+                StatisticsCalculationComboBox.Items.Add(sc.Name);
+            }
 
             foreach (Company c in listOfCompanies)
             {
@@ -77,6 +69,24 @@ namespace RevisionFyn.BI_Pro.Controller
         #endregion
 
         #region Private methods
+        private void LoadButtonsIntoStackPanel(StackPanel StatisticsTypeStackPanel, List<StatisticsType> activeStatisticsType)
+        {
+            foreach (StatisticsType st in activeStatisticsType)
+            {
+                Button typeChooseButton = new Button
+                {
+                    Name = String.Format("TypeChooseButton{0}Button", st.ID),
+                    Content = st.Name,
+                    Margin = new Thickness(10),
+                    FontSize = 30,
+                };
+
+                typeChooseButton.Click += TypeChooseButton_Click;
+
+                StatisticsTypeStackPanel.Children.Add(typeChooseButton);
+            }
+        }
+
         private void TypeChooseButton_Click(object sender, RoutedEventArgs e)
         {
             Button statisticsTypeSender = (Button)sender;

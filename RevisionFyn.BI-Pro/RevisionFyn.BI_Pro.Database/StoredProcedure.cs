@@ -234,17 +234,55 @@ namespace RevisionFyn.BI_Pro.Database
                             string statisticsTypeID = reader["StatisticsTypeID"].ToString();
                             string typeName = reader["Name"].ToString();
                             string typeExternalSource = reader["ExternalSource"].ToString();
-                            string isActive = reader["IsActive"].ToString();
 
                             Int32.TryParse(statisticsTypeID, out int convertedStatisticsTypeID);
-                            Boolean.TryParse(isActive, out bool convertedIsActive);
 
                             result.Add(new StatisticsType()
                             {
                                 ID = convertedStatisticsTypeID,
                                 Name = typeName,
-                                ExternalSource = typeExternalSource,
-                                IsActive = convertedIsActive
+                                ExternalSource = typeExternalSource
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+        public List<StatisticsCalculation> GetActiveStatisticsCalculation()
+        {
+            List<StatisticsCalculation> result = new List<StatisticsCalculation>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsCalculationCmd = new SqlCommand("sp_GetActiveStatisticsCalculation", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = getActiveStatisticsCalculationCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string statisticsCalculationID = reader["StatisticsCalculationID"].ToString();
+                            string calculationName = reader["Name"].ToString();
+
+                            Int32.TryParse(statisticsCalculationID, out int convertedStatisticsTypeID);
+
+                            result.Add(new StatisticsCalculation()
+                            {
+                                ID = convertedStatisticsTypeID,
+                                Name = calculationName
                             });
                         }
                     }
