@@ -259,7 +259,7 @@ namespace RevisionFyn.BI_Pro.Database
         }
         public List<Employee> getEmployee()
         {
-            List<Employee> Employee = new List<Employee>();
+            List<Employee> employee = new List<Employee>();
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -277,11 +277,11 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string employeeID = reader["EmployeeID"].ToString();
+                            string employeeID = reader["EmployeeID"].ToString(); 
 
                             Int32.TryParse(employeeID, out int convertedEmployeeID);
 
-                            Employee.Add(new Employee()
+                            employee.Add(new Employee()
                             {
                                 EmployeeID = convertedEmployeeID,
                             });
@@ -292,7 +292,47 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                return Employee;
+                return employee;
+            }
+        }
+        public List<AccountCard> Getbalance()
+        {
+            List<AccountCard> listBalance = new List<AccountCard>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getBalance = new SqlCommand("sp_GetBalance", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    SqlDataReader reader = getBalance.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string clientName = reader["ClientName"].ToString();
+                            string balance = reader["Balance"].ToString();
+
+                            Int32.TryParse(balance, out int convertedBalance);
+
+                            listBalance.Add(new AccountCard()
+                            {
+                                CompanyName = clientName,
+                                Balance = convertedBalance,
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return listBalance;
             }
         }
         #endregion
