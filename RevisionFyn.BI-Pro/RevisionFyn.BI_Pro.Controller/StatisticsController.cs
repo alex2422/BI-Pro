@@ -13,49 +13,63 @@ namespace RevisionFyn.BI_Pro.Controller
 {
     public class StatisticsController
     {
-        #region Variables
-        private static StatisticsController controllerInstance;
+        #region Variables / Properties
+        private static StatisticsController _ControllerInstance { get; set; }
+        private StoredProcedure _StoredProcedure { get; set; }
+        private Grid _Step1Grid { get; set; }
+        private Grid _Step2Grid { get; set; }
+        private List<Control> _Step2Controls { get; set; }
         #endregion
 
         #region Constructor
         private StatisticsController()
-        { }
+        {
+            _StoredProcedure = new StoredProcedure();
+        }
         #endregion
 
         #region Public methods
         public static StatisticsController GetInstance()
         {
-            if (controllerInstance == null)
+            if (_ControllerInstance == null)
             {
-                controllerInstance = new StatisticsController();
+                _ControllerInstance = new StatisticsController();
             }
 
-            return controllerInstance;
+            return _ControllerInstance;
         }
 
-        public void LoadStep1(StackPanel StatisticsTypeStackPanel)
+        public void LoadStep1(Grid Step1Grid, StackPanel StatisticsTypeStackPanel, List<Control> Step2Controls, Grid Step2Grid)
         {
-            StoredProcedure sp = new StoredProcedure();
-            
-            LoadButtonsIntoStackPanel(StatisticsTypeStackPanel, sp.GetActiveStatisticsType());
+            _Step1Grid = Step1Grid;
+            _Step2Controls = Step2Controls;
+            _Step2Grid = Step2Grid;
+
+            LoadButtonsIntoStackPanel(StatisticsTypeStackPanel, _StoredProcedure.GetActiveStatisticsType()); 
         }
 
         public void LoadStep2(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)
         {
-            StoredProcedure sp = new StoredProcedure();
+            //InitializeStep2Controls(DefaultCompaniesListBox, StatisticsCalculationComboBox);
 
-            List<StatisticsCalculation> listOfActiveCalculations = sp.GetActiveStatisticsCalculation();
-            List<Company> listOfCompanies = sp.GetCompanies();
-
-            foreach (StatisticsCalculation sc in listOfActiveCalculations)
+            foreach (Control control in _Step2Controls)
             {
-                StatisticsCalculationComboBox.Items.Add(sc.Name);
+                if (control is ListBox)
+                {
+                    DefaultCompaniesListBox = (ListBox)control;
+                }
+
+                if (control is ComboBox)
+                {
+                    StatisticsCalculationComboBox = (ComboBox)control;
+                }
             }
 
-            foreach (Company c in listOfCompanies)
-            {
-                DefaultCompaniesListBox.Items.Add(c.CompanyName);
-            }
+            List<StatisticsCalculation> listOfActiveCalculations = _StoredProcedure.GetActiveStatisticsCalculation();
+            List<Company> listOfCompanies = _StoredProcedure.GetCompanies();
+
+            AddStatisticsCalculationToComboBox(StatisticsCalculationComboBox, listOfActiveCalculations);
+            AddCompanyToListBox(DefaultCompaniesListBox, listOfCompanies);
         }
 
         public void MoveItemsToListBox(ListBox ToAddListBox, ListBox ToRemoveListBox)
@@ -75,13 +89,14 @@ namespace RevisionFyn.BI_Pro.Controller
             {
                 Button typeChooseButton = new Button
                 {
-                    Name = String.Format("TypeChooseButton{0}Button", st.ID),
+                    Name = String.Format("TypeChoose{0}Button", st.ID),
                     Content = st.Name,
                     Margin = new Thickness(10),
-                    FontSize = 30,
+                    FontSize = 30 
                 };
 
                 typeChooseButton.Click += TypeChooseButton_Click;
+                //typeChooseButton.Click += delegate(object sender, RoutedEventArgs e) { TypeChooseButton_Click(sender, e, null); };
 
                 StatisticsTypeStackPanel.Children.Add(typeChooseButton);
             }
@@ -89,9 +104,45 @@ namespace RevisionFyn.BI_Pro.Controller
 
         private void TypeChooseButton_Click(object sender, RoutedEventArgs e)
         {
-            Button statisticsTypeSender = (Button)sender;
+            _Step1Grid.Visibility = Visibility.Hidden;
+            _Step2Grid.Visibility = Visibility.Visible;
 
-            MessageBox.Show(statisticsTypeSender.Name);
+            LoadStep2(null, null);
+
+            Button statisticsTypeSender = (Button)sender;
+            //MessageBox.Show(statisticsTypeSender.Name);
+        }
+
+        private void InitializeStep2Controls(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)
+        {
+            foreach (Control control in _Step2Controls)
+            {
+                if (control is ListBox)
+                {
+                    DefaultCompaniesListBox = (ListBox)control;
+                }
+
+                if (control is ComboBox)
+                {
+                    StatisticsCalculationComboBox = (ComboBox)control;
+                }
+            }
+        }
+
+        private void AddStatisticsCalculationToComboBox(ComboBox StatisticsCalculationComboBox, List<StatisticsCalculation> listOfActiveCalculations)
+        {
+            foreach (StatisticsCalculation sc in listOfActiveCalculations)
+            {
+                StatisticsCalculationComboBox.Items.Add(sc.Name);
+            }
+        }
+
+        private void AddCompanyToListBox(ListBox DefaultCompaniesListBox, List<Company> listOfCompanies)
+        {
+            foreach (Company company in listOfCompanies)
+            {
+                DefaultCompaniesListBox.Items.Add(company.CompanyName);
+            }
         }
         #endregion
     }

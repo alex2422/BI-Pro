@@ -26,8 +26,12 @@ namespace RevisionFyn.BI_Pro.View
         public Statistics()
         {
             InitializeComponent();
-            //controller.LoadStep1(StatisticsTypeStackPanel);
-            controller.LoadStep2(DefaultCompaniesListBox, StatisticsCalculationComboBox);
+            List<Control> step2Controls = new List<Control>
+            {
+                DefaultCompaniesListBox,
+                StatisticsCalculationComboBox
+            };
+            controller.LoadStep1(Step1Grid,StatisticsTypeStackPanel, step2Controls, Step2Grid);
         }
 
         private void StartScreenButton_Click(object sender, RoutedEventArgs e)

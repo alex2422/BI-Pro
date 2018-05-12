@@ -162,5 +162,11 @@
   <ItemGroup>
     <Resource Include="Images\UIStandard.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DefaultCircle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DefaultLine.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

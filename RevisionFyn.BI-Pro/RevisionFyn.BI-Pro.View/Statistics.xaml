@@ -13,15 +13,24 @@
         <Button x:Name="StartScreenButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="StartScreenButton_Click" Opacity="0"/>
         <Button x:Name="OverviewButton" Content="Button" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="OverviewButton_Click" Opacity="0"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
-        <Grid x:Name="Step1Grid" HorizontalAlignment="Left" Height="474" Margin="193,126,0,0" VerticalAlignment="Top" Width="697" Visibility="Hidden">
-            <StackPanel x:Name="StatisticsTypeStackPanel" HorizontalAlignment="Left" Height="285" Margin="168,92,0,0" VerticalAlignment="Top" Width="326"/>
+        <Grid x:Name="ProgressGrid" HorizontalAlignment="Left" Height="93" Margin="193,60,0,0" VerticalAlignment="Top" Width="697">
+            <Image x:Name="Step1CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="49,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" />
+            <Image x:Name="Step1LineImage" HorizontalAlignment="Left" Height="64" Width="190" Margin="118,13,0,0" VerticalAlignment="Top" Source="Images/DefaultLine.png" Stretch="Fill" />
+            <Image x:Name="Step2CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="313,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" />
+            <Image x:Name="Step2LineImage" HorizontalAlignment="Left" Height="64" Width="193" Margin="382,10,0,0" VerticalAlignment="Top" Source="Images/DefaultLine.png" Stretch="Fill" />
+            <Image x:Name="Step3CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="580,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" />
         </Grid>
-        <Grid x:Name="Step2Grid" HorizontalAlignment="Left" Height="474" Margin="193,126,0,0" VerticalAlignment="Top" Width="697">
+        <Grid x:Name="Step1Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697">
+            <Label Content="Vælg statistik type" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>
+            <StackPanel x:Name="StatisticsTypeStackPanel" HorizontalAlignment="Left" Height="285" Margin="183,92,0,0" VerticalAlignment="Top" Width="326"/>
+        </Grid>
+        <Grid x:Name="Step2Grid" HorizontalAlignment="Left" Height="474" Margin="193,126,0,0" VerticalAlignment="Top" Width="697" Visibility="Hidden">
             <ListBox x:Name="DefaultCompaniesListBox" HorizontalAlignment="Left" Height="230" Margin="48,193,0,0" VerticalAlignment="Top" Width="217" SelectionMode="Extended"/>
             <ListBox x:Name="SelectedCompanesListBox" HorizontalAlignment="Left" Height="230" Margin="406,193,0,0" VerticalAlignment="Top" Width="217" SelectionMode="Extended"/>
             <Button x:Name="AddSelectedCompaniesButton" Content=">" HorizontalAlignment="Left" Margin="298,276,0,0" VerticalAlignment="Top" Width="75" Click="AddSelectedCompaniesButton_Click"/>
             <Button x:Name="RemoveSelectedCompaniesButton" Content="&lt;" HorizontalAlignment="Left" Margin="298,327,0,0" VerticalAlignment="Top" Width="75" Click="RemoveSelectedCompaniesButton_Click"/>
             <ComboBox x:Name="StatisticsCalculationComboBox" HorizontalAlignment="Left" Margin="180,72,0,0" VerticalAlignment="Top" Width="193"/>
         </Grid>
+
     </Grid>
 </Page>
