@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using RevisionFyn.BI_Pro.Database;
 using RevisionFyn.BI_Pro.Model;
+using System.Windows.Media.Imaging;
 
 namespace RevisionFyn.BI_Pro.Controller
 {
@@ -18,6 +19,7 @@ namespace RevisionFyn.BI_Pro.Controller
         private StoredProcedure _StoredProcedure { get; set; }
         private Grid _Step1Grid { get; set; }
         private Grid _Step2Grid { get; set; }
+        private Grid _ProgressGrid { get; set; }
         private List<Control> _Step2Controls { get; set; }
         #endregion
 
@@ -39,13 +41,15 @@ namespace RevisionFyn.BI_Pro.Controller
             return _ControllerInstance;
         }
 
-        public void LoadStep1(Grid Step1Grid, StackPanel StatisticsTypeStackPanel, List<Control> Step2Controls, Grid Step2Grid)
+        public void LoadStep1(Grid Step1Grid, StackPanel StatisticsTypeStackPanel, List<Control> Step2Controls, Grid Step2Grid, Grid ProgressGrid)
         {
             _Step1Grid = Step1Grid;
             _Step2Controls = Step2Controls;
             _Step2Grid = Step2Grid;
+            _ProgressGrid = ProgressGrid;
 
-            LoadButtonsIntoStackPanel(StatisticsTypeStackPanel, _StoredProcedure.GetActiveStatisticsType()); 
+            LoadButtonsIntoStackPanel(StatisticsTypeStackPanel, _StoredProcedure.GetActiveStatisticsType());
+            UpdateProgress(_ProgressGrid, 0);
         }
 
         public void LoadStep2(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)
@@ -70,6 +74,33 @@ namespace RevisionFyn.BI_Pro.Controller
 
             AddStatisticsCalculationToComboBox(StatisticsCalculationComboBox, listOfActiveCalculations);
             AddCompanyToListBox(DefaultCompaniesListBox, listOfCompanies);
+        }
+
+        public void UpdateProgress(Grid ProgressGrid, int progressID)
+        {
+            // TO DO: Foreach -> set all image source to default, so image click do same switch
+
+            switch (progressID)
+            {
+                case 0:
+                    if (FindObjectByName(ProgressGrid, "Step1CircleImage") is Image Step1CircleImage)
+                    {
+                        Step1CircleImage.Source = new BitmapImage(new Uri("Images/DoneCircle.png", UriKind.Relative));
+                    }
+                    break;
+                case 1:
+                    if (FindObjectByName(ProgressGrid, "Step1LineImage") is Image Step1LineImage)
+                    {
+                        Step1LineImage.Source = new BitmapImage(new Uri("Images/DoneLine.png", UriKind.Relative));
+                    }
+                    if (FindObjectByName(ProgressGrid, "Step2CircleImage") is Image Step2CircleImage)
+                    {
+                        Step2CircleImage.Source = new BitmapImage(new Uri("Images/DoneCircle.png", UriKind.Relative));
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void MoveItemsToListBox(ListBox ToAddListBox, ListBox ToRemoveListBox)
@@ -111,6 +142,13 @@ namespace RevisionFyn.BI_Pro.Controller
 
             Button statisticsTypeSender = (Button)sender;
             //MessageBox.Show(statisticsTypeSender.Name);
+
+            UpdateProgress(_ProgressGrid, 1);
+        }
+
+        private object FindObjectByName(Grid GridToSearch, string objectName)
+        {
+            return GridToSearch.FindName(objectName);
         }
 
         private void InitializeStep2Controls(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)

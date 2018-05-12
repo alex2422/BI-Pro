@@ -168,5 +168,9 @@
   <ItemGroup>
     <Resource Include="Images\DefaultLine.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DoneCircle.png" />
+    <Resource Include="Images\DoneLine.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
