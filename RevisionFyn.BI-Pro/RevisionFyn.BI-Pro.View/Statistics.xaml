@@ -22,7 +22,7 @@
         </Grid>
         <Grid x:Name="Step1Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697">
             <Label Content="Vælg statistik type" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>
-            <StackPanel x:Name="StatisticsTypeStackPanel" HorizontalAlignment="Left" Height="285" Margin="183,92,0,0" VerticalAlignment="Top" Width="326"/>
+            <StackPanel x:Name="StatisticsTypeStackPanel" HorizontalAlignment="Left" Height="340" Margin="183,92,0,0" VerticalAlignment="Top" Width="326"/>
         </Grid>
         <Grid x:Name="Step2Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697" Visibility="Hidden">
             <Label Content="Tilpas opsætningen af statistik" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>
