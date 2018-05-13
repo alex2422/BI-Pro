@@ -9,16 +9,16 @@
       Title="Statistics">
 
     <Grid>
-        <Image HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIStatisticks.png"/>
+        <Image x:Name="LayoutImage" HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="900" Source="Images/UIStatisticks.png"/>
         <Button x:Name="StartScreenButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="StartScreenButton_Click" Opacity="0"/>
         <Button x:Name="OverviewButton" Content="Button" HorizontalAlignment="Left" Margin="0,200,0,0" VerticalAlignment="Top" Width="188" Height="72" Click="OverviewButton_Click" Opacity="0"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
         <Grid x:Name="ProgressGrid" HorizontalAlignment="Left" Height="93" Margin="193,60,0,0" VerticalAlignment="Top" Width="697">
-            <Image x:Name="Step1CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="49,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" />
+            <Image x:Name="Step1CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="49,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" MouseUp="Step1CircleImage_MouseUp" />
             <Image x:Name="Step1LineImage" HorizontalAlignment="Left" Height="64" Width="190" Margin="118,13,0,0" VerticalAlignment="Top" Source="Images/DefaultLine.png" Stretch="Fill" />
-            <Image x:Name="Step2CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="313,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" />
+            <Image x:Name="Step2CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="313,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" MouseUp="Step2CircleImage_MouseUp"/>
             <Image x:Name="Step2LineImage" HorizontalAlignment="Left" Height="64" Width="193" Margin="382,10,0,0" VerticalAlignment="Top" Source="Images/DefaultLine.png" Stretch="Fill" />
-            <Image x:Name="Step3CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="580,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" />
+            <Image x:Name="Step3CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="580,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" MouseUp="Step3CircleImage_MouseUp" />
         </Grid>
         <Grid x:Name="Step1Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697">
             <Label Content="Vælg statistik type" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>

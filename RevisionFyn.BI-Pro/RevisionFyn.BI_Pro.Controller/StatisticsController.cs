@@ -76,11 +76,9 @@ namespace RevisionFyn.BI_Pro.Controller
             AddCompanyToListBox(DefaultCompaniesListBox, listOfCompanies);
         }
 
-        public void UpdateProgress(Grid ProgressGrid, int progressID)
+        public void UpdateProgress(Grid ProgressGrid, int stepID)
         {
-            // TO DO: Foreach -> set all image source to default, so image click do same switch
-
-            switch (progressID)
+            switch (stepID)
             {
                 case 0:
                     if (FindObjectByName(ProgressGrid, "Step1CircleImage") is Image Step1CircleImage)
@@ -107,9 +105,30 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             if (ToRemoveListBox.SelectedItem != null)
             {
-                ToAddListBox.Items.Add(ToRemoveListBox.SelectedValue);
-                ToRemoveListBox.Items.Remove(ToRemoveListBox.SelectedValue);
+                if (!ToAddListBox.Items.Contains(ToRemoveListBox.SelectedValue))
+                {
+                    ToAddListBox.Items.Add(ToRemoveListBox.SelectedValue);
+                    ToRemoveListBox.Items.Remove(ToRemoveListBox.SelectedValue);
+                } 
             } 
+        }
+
+        public void ShowSelectedStep(Grid SelectedGrid)
+        {
+            if (SelectedGrid.Name.Contains("Step1"))
+            {
+                _Step2Grid.Visibility = Visibility.Hidden;
+
+                _Step1Grid.Visibility = Visibility.Visible;
+                UpdateProgress(_ProgressGrid, 0);
+            }
+            else if (SelectedGrid.Name.Contains("Step2"))
+            {
+                _Step1Grid.Visibility = Visibility.Hidden;
+
+                _Step2Grid.Visibility = Visibility.Visible;
+                UpdateProgress(_ProgressGrid, 1);
+            }
         }
         #endregion
 
@@ -127,7 +146,6 @@ namespace RevisionFyn.BI_Pro.Controller
                 };
 
                 typeChooseButton.Click += TypeChooseButton_Click;
-                //typeChooseButton.Click += delegate(object sender, RoutedEventArgs e) { TypeChooseButton_Click(sender, e, null); };
 
                 StatisticsTypeStackPanel.Children.Add(typeChooseButton);
             }
@@ -169,6 +187,8 @@ namespace RevisionFyn.BI_Pro.Controller
 
         private void AddStatisticsCalculationToComboBox(ComboBox StatisticsCalculationComboBox, List<StatisticsCalculation> listOfActiveCalculations)
         {
+            StatisticsCalculationComboBox.Items.Clear();
+
             foreach (StatisticsCalculation sc in listOfActiveCalculations)
             {
                 StatisticsCalculationComboBox.Items.Add(sc.Name);
@@ -177,6 +197,8 @@ namespace RevisionFyn.BI_Pro.Controller
 
         private void AddCompanyToListBox(ListBox DefaultCompaniesListBox, List<Company> listOfCompanies)
         {
+            DefaultCompaniesListBox.Items.Clear();
+
             foreach (Company company in listOfCompanies)
             {
                 DefaultCompaniesListBox.Items.Add(company.CompanyName);

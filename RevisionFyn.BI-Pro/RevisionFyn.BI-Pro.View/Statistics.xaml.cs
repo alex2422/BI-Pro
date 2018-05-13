@@ -60,5 +60,20 @@ namespace RevisionFyn.BI_Pro.View
         {
             controller.MoveItemsToListBox(DefaultCompaniesListBox, SelectedCompanesListBox);
         }
+
+        private void Step1CircleImage_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            controller.ShowSelectedStep(Step1Grid);
+        }
+
+        private void Step2CircleImage_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            controller.ShowSelectedStep(Step2Grid);
+        }
+
+        private void Step3CircleImage_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
