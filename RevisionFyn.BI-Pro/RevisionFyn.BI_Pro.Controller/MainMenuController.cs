@@ -46,6 +46,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 };
                 company.MainEmployee.FirstName += company.MainEmployee.EmployeeID;
                 company.MainEmployee.LastName += company.MainEmployee.EmployeeID;
+                _StoredProcedure.AddEmployee(company.MainEmployee.FirstName, company.MainEmployee.LastName, "Placeholder Position", company.MainEmployee.EmployeeID);
                 for (int yeari = company.CompanyStartYear-1; yeari < company.CompanyEndYear; yeari++)
                 {
                     company.years.Add(yeari);
@@ -70,6 +71,7 @@ namespace RevisionFyn.BI_Pro.Controller
                                 FirstName = "placeHolderFirstName",
                                 LastName = "placeHolderLastName"
                             };
+                            _StoredProcedure.AddEmployee(emp.FirstName, emp.LastName, "Placeholder Position", emp.EmployeeID);
                         } while (emp.EmployeeID != accCard.MainEmployee.EmployeeID);
                         emp.FirstName += emp.EmployeeID;
                         emp.LastName += emp.EmployeeID;
