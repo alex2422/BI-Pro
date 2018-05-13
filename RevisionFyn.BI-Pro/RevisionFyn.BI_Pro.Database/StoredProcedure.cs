@@ -452,5 +452,70 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
+        public string AddEmployee(string firstName, string lastName, string position, int iD)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand addEmployee = new SqlCommand("sp_AddEmployee", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    addEmployee.Parameters.Add(new SqlParameter("@EmployeeID", iD));
+                    addEmployee.Parameters.Add(new SqlParameter("@EmployeePosition", position));
+                    addEmployee.Parameters.Add(new SqlParameter("@EmployeeFirstName", firstName));
+                    addEmployee.Parameters.Add(new SqlParameter("@EmployeeLastName", lastName));
+
+                    result = "Succes: medarbejderen er nu tilføjet";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+            return result;
+        }
+        public string AddAccCard(string iD, int mainEmployeeID, int totalConsumption, int balance, int clientID, string clientName, string otherEmployeeIDs, double totalHours, int year, int numberOfTasks, int invoicePrice)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand addAccCard = new SqlCommand("sp_AddAccountCard", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    addAccCard.Parameters.Add(new SqlParameter("@CaseID", iD));
+                    addAccCard.Parameters.Add(new SqlParameter("@MainEmployeeID", mainEmployeeID));
+                    addAccCard.Parameters.Add(new SqlParameter("@TotalConsumption", totalConsumption));
+                    addAccCard.Parameters.Add(new SqlParameter("@Balance", balance));
+                    addAccCard.Parameters.Add(new SqlParameter("@ClientID", clientID));
+                    addAccCard.Parameters.Add(new SqlParameter("@ClientName", clientName));
+                    addAccCard.Parameters.Add(new SqlParameter("@OtherEmployeeIDs", otherEmployeeIDs));
+                    addAccCard.Parameters.Add(new SqlParameter("@TotalHours", totalHours));
+                    addAccCard.Parameters.Add(new SqlParameter("@year", year));
+                    addAccCard.Parameters.Add(new SqlParameter("@NumberOftasks", numberOfTasks));
+                    addAccCard.Parameters.Add(new SqlParameter("@InvoicePrice", invoicePrice));
+
+                    result = "Succes: kontokortet er nu tilføjet";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+            return result;
+        }
     }
 }

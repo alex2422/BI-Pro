@@ -18,5 +18,6 @@ namespace RevisionFyn.BI_Pro.Model
         public int TotalConsumption { get; set; }
         public string CompanyName { get; set; }
         public int CompanyID { get; set; }
+        public double totalHours { get; set; }
     }
 }

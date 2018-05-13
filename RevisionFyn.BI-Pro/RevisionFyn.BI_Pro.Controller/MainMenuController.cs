@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using InteractiveDataDisplay.WPF;
+using RevisionFyn.BI_Pro.Database;
 
 namespace RevisionFyn.BI_Pro.Controller
 {
@@ -15,6 +16,7 @@ namespace RevisionFyn.BI_Pro.Controller
     {
         #region Variables
         private static MainMenuController controllerInstance;
+        private StoredProcedure _StoredProcedure { get; set; }
         public List<Company> companies = new List<Company>();
         List<double> hourValues = new List<double>() { 0.25, 0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75 };
         List<Company> listOfCompanies;
@@ -28,8 +30,8 @@ namespace RevisionFyn.BI_Pro.Controller
             for (int i = 0; i < 10; i++)
             {
                 Company company = new Company();
-                company.CompanyName = "Firma "+(i+1);
-                company.CompanyID = i;
+                company.CompanyName = "Firma "+(listOfCompanies.Count+1);
+                company.CompanyID = listOfCompanies.Count+1;
                 Random randomNumberGenerator = new Random();
                 int startYearGen = randomNumberGenerator.Next(2000, 2014);
                 company.CompanyStartYear = startYearGen;
@@ -38,12 +40,17 @@ namespace RevisionFyn.BI_Pro.Controller
                 company.MainEmployee = new Employee
                 {
                     Hours = hourValues[randomNumberGenerator.Next(0, hourValues.Count - 1)],
-                    EmployeeID = randomNumberGenerator.Next(1, 20)
+                    EmployeeID = randomNumberGenerator.Next(1, 20),
+                    FirstName = "placeHolderFirstName",
+                    LastName = "placeHolderLastName"
                 };
-                for (int yeari = company.CompanyStartYear-1; yeari < company.CompanyEndYear; i++)
+                company.MainEmployee.FirstName += company.MainEmployee.EmployeeID;
+                company.MainEmployee.LastName += company.MainEmployee.EmployeeID;
+                for (int yeari = company.CompanyStartYear-1; yeari < company.CompanyEndYear; yeari++)
                 {
                     company.years.Add(yeari);
                 }
+                _StoredProcedure.AddClient(company.CompanyID, company.CompanyName, company.CompanyStartYear, company.MainEmployee);
                 foreach (var year in company.years)
                 {
                     AccountCard accCard = new AccountCard();
@@ -59,22 +66,36 @@ namespace RevisionFyn.BI_Pro.Controller
                             emp = new Employee
                             {
                                 Hours = hourValues[randomNumberGenerator.Next(0, hourValues.Count - 1)],
-                                EmployeeID = randomNumberGenerator.Next(1, 20)
+                                EmployeeID = randomNumberGenerator.Next(1, 20),
+                                FirstName = "placeHolderFirstName",
+                                LastName = "placeHolderLastName"
                             };
                         } while (emp.EmployeeID != accCard.MainEmployee.EmployeeID);
+                        emp.FirstName += emp.EmployeeID;
+                        emp.LastName += emp.EmployeeID;
                         accCard.otherEmployees.Add(emp);
+                        
+                    }
+                    string otherEmployeesString = "";
+                    foreach (var employee in accCard.otherEmployees)
+                    {
+                        otherEmployeesString += employee.EmployeeID + ",";
+                    }
+                    otherEmployeesString.Remove(otherEmployeesString.LastIndexOf(','), 1);
+                    double totalHours = accCard.MainEmployee.Hours;
+                    foreach (var employee in accCard.otherEmployees)
+                    {
+                        totalHours += employee.Hours;
                     }
                     accCard.NumberOfTasks = randomNumberGenerator.Next(8, 25);
                     accCard.InvoicePrice = randomNumberGenerator.Next(2000, 6000);
                     accCard.TotalConsumption = randomNumberGenerator.Next(5500, 27000);
                     accCard.CompanyName = company.CompanyName;
                     accCard.CompanyID = company.CompanyID;
+                    accCard.totalHours = totalHours;
+                    _StoredProcedure.AddAccCard(accCard.CaseID, accCard.MainEmployee.EmployeeID, accCard.TotalConsumption, accCard.Balance, accCard.CompanyID, accCard.CompanyName, otherEmployeesString, accCard.totalHours, accCard.Year, accCard.NumberOfTasks, accCard.InvoicePrice);
                 }
                 listOfCompanies.Add(company);
-            }
-            foreach (var comapny in listOfCompanies)
-            {
-
             }
         }
         #endregion
