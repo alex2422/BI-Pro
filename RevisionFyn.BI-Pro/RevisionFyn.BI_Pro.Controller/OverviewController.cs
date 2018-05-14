@@ -14,6 +14,7 @@ namespace RevisionFyn.BI_Pro.Controller
     {
         #region Variables
         private static OverviewController controllerInstance;
+        public StoredProcedure _StoreProcedure { get; set; }
 
         ObservableCollection<string> dummyData = new ObservableCollection<string>();
         ObservableCollection<string> dummyData2 = new ObservableCollection<string>();
@@ -23,13 +24,15 @@ namespace RevisionFyn.BI_Pro.Controller
         public ListBox RightBox { get; set; }
         #endregion
 
-        #region Private methods
+        #region Constructor
         private OverviewController(ListBox leftBox, ListBox rightBox)
         {
             LeftBox = leftBox;
             RightBox = rightBox;
             rightBox.ItemsSource = dummyData2;
             leftBox.ItemsSource = dummyData;
+
+            _StoreProcedure = new StoredProcedure();
         }
         #endregion
 
@@ -45,8 +48,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ButtonTest(ListBox companies)
         {
-            StoredProcedure sp = new StoredProcedure();
-            companies.ItemsSource = sp.GetCompanies(); //dette skulle gerne virke :D
+            companies.ItemsSource = _StoreProcedure.GetCompanies(); //dette skulle gerne virke :D
             //dummyData.Add("Mærsk");
             //dummyData.Add("FiskeTorvet");
             //dummyData.Add("Guby");
@@ -84,8 +86,17 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             yearsBox.ItemsSource = years;
         }
+
+
+        public void ExportData()
+        {
+            
+        }
         #endregion
 
-        
+        #region Private methods
+
+        #endregion
+
     }
 }
