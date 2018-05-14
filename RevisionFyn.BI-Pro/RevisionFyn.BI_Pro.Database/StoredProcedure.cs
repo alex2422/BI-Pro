@@ -318,7 +318,7 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string clientID = reader["ClientID"].ToString();
                             string clientName = reader["ClientName"].ToString();
-                            string mainEmployee = reader["MainEmployee"].ToString();
+                            string mainEmployee = reader["FK_MainEmployeeID"].ToString();
                             string startYear = reader["StartYear"].ToString();
 
                             Int32.TryParse(clientID, out int convertedClientID);
