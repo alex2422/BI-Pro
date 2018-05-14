@@ -14,6 +14,7 @@ namespace RevisionFyn.BI_Pro.Controller
     {
         #region Variables
         private static OverviewController controllerInstance;
+        ExcelExport excelInstance;
         public StoredProcedure _StoreProcedure { get; set; }
 
         ObservableCollection<string> dummyData = new ObservableCollection<string>();
@@ -27,12 +28,22 @@ namespace RevisionFyn.BI_Pro.Controller
         #region Constructor
         private OverviewController(ListBox leftBox, ListBox rightBox)
         {
+            string companyName = "";
+            int balance = 0;
+            int companyID = 0;
+            int employeeID = 0;
+            int companyStartYear = 0;
+
+            excelInstance = new ExcelExport(companyName, balance,  companyID,  employeeID,  companyStartYear);
+
             LeftBox = leftBox;
             RightBox = rightBox;
             rightBox.ItemsSource = dummyData2;
             leftBox.ItemsSource = dummyData;
 
             _StoreProcedure = new StoredProcedure();
+
+            
         }
         #endregion
 
@@ -90,7 +101,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ExportData()
         {
-            
+            _StoreProcedure.GetCompanies();
         }
         #endregion
 
