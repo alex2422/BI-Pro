@@ -19,10 +19,12 @@ namespace RevisionFyn.BI_Pro.Controller
         private StoredProcedure _StoredProcedure { get; set; }
         private Grid _Step1Grid { get; set; }
         private Grid _Step2Grid { get; set; }
+        private Grid _Step3Grid { get; set; }
         private Grid _ProgressGrid { get; set; }
         private List<Control> _Step2Controls { get; set; }
         private bool _IsStep1Done { get; set; }
         private bool _IsStep2Done { get; set; }
+        private bool _IsStep3Done { get; set; }
         #endregion
 
         #region Constructor
@@ -43,15 +45,17 @@ namespace RevisionFyn.BI_Pro.Controller
             return _ControllerInstance;
         }
 
-        public void InitializeSteps(Grid Step1Grid, List<Control> step2Controls, Grid Step2Grid, Grid ProgressGrid)
+        public void InitializeSteps(Grid Step1Grid, List<Control> step2Controls, Grid Step2Grid, Grid Step3Grid, Grid ProgressGrid)
         {
             _Step1Grid = Step1Grid;
             _Step2Controls = step2Controls;
             _Step2Grid = Step2Grid;
+            _Step3Grid = Step3Grid;
             _ProgressGrid = ProgressGrid;
 
             _IsStep1Done = false;
             _IsStep2Done = false;
+            _IsStep3Done = false;
         }
 
         public void LoadStep1(StackPanel StatisticsTypeStackPanel)
@@ -87,6 +91,11 @@ namespace RevisionFyn.BI_Pro.Controller
             _IsStep2Done = true;
         }
 
+        public void LoadStep3()
+        {
+            _IsStep3Done = true;
+        }
+
         public void UpdateProgress(Grid ProgressGrid, int stepID)
         {
             switch (stepID)
@@ -105,6 +114,16 @@ namespace RevisionFyn.BI_Pro.Controller
                     if (FindObjectByName(ProgressGrid, "Step2CircleImage") is Image Step2CircleImage)
                     {
                         Step2CircleImage.Source = new BitmapImage(new Uri("Images/DoneCircle.png", UriKind.Relative));
+                    }
+                    break;
+                case 2:
+                    if (FindObjectByName(ProgressGrid, "Step2LineImage") is Image Step2LineImage)
+                    {
+                        Step2LineImage.Source = new BitmapImage(new Uri("Images/DoneLine.png", UriKind.Relative));
+                    }
+                    if (FindObjectByName(ProgressGrid, "Step3CircleImage") is Image Step3CircleImage)
+                    {
+                        Step3CircleImage.Source = new BitmapImage(new Uri("Images/DoneCircle.png", UriKind.Relative));
                     }
                     break;
                 default:
@@ -129,6 +148,7 @@ namespace RevisionFyn.BI_Pro.Controller
             if (SelectedGrid.Name.Contains("Step1") && _IsStep1Done)
             {
                 _Step2Grid.Visibility = Visibility.Hidden;
+                _Step3Grid.Visibility = Visibility.Hidden;
 
                 _Step1Grid.Visibility = Visibility.Visible;
                 UpdateProgress(_ProgressGrid, 0);
@@ -136,9 +156,18 @@ namespace RevisionFyn.BI_Pro.Controller
             else if (SelectedGrid.Name.Contains("Step2") && _IsStep2Done)
             {
                 _Step1Grid.Visibility = Visibility.Hidden;
+                _Step3Grid.Visibility = Visibility.Hidden;
 
                 _Step2Grid.Visibility = Visibility.Visible;
                 UpdateProgress(_ProgressGrid, 1);
+            }
+            else if (SelectedGrid.Name.Contains("Step3") && _IsStep2Done && _IsStep3Done)
+            {
+                _Step1Grid.Visibility = Visibility.Hidden;
+                _Step2Grid.Visibility = Visibility.Hidden;
+
+                _Step3Grid.Visibility = Visibility.Visible;
+                UpdateProgress(_ProgressGrid, 2);
             }
         }
         #endregion
