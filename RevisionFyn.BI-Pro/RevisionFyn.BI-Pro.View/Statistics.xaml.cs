@@ -33,7 +33,8 @@ namespace RevisionFyn.BI_Pro.View
                 StatisticsCalculationComboBox
             };
 
-            controller.LoadStep1(Step1Grid,StatisticsTypeStackPanel, step2Controls, Step2Grid, ProgressGrid);
+            controller.InitializeSteps(Step1Grid, step2Controls, Step2Grid, ProgressGrid);
+            controller.LoadStep1(StatisticsTypeStackPanel);
         }
 
         private void StartScreenButton_Click(object sender, RoutedEventArgs e)

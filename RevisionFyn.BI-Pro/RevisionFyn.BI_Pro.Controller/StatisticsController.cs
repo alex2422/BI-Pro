@@ -21,6 +21,8 @@ namespace RevisionFyn.BI_Pro.Controller
         private Grid _Step2Grid { get; set; }
         private Grid _ProgressGrid { get; set; }
         private List<Control> _Step2Controls { get; set; }
+        private bool _IsStep1Done { get; set; }
+        private bool _IsStep2Done { get; set; }
         #endregion
 
         #region Constructor
@@ -41,15 +43,22 @@ namespace RevisionFyn.BI_Pro.Controller
             return _ControllerInstance;
         }
 
-        public void LoadStep1(Grid Step1Grid, StackPanel StatisticsTypeStackPanel, List<Control> Step2Controls, Grid Step2Grid, Grid ProgressGrid)
+        public void InitializeSteps(Grid Step1Grid, List<Control> step2Controls, Grid Step2Grid, Grid ProgressGrid)
         {
             _Step1Grid = Step1Grid;
-            _Step2Controls = Step2Controls;
+            _Step2Controls = step2Controls;
             _Step2Grid = Step2Grid;
             _ProgressGrid = ProgressGrid;
 
+            _IsStep1Done = false;
+            _IsStep2Done = false;
+        }
+
+        public void LoadStep1(StackPanel StatisticsTypeStackPanel)
+        {
             LoadButtonsIntoStackPanel(StatisticsTypeStackPanel, _StoredProcedure.GetActiveStatisticsType());
             UpdateProgress(_ProgressGrid, 0);
+            _IsStep1Done = true;
         }
 
         public void LoadStep2(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)
@@ -74,6 +83,8 @@ namespace RevisionFyn.BI_Pro.Controller
 
             AddStatisticsCalculationToComboBox(StatisticsCalculationComboBox, listOfActiveCalculations);
             AddCompanyToListBox(DefaultCompaniesListBox, listOfCompanies);
+
+            _IsStep2Done = true;
         }
 
         public void UpdateProgress(Grid ProgressGrid, int stepID)
@@ -115,14 +126,14 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ShowSelectedStep(Grid SelectedGrid)
         {
-            if (SelectedGrid.Name.Contains("Step1"))
+            if (SelectedGrid.Name.Contains("Step1") && _IsStep1Done)
             {
                 _Step2Grid.Visibility = Visibility.Hidden;
 
                 _Step1Grid.Visibility = Visibility.Visible;
                 UpdateProgress(_ProgressGrid, 0);
             }
-            else if (SelectedGrid.Name.Contains("Step2"))
+            else if (SelectedGrid.Name.Contains("Step2") && _IsStep2Done)
             {
                 _Step1Grid.Visibility = Visibility.Hidden;
 
