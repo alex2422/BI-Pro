@@ -421,7 +421,7 @@ namespace RevisionFyn.BI_Pro.Database
                 return listBalance;
             }
         }
-        public string AddClient(int clientID, string clientName, int startYear, int mainEmployeeID)
+        public string AddClient(string clientName, int startYear, int mainEmployeeID)
         {
             string result = "";
 
@@ -436,10 +436,9 @@ namespace RevisionFyn.BI_Pro.Database
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addClient.Parameters.Add(new SqlParameter("@ClientID", clientID));
                     addClient.Parameters.Add(new SqlParameter("@ClientName", clientName));
                     addClient.Parameters.Add(new SqlParameter("@StartYear", startYear));
-                    addClient.Parameters.Add(new SqlParameter("@MainEmployee", mainEmployeeID));
+                    addClient.Parameters.Add(new SqlParameter("@MainEmployeeID", mainEmployeeID));
                     addClient.ExecuteNonQuery();
 
                     result = "Succes: Klienten er nu tilføjet";
@@ -466,7 +465,7 @@ namespace RevisionFyn.BI_Pro.Database
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addEmployee.Parameters.Add(new SqlParameter("@EmployeeID", iD));
+                    //addEmployee.Parameters.Add(new SqlParameter("@EmployeeID", iD));
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeePosition", position));
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeeFirstName", firstName));
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeeLastName", lastName));

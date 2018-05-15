@@ -53,7 +53,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 {
                     company.years.Add(yeari);
                 }
-                _StoredProcedure.AddClient(company.CompanyID, company.CompanyName, company.CompanyStartYear, company.MainEmployee.EmployeeID);
+                _StoredProcedure.AddClient(company.CompanyName, company.CompanyStartYear, company.MainEmployee.EmployeeID);
                 foreach (var year in company.years)
                 {
                     AccountCard accCard = new AccountCard();
