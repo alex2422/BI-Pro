@@ -20,7 +20,7 @@
             <Image x:Name="Step2LineImage" HorizontalAlignment="Left" Height="64" Width="193" Margin="382,10,0,0" VerticalAlignment="Top" Source="Images/DefaultLine.png" Stretch="Fill" />
             <Image x:Name="Step3CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="580,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" MouseUp="Step3CircleImage_MouseUp" />
         </Grid>
-        <Grid x:Name="Step1Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697" Visibility="Hidden">
+        <Grid x:Name="Step1Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697">
             <Label Content="Vælg statistik type" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>
             <StackPanel x:Name="StatisticsTypeStackPanel" HorizontalAlignment="Left" Height="340" Margin="183,92,0,0" VerticalAlignment="Top" Width="326"/>
         </Grid>
@@ -35,7 +35,7 @@
             <Label Content="Alle kunder" FontSize="16" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="48,157,0,0" VerticalAlignment="Top" Width="217"/>
             <Label Content="Valgte kunder" FontSize="16" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="406,157,0,0" VerticalAlignment="Top" Width="217"/>
         </Grid>
-        <Grid x:Name="Step3Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697" Visibility="Visible">
+        <Grid x:Name="Step3Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697" Visibility="Hidden">
             <Label Content="Gem valgte statistik som favorit" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>
             <Grid HorizontalAlignment="Left" Height="60" Margin="31,101,0,0" VerticalAlignment="Top" Width="226">
                 <Grid.RowDefinitions>
