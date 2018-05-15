@@ -51,6 +51,11 @@ namespace RevisionFyn.BI_Pro.View
         {
             this.NavigationService.Navigate(new Uri("CustomizeMainMenu.Xaml", UriKind.Relative));
         }
+
+        private void LavFirmaer_Click(object sender, RoutedEventArgs e)
+        {
+            controller.GenerateCompany();
+        }
     }
     #region VisibilityResource
     public class VisibilityToCheckedConverter : IValueConverter

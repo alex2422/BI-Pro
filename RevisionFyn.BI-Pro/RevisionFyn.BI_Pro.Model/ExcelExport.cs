@@ -25,8 +25,13 @@ namespace RevisionFyn.BI_Pro.Model
 
         public void trialExport()
         {
-            Header.Add("Hej"); 
-            Header.Add("Janus");
+            SaveFileDialog saveDlg = new SaveFileDialog();
+
+            saveDlg.Filter = "CSV filer (*.csv)|*.csv|All files (*.*)|*.*";
+            saveDlg.InitialDirectory = @"C:\%USERNAME%\";
+            saveDlg.ShowDialog();
+
+            string path = saveDlg.FileName;
         }
 
 

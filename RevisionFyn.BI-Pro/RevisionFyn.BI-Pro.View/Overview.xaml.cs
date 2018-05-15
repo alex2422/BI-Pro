@@ -80,5 +80,12 @@ namespace RevisionFyn.BI_Pro.View
         {
 
         }
+
+        //private void ButtonExport_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ExportView expView = new ExportView();
+        //    string path = expView.GetExportPath(ListBoxChosenCampanies);
+        //    controller.CreateFile(path);
+        //}
     }
 }

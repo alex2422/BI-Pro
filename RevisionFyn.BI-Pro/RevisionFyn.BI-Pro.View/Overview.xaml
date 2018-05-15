@@ -20,6 +20,7 @@
         <Button x:Name="ButtonTest" Content="Test" HorizontalAlignment="Left" Margin="501,554,0,0" VerticalAlignment="Top" Width="103" Height="36" Click="ButtonTest_Click"/>
         <ComboBox x:Name="ComboBoxStartYear" HorizontalAlignment="Left" Margin="252,399,0,0" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="ComboBoxEndYear" HorizontalAlignment="Left" Margin="660,399,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="ButtonExport" Content="Eksporter" HorizontalAlignment="Left" Margin="660,554,0,0" VerticalAlignment="Top" Width="103" Height="36"/>
 
     </Grid>
 </Page>

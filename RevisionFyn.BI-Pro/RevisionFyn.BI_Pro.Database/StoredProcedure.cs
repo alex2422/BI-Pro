@@ -423,7 +423,7 @@ namespace RevisionFyn.BI_Pro.Database
                 return listBalance;
             }
         }
-        public string AddClient(int clientID, string clientName, int startYear, Employee mainEmployee)
+        public string AddClient(int clientID, string clientName, int startYear, int mainEmployeeID)
         {
             string result = "";
 
@@ -441,7 +441,8 @@ namespace RevisionFyn.BI_Pro.Database
                     addClient.Parameters.Add(new SqlParameter("@ClientID", clientID));
                     addClient.Parameters.Add(new SqlParameter("@ClientName", clientName));
                     addClient.Parameters.Add(new SqlParameter("@StartYear", startYear));
-                    addClient.Parameters.Add(new SqlParameter("@MainEmployee", mainEmployee));
+                    addClient.Parameters.Add(new SqlParameter("@MainEmployee", mainEmployeeID));
+                    addClient.ExecuteNonQuery();
 
                     result = "Succes: Klienten er nu tilføjet";
                 }
@@ -471,6 +472,7 @@ namespace RevisionFyn.BI_Pro.Database
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeePosition", position));
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeeFirstName", firstName));
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeeLastName", lastName));
+                    addEmployee.ExecuteNonQuery();
 
                     result = "Succes: medarbejderen er nu tilføjet";
                 }
@@ -507,6 +509,7 @@ namespace RevisionFyn.BI_Pro.Database
                     addAccCard.Parameters.Add(new SqlParameter("@year", year));
                     addAccCard.Parameters.Add(new SqlParameter("@NumberOftasks", numberOfTasks));
                     addAccCard.Parameters.Add(new SqlParameter("@InvoicePrice", invoicePrice));
+                    addAccCard.ExecuteNonQuery();
 
                     result = "Succes: kontokortet er nu tilføjet";
                 }

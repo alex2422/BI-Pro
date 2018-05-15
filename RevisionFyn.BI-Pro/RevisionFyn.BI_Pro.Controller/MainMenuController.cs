@@ -19,11 +19,13 @@ namespace RevisionFyn.BI_Pro.Controller
         private StoredProcedure _StoredProcedure { get; set; }
         public List<Company> companies = new List<Company>();
         List<double> hourValues = new List<double>() { 0.25, 0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75 };
-        List<Company> listOfCompanies;
+        List<Company> listOfCompanies = new List<Company>();
         #endregion
 
         private MainMenuController()
-        { }
+        {
+            _StoredProcedure = new StoredProcedure();
+        }
         #region CreateMockData
         public void GenerateCompany()
         {
@@ -35,8 +37,8 @@ namespace RevisionFyn.BI_Pro.Controller
                 Random randomNumberGenerator = new Random();
                 int startYearGen = randomNumberGenerator.Next(2000, 2014);
                 company.CompanyStartYear = startYearGen;
-                DateTime thisDay = DateTime.Today;
-                company.CompanyEndYear = Convert.ToInt32(thisDay.ToString("d").Split('/')[3])-1;
+                int thisYear = DateTime.Now.Year;
+                company.CompanyEndYear = thisYear-1;
                 company.MainEmployee = new Employee
                 {
                     Hours = hourValues[randomNumberGenerator.Next(0, hourValues.Count - 1)],
@@ -51,7 +53,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 {
                     company.years.Add(yeari);
                 }
-                _StoredProcedure.AddClient(company.CompanyID, company.CompanyName, company.CompanyStartYear, company.MainEmployee);
+                _StoredProcedure.AddClient(company.CompanyID, company.CompanyName, company.CompanyStartYear, company.MainEmployee.EmployeeID);
                 foreach (var year in company.years)
                 {
                     AccountCard accCard = new AccountCard();
@@ -71,10 +73,10 @@ namespace RevisionFyn.BI_Pro.Controller
                                 FirstName = "placeHolderFirstName",
                                 LastName = "placeHolderLastName"
                             };
+                            emp.FirstName += emp.EmployeeID;
+                            emp.LastName += emp.EmployeeID;
                             _StoredProcedure.AddEmployee(emp.FirstName, emp.LastName, "Placeholder Position", emp.EmployeeID);
                         } while (emp.EmployeeID != accCard.MainEmployee.EmployeeID);
-                        emp.FirstName += emp.EmployeeID;
-                        emp.LastName += emp.EmployeeID;
                         accCard.otherEmployees.Add(emp);
                         
                     }
