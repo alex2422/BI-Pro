@@ -11,9 +11,8 @@ namespace RevisionFyn.BI_Pro.Model
         public string Company1 { get; set; }
         public string Company2 { get; set; }
         public string Company3 { get; set; }
-        public string Company4 { get; set; }
-        public string Company5 { get; set; }
-        public string DataType { get; set; }
-        public string InfoType { get; set; }
+        public int StartYear1 { get; set; }
+        public int StartYear2 { get; set; }
+        public int StartYear3 { get; set; }
     }
 }

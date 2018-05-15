@@ -403,6 +403,7 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string clientName = reader["ClientName"].ToString();
                             string balance = reader["Balance"].ToString();
+                            int year = (int)reader["Year"];
 
                             Int32.TryParse(balance, out int convertedBalance);
 
@@ -410,6 +411,7 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 CompanyName = clientName,
                                 Balance = convertedBalance,
+                                Year = year,
                             });
                         }
                     }
@@ -418,9 +420,54 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                listBalance.Sort((x, y) => x.Year.CompareTo(y.Year)); ;
                 return listBalance;
             }
         }
+        public List<AccountCard> GetGraphData()
+        {
+            List<AccountCard> listBalance = new List<AccountCard>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getBalance = new SqlCommand("sp_GetGraphData", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    SqlDataReader reader = getBalance.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string clientName = reader["ClientName"].ToString();
+                            string balance = reader["Balance"].ToString();
+                            int year = (int)reader["Year"];
+
+                            Int32.TryParse(balance, out int convertedBalance);
+
+                            listBalance.Add(new AccountCard()
+                            {
+                                CompanyName = clientName,
+                                Balance = convertedBalance,
+                                Year = year,
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                listBalance.Sort((x, y) => x.Year.CompareTo(y.Year)); ;
+                return listBalance;
+            }
+        }
+
         public string AddClient(int clientID, string clientName, int startYear, int mainEmployeeID)
         {
             string result = "";
