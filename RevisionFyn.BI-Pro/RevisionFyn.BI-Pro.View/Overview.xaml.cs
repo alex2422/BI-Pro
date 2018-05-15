@@ -27,7 +27,7 @@ namespace RevisionFyn.BI_Pro.View
             InitializeComponent();
 
             controller = OverviewController.GetInstance(ListBoxCompaniesToBeChosen, ListBoxChosenCampanies);
-            controller.ComboBoxYear();
+            //controller.ComboBoxYear();
             controller.LoadIntoComoBox(ComboBoxStartYear);
             controller.LoadIntoComoBox(ComboBoxEndYear);
         }

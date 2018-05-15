@@ -17,11 +17,12 @@ namespace RevisionFyn.BI_Pro.Controller
         ExcelExport excelInstance;
         public StoredProcedure _StoreProcedure { get; set; }
 
-        ObservableCollection<string> companyData = new ObservableCollection<string>();
-        ObservableCollection<string> companyData2 = new ObservableCollection<string>();
+
 
         public ListBox LeftBox { get; set; }
         public ListBox RightBox { get; set; }
+        ObservableCollection<Company> companyData;
+        ObservableCollection<Company> companyData2 = new ObservableCollection<Company>();
         #endregion
 
         #region Constructor
@@ -37,10 +38,14 @@ namespace RevisionFyn.BI_Pro.Controller
 
             LeftBox = leftBox;
             RightBox = rightBox;
-            rightBox.ItemsSource = companyData2;
-            leftBox.ItemsSource = companyData;
+
 
             _StoreProcedure = new StoredProcedure();
+            companyData = new ObservableCollection<Company>(_StoreProcedure.GetCompanies());
+            rightBox.ItemsSource = companyData2;
+            leftBox.ItemsSource = companyData;
+            rightBox.DisplayMemberPath = "CompanyName";
+            leftBox.DisplayMemberPath = "CompanyName";
         }
         #endregion
 
@@ -61,20 +66,21 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ButtonAdd()
         {
-            companyData2.Add(Convert.ToString(LeftBox.SelectedItem));
-            companyData.Remove(Convert.ToString(LeftBox.SelectedItem));
+            companyData2.Add((Company)LeftBox.SelectedItem);
+            companyData.Remove((Company)LeftBox.SelectedItem);
         }
 
         public void ButtonRemove()
         {
-            companyData.Add(Convert.ToString(RightBox.SelectedItem));
-            companyData2.Remove(Convert.ToString(RightBox.SelectedItem));
+            companyData.Add((Company)RightBox.SelectedItem);
+            companyData2.Remove((Company)RightBox.SelectedItem);
         }
 
 
         public void LoadIntoComoBox(ComboBox yearsBox)
         {
             yearsBox.ItemsSource = _StoreProcedure.GetYear();
+            yearsBox.DisplayMemberPath = "Year";
         }
 
 
