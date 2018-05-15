@@ -33,7 +33,7 @@ namespace RevisionFyn.BI_Pro.View
                 StatisticsCalculationComboBox
             };
 
-            controller.InitializeSteps(Step1Grid, step2Controls, Step2Grid, ProgressGrid);
+            controller.InitializeSteps(Step1Grid, step2Controls, Step2Grid, Step3Grid, ProgressGrid);
             controller.LoadStep1(StatisticsTypeStackPanel);
         }
 
@@ -74,7 +74,8 @@ namespace RevisionFyn.BI_Pro.View
 
         private void Step3CircleImage_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
+            controller.LoadStep3();
+            controller.ShowSelectedStep(Step3Grid);
         }
     }
 }

@@ -10,6 +10,5 @@ namespace RevisionFyn.BI_Pro.Model
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string ExternalSource { get; set; }
     }
 }

@@ -233,7 +233,6 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string statisticsTypeID = reader["StatisticsTypeID"].ToString();
                             string typeName = reader["Name"].ToString();
-                            string typeExternalSource = reader["ExternalSource"].ToString();
 
                             Int32.TryParse(statisticsTypeID, out int convertedStatisticsTypeID);
 
@@ -241,7 +240,6 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 ID = convertedStatisticsTypeID,
                                 Name = typeName,
-                                ExternalSource = typeExternalSource
                             });
                         }
                     }
@@ -318,7 +316,7 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string clientID = reader["ClientID"].ToString();
                             string clientName = reader["ClientName"].ToString();
-                            string mainEmployee = reader["MainEmployee"].ToString();
+                            string mainEmployee = reader["FK_MainEmployeeID"].ToString();
                             string startYear = reader["StartYear"].ToString();
 
                             Int32.TryParse(clientID, out int convertedClientID);
