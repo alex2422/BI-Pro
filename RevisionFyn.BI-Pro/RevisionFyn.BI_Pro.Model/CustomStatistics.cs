@@ -8,6 +8,7 @@ namespace RevisionFyn.BI_Pro.Model
 {
     public class CustomStatistics
     {
+        public string Name { get; set; }
         public int ChoosenStatisticsTypeID { get; set; }
         public int ChoosenStatisticsCalculationID { get; set; }
         public List<Company> ChoosenCompanies { get; set; }

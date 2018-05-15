@@ -47,8 +47,8 @@
                     <ColumnDefinition Width="103.354" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Navn:"/>
-                <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="0" Margin="3,3,-71,3" />
-                <Button x:Name="AddStatisticsButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" MinWidth="80" Margin="0,6,-71,0" Content="Tilføj til favoriter" Width="172" />
+                <TextBox x:Name="FavoriteNameTextBox" Grid.Column="1" Grid.Row="0" Margin="3,3,-71,3" />
+                <Button x:Name="AddStatisticsButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" MinWidth="80" Margin="0,6,-71,0" Content="Tilføj til favoriter" Width="172" Click="AddStatisticsButton_Click"/>
             </Grid>
         </Grid>
     </Grid>

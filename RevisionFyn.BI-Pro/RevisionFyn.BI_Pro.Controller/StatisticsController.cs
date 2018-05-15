@@ -176,6 +176,17 @@ namespace RevisionFyn.BI_Pro.Controller
                 UpdateProgress(_ProgressGrid, 2);
             }
         }
+
+        public void SaveCustomStatistics(TextBox FavoriteNameTextBox)
+        {
+            _CustomStatistics.Name = FavoriteNameTextBox.Text;
+
+            if (!String.IsNullOrEmpty(_CustomStatistics.Name) && _CustomStatistics.ChoosenStatisticsTypeID != 0 && _CustomStatistics.ChoosenStatisticsCalculationID != 0)
+            {
+                MessageBox.Show(_StoredProcedure.AddStatisticsFavorite(_CustomStatistics.Name, _CustomStatistics.ChoosenStatisticsTypeID,
+                _CustomStatistics.ChoosenStatisticsCalculationID));
+            }           
+        }
         #endregion
 
         #region Private methods

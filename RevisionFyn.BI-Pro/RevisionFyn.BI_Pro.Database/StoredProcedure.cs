@@ -292,6 +292,36 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
+        public string AddStatisticsFavorite(string favoriteName, int statisticsTypeID, int statisticsCalculationID)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand addStatisticsFavoriteCmd = new SqlCommand("sp_AddStatisticsFavorite", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    addStatisticsFavoriteCmd.Parameters.Add(new SqlParameter("@Name", favoriteName));
+                    addStatisticsFavoriteCmd.Parameters.Add(new SqlParameter("@StatisticsTypeID", statisticsTypeID));
+                    addStatisticsFavoriteCmd.Parameters.Add(new SqlParameter("@StatisticsCalculationID", statisticsCalculationID));
+                    addStatisticsFavoriteCmd.ExecuteNonQuery();
+
+                    result = "Succes: Statistikken er nu tilføjet til favoriter";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+
+            return result;
+        }
         #endregion
 
         public List<Company> GetCompanies()

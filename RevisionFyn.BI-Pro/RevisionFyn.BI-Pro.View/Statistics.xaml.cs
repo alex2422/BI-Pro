@@ -77,5 +77,10 @@ namespace RevisionFyn.BI_Pro.View
             controller.LoadStep3(StatisticsCalculationComboBox);
             controller.ShowSelectedStep(Step3Grid);
         }
+
+        private void AddStatisticsButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.SaveCustomStatistics(FavoriteNameTextBox);
+        }
     }
 }
