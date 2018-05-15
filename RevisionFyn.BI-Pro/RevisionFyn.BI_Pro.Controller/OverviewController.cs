@@ -17,8 +17,7 @@ namespace RevisionFyn.BI_Pro.Controller
         ExcelExport excelInstance;
         public StoredProcedure _StoreProcedure { get; set; }
 
-
-
+        public List<int> yearList = new List<int>();
         public ListBox LeftBox { get; set; }
         public ListBox RightBox { get; set; }
         ObservableCollection<Company> companyData;
@@ -79,8 +78,15 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void LoadIntoComoBox(ComboBox yearsBox)
         {
-            yearsBox.ItemsSource = _StoreProcedure.GetYear();
-            yearsBox.DisplayMemberPath = "Year";
+            foreach (var accCard in _StoreProcedure.GetYear())
+            {
+                if (!yearList.Contains(accCard.Year))
+                {
+                    yearList.Add(accCard.Year);
+                }
+            }
+            yearList.Sort();
+            yearsBox.ItemsSource = yearList;
         }
 
 
@@ -91,7 +97,6 @@ namespace RevisionFyn.BI_Pro.Controller
         #endregion
 
         #region Private methods
-        string jonas; //skal slettes
         #endregion
 
     }

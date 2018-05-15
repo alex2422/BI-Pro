@@ -54,7 +54,6 @@ namespace RevisionFyn.BI_Pro.View
 
         private void LavFirmaer_Click(object sender, RoutedEventArgs e)
         {
-            controller.GenerateCompany();
         }
     }
     #region VisibilityResource
