@@ -517,5 +517,43 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
+
+        public List<AccountCard> GetYear()
+        {
+            List<AccountCard> listYear = new List<AccountCard>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand getYear = new SqlCommand("sp_GetYear", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    SqlDataReader reader = getYear.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string year = reader["Year"].ToString();
+
+                            Int32.TryParse(year, out int convertedYear);
+
+                            listYear.Add(new AccountCard()
+                            {
+                                Year = convertedYear
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return listYear;
+            }
+        }
     }
 }

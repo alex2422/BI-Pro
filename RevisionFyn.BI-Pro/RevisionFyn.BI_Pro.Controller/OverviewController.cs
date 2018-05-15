@@ -17,9 +17,8 @@ namespace RevisionFyn.BI_Pro.Controller
         ExcelExport excelInstance;
         public StoredProcedure _StoreProcedure { get; set; }
 
-        ObservableCollection<string> dummyData = new ObservableCollection<string>();
-        ObservableCollection<string> dummyData2 = new ObservableCollection<string>();
-        ObservableCollection<string> years = new ObservableCollection<string>();
+        ObservableCollection<string> companyData = new ObservableCollection<string>();
+        ObservableCollection<string> companyData2 = new ObservableCollection<string>();
 
         public ListBox LeftBox { get; set; }
         public ListBox RightBox { get; set; }
@@ -38,12 +37,10 @@ namespace RevisionFyn.BI_Pro.Controller
 
             LeftBox = leftBox;
             RightBox = rightBox;
-            rightBox.ItemsSource = dummyData2;
-            leftBox.ItemsSource = dummyData;
+            rightBox.ItemsSource = companyData2;
+            leftBox.ItemsSource = companyData;
 
             _StoreProcedure = new StoredProcedure();
-
-            
         }
         #endregion
 
@@ -59,43 +56,25 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ButtonTest(ListBox companies)
         {
-            companies.ItemsSource = _StoreProcedure.GetCompanies(); //dette skulle gerne virke :D
-            //dummyData.Add("Mærsk");
-            //dummyData.Add("FiskeTorvet");
-            //dummyData.Add("Guby");
-            //dummyData.Add("Grillen");
-
-            //companies.ItemsSource = dummyData;
+            companies.ItemsSource = _StoreProcedure.GetCompanies();
         }
 
         public void ButtonAdd()
         {
-            dummyData2.Add(Convert.ToString(LeftBox.SelectedItem));
-            dummyData.Remove(Convert.ToString(LeftBox.SelectedItem));
+            companyData2.Add(Convert.ToString(LeftBox.SelectedItem));
+            companyData.Remove(Convert.ToString(LeftBox.SelectedItem));
         }
 
         public void ButtonRemove()
         {
-            dummyData.Add(Convert.ToString(RightBox.SelectedItem));
-            dummyData2.Remove(Convert.ToString(RightBox.SelectedItem));
+            companyData.Add(Convert.ToString(RightBox.SelectedItem));
+            companyData2.Remove(Convert.ToString(RightBox.SelectedItem));
         }
 
-        public void ComboBoxYear()
-        {
-            years.Add("2017");
-            years.Add("2018");
-            years.Add("2019");
-            years.Add("2020");
-            years.Add("2021");
-            years.Add("2022");
-            years.Add("2023");
-            years.Add("2024");
-            years.Add("2025");
-        }
 
         public void LoadIntoComoBox(ComboBox yearsBox)
         {
-            yearsBox.ItemsSource = years;
+            yearsBox.ItemsSource = _StoreProcedure.GetYear();
         }
 
 
