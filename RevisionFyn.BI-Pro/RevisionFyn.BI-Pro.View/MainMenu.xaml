@@ -40,6 +40,5 @@
         <Grid x:Name="KpiGrid" HorizontalAlignment="Left" Height="185" Margin="208,81,0,0" VerticalAlignment="Top" Width="658" Background="DimGray">
             <Label x:Name="Standard" Content="Ingen KPI'er fundet" FontSize="40" Foreground="White" HorizontalAlignment="Left" Margin="149,56,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <Button x:Name="LavFirmaer"  Content="FirmaCreation" HorizontalAlignment="Left" Margin="24,511,0,0" VerticalAlignment="Top" Width="142" Height="38" Click="LavFirmaer_Click"/>
     </Grid>
 </Page>

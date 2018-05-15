@@ -25,12 +25,15 @@ namespace RevisionFyn.BI_Pro.Controller
         private bool _IsStep1Done { get; set; }
         private bool _IsStep2Done { get; set; }
         private bool _IsStep3Done { get; set; }
+        private CustomStatistics _CustomStatistics { get; set; }
+        private List<StatisticsCalculation> _ListOfActiveCalculations { get; set; }
         #endregion
 
         #region Constructor
         private StatisticsController()
         {
             _StoredProcedure = new StoredProcedure();
+            _CustomStatistics = new CustomStatistics();
         }
         #endregion
 
@@ -67,8 +70,6 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void LoadStep2(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)
         {
-            //InitializeStep2Controls(DefaultCompaniesListBox, StatisticsCalculationComboBox);
-
             foreach (Control control in _Step2Controls)
             {
                 if (control is ListBox)
@@ -82,17 +83,22 @@ namespace RevisionFyn.BI_Pro.Controller
                 }
             }
 
-            List<StatisticsCalculation> listOfActiveCalculations = _StoredProcedure.GetActiveStatisticsCalculation();
+            _ListOfActiveCalculations = _StoredProcedure.GetActiveStatisticsCalculation();
             List<Company> listOfCompanies = _StoredProcedure.GetCompanies();
 
-            AddStatisticsCalculationToComboBox(StatisticsCalculationComboBox, listOfActiveCalculations);
+            AddStatisticsCalculationToComboBox(StatisticsCalculationComboBox, _ListOfActiveCalculations);
             AddCompanyToListBox(DefaultCompaniesListBox, listOfCompanies);
 
             _IsStep2Done = true;
         }
 
-        public void LoadStep3()
+        public void LoadStep3(ComboBox StatisticsCalculationComboBox)
         {
+            if (StatisticsCalculationComboBox.SelectedIndex != -1)
+            {
+                _CustomStatistics.ChoosenStatisticsCalculationID = _ListOfActiveCalculations.Find(x => x.Name == StatisticsCalculationComboBox.SelectedValue.ToString()).ID;
+            }
+
             _IsStep3Done = true;
         }
 
@@ -182,7 +188,8 @@ namespace RevisionFyn.BI_Pro.Controller
                     Name = String.Format("TypeChoose{0}Button", st.ID),
                     Content = st.Name,
                     Margin = new Thickness(10),
-                    FontSize = 30 
+                    FontSize = 30,
+                    Tag = st.ID
                 };
 
                 typeChooseButton.Click += TypeChooseButton_Click;
@@ -193,13 +200,13 @@ namespace RevisionFyn.BI_Pro.Controller
 
         private void TypeChooseButton_Click(object sender, RoutedEventArgs e)
         {
+            Button statisticsTypeSender = (Button)sender;
+            _CustomStatistics.ChoosenStatisticsTypeID = (int)statisticsTypeSender.Tag;
+
             _Step1Grid.Visibility = Visibility.Hidden;
             _Step2Grid.Visibility = Visibility.Visible;
 
             LoadStep2(null, null);
-
-            Button statisticsTypeSender = (Button)sender;
-            //MessageBox.Show(statisticsTypeSender.Name);
 
             UpdateProgress(_ProgressGrid, 1);
         }
@@ -207,22 +214,6 @@ namespace RevisionFyn.BI_Pro.Controller
         private object FindObjectByName(Grid GridToSearch, string objectName)
         {
             return GridToSearch.FindName(objectName);
-        }
-
-        private void InitializeStep2Controls(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)
-        {
-            foreach (Control control in _Step2Controls)
-            {
-                if (control is ListBox)
-                {
-                    DefaultCompaniesListBox = (ListBox)control;
-                }
-
-                if (control is ComboBox)
-                {
-                    StatisticsCalculationComboBox = (ComboBox)control;
-                }
-            }
         }
 
         private void AddStatisticsCalculationToComboBox(ComboBox StatisticsCalculationComboBox, List<StatisticsCalculation> listOfActiveCalculations)

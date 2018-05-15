@@ -22,7 +22,6 @@ namespace RevisionFyn.BI_Pro.View
     /// </summary>
     public partial class MainMenu : Page
     {
-        public string Company1;
         MainMenuController controller = MainMenuController.GetInstance();
 
         public MainMenu()
@@ -51,11 +50,8 @@ namespace RevisionFyn.BI_Pro.View
         {
             this.NavigationService.Navigate(new Uri("CustomizeMainMenu.Xaml", UriKind.Relative));
         }
-
-        private void LavFirmaer_Click(object sender, RoutedEventArgs e)
-        {
-        }
     }
+
     #region VisibilityResource
     public class VisibilityToCheckedConverter : IValueConverter
     {
