@@ -403,6 +403,7 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string clientName = reader["ClientName"].ToString();
                             string balance = reader["Balance"].ToString();
+                            int year = (int)reader["Year"];
 
                             Int32.TryParse(balance, out int convertedBalance);
 
@@ -410,6 +411,7 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 CompanyName = clientName,
                                 Balance = convertedBalance,
+                                Year = year,
                             });
                         }
                     }
@@ -418,10 +420,55 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                listBalance.Sort((x, y) => x.Year.CompareTo(y.Year)); ;
                 return listBalance;
             }
         }
-        public string AddClient(string clientName, int startYear, int mainEmployeeID)
+        public List<AccountCard> GetGraphData()
+        {
+            List<AccountCard> listBalance = new List<AccountCard>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getBalance = new SqlCommand("sp_GetGraphData", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    SqlDataReader reader = getBalance.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string clientName = reader["ClientName"].ToString();
+                            string balance = reader["Balance"].ToString();
+                            int year = (int)reader["Year"];
+
+                            Int32.TryParse(balance, out int convertedBalance);
+
+                            listBalance.Add(new AccountCard()
+                            {
+                                CompanyName = clientName,
+                                Balance = convertedBalance,
+                                Year = year,
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                listBalance.Sort((x, y) => x.Year.CompareTo(y.Year)); ;
+                return listBalance;
+            }
+        }
+
+        public string AddClient(int clientID, string clientName, int startYear, int mainEmployeeID)
         {
             string result = "";
 
@@ -436,9 +483,10 @@ namespace RevisionFyn.BI_Pro.Database
                         CommandType = CommandType.StoredProcedure
                     };
 
+                    addClient.Parameters.Add(new SqlParameter("@ClientID", clientID));
                     addClient.Parameters.Add(new SqlParameter("@ClientName", clientName));
                     addClient.Parameters.Add(new SqlParameter("@StartYear", startYear));
-                    addClient.Parameters.Add(new SqlParameter("@MainEmployeeID", mainEmployeeID));
+                    addClient.Parameters.Add(new SqlParameter("@MainEmployee", mainEmployeeID));
                     addClient.ExecuteNonQuery();
 
                     result = "Succes: Klienten er nu tilføjet";
@@ -465,7 +513,7 @@ namespace RevisionFyn.BI_Pro.Database
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    //addEmployee.Parameters.Add(new SqlParameter("@EmployeeID", iD));
+                    addEmployee.Parameters.Add(new SqlParameter("@EmployeeID", iD));
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeePosition", position));
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeeFirstName", firstName));
                     addEmployee.Parameters.Add(new SqlParameter("@EmployeeLastName", lastName));
@@ -516,44 +564,6 @@ namespace RevisionFyn.BI_Pro.Database
                 }
             }
             return result;
-        }
-
-        public List<AccountCard> GetYear()
-        {
-            List<AccountCard> listYear = new List<AccountCard>();
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    con.Open();
-                    SqlCommand getYear = new SqlCommand("sp_GetYear", con)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    SqlDataReader reader = getYear.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            string year = reader["Year"].ToString();
-
-                            Int32.TryParse(year, out int convertedYear);
-
-                            listYear.Add(new AccountCard()
-                            {
-                                Year = convertedYear
-                            });
-                        }
-                    }
-                }
-                catch (SqlException e)
-                {
-                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                return listYear;
-            }
         }
     }
 }
