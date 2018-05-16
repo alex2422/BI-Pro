@@ -91,7 +91,7 @@ namespace RevisionFyn.BI_Pro.Controller
         #endregion
 
         #region Private methods
-        string jonas; //skal slettes
+        
         #endregion
 
     }
