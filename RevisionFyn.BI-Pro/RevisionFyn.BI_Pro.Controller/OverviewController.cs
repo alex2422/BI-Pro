@@ -14,27 +14,22 @@ namespace RevisionFyn.BI_Pro.Controller
     {
         #region Variables
         private static OverviewController controllerInstance;
-        ExcelExport excelInstance;
         public StoredProcedure _StoreProcedure { get; set; }
 
         public List<int> yearList = new List<int>();
         public ListBox LeftBox { get; set; }
         public ListBox RightBox { get; set; }
+        public ComboBox StartYear { get; set; }
         ObservableCollection<Company> companyData;
         ObservableCollection<Company> companyData2 = new ObservableCollection<Company>();
         #endregion
 
         #region Constructor
-        private OverviewController(ListBox leftBox, ListBox rightBox)
+        private OverviewController(ListBox leftBox, ListBox rightBox, ComboBox startYear)
         {
-            string companyName = "";
-            int balance = 0;
-            int companyID = 0;
-            int employeeID = 0;
-            int companyStartYear = 0;
 
-            excelInstance = new ExcelExport(companyName, balance,  companyID,  employeeID,  companyStartYear);
 
+            StartYear = startYear;
             LeftBox = leftBox;
             RightBox = rightBox;
 
@@ -49,11 +44,11 @@ namespace RevisionFyn.BI_Pro.Controller
         #endregion
 
         #region Public methods
-        public static OverviewController GetInstance(ListBox leftBox, ListBox rightBox)
+        public static OverviewController GetInstance(ListBox leftBox, ListBox rightBox, ComboBox startYear)
         {
             if (controllerInstance == null)
             {
-                controllerInstance = new OverviewController(leftBox, rightBox);
+                controllerInstance = new OverviewController(leftBox, rightBox, startYear);
             }
             return controllerInstance;
         }
@@ -92,7 +87,9 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void ExportData()
         {
-            _StoreProcedure.GetCompanies();
+            ExcelExport export = new ExcelExport();
+            string path = export.GetExportPath(RightBox);
+            export.Export(RightBox, StartYear, path);
         }
         #endregion
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Controls;
 using Microsoft.Win32;
 using System.Windows;
 
@@ -19,33 +20,101 @@ namespace RevisionFyn.BI_Pro.Model
         StringBuilder csvImport { get; set; }
         List<string> Header { get; set; } = new List<string>();
 
-        public string CompanyName { get; set; }
-        public int Balance { get; set; }
-        public int CompanyID { get; set; }
-        public int EmployeeID { get; set; }
         public int CompanyStartYear { get; set; }
+        public List<int> Years = new List<int>();
+        public List<Company> companies = new List<Company>();
+        Encoding encoding;
 
         #endregion
 
         #region Constructor
-        public ExcelExport(string companyName, int balance, int companyID, int employeeID, int companyStartYear)
+        public ExcelExport()
         {
-            CompanyName = companyName;
-            Balance = balance;
-            CompanyID = companyID;
-            EmployeeID = employeeID;
-            CompanyStartYear = companyStartYear;
+
         }
         #endregion
 
         #region Public methods
-        public void Export(string CompanyName, int Balance, int ComapnyID, int EmployeeID, int ComapanyStartYear)
+        public string GetExportPath(ListBox rightBox)
         {
-            Header.Add(CompanyName); 
-            Header.Add(Balance.ToString());
-            Header.Add(CompanyID.ToString());
-            Header.Add(EmployeeID.ToString());
-            Header.Add(CompanyStartYear.ToString());
+            if (rightBox != null)
+            {
+                SaveFileDialog saveDlg = new SaveFileDialog();
+
+                saveDlg.Filter = "CSV filer (*.csv)|*.csv|All files (*.*)|*.*";
+                saveDlg.InitialDirectory = @"C:\%USERNAME%\";
+                saveDlg.ShowDialog();
+
+                string path = saveDlg.FileName;
+                return path;
+            }
+            else return "fejl";
+        }
+        public void Export(ListBox listBox, ComboBox startYear, string path)
+        {
+            List<AccountCard> accCards = new List<AccountCard>();
+            encoding = Encoding.GetEncoding("iso-8859-1");
+            Header.Add("Medarbejder");
+            Header.Add("Firma");
+            foreach (int year in startYear.Items)
+            {
+                Years.Add(year);
+            }
+            foreach (int year in Years)
+            {
+                Header.Add(year.ToString());
+            }
+            Header.Add(" ");
+            Header.Add("I alt");
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                using (StreamWriter streamWriter = new StreamWriter(@path, true, encoding))
+                {
+                    streamWriter.WriteLine("sep=;");
+                    streamWriter.WriteLine(String.Join<string>(";", Header));
+                    streamWriter.WriteLine("");
+                    List<Company> listOfCompanies = new List<Company>();
+                    foreach (Company company in listBox.Items)
+                    {
+                        listOfCompanies.Add(company);
+                    }
+                    listOfCompanies.Sort((x, y) => x.MainEmployee.EmployeeID.CompareTo(y.MainEmployee.EmployeeID));
+                    foreach (Company company in listOfCompanies)
+                    {
+                        string balanceString = ";";
+                        int totalBalance = 0;
+                        foreach (int year in Years)
+                        {
+                            if (company.accountCards[0].Year > year)
+                            {
+                                balanceString += "N/A ;";
+                            }
+                            else
+                            {
+                                if (company.accountCards[0].Year == year)
+                                {
+                                    for (int i = 0; i < company.accountCards.Count; i++)
+                                    {
+                                        totalBalance += company.accountCards[i].Balance;
+                                        balanceString +=company.accountCards[i].Balance + ";";
+                                    }
+                                }
+                            }
+                        }
+                        balanceString += " "+";" + totalBalance;
+                        streamWriter.WriteLine(company.MainEmployee.EmployeeID+";"+company.CompanyName+balanceString);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         #endregion

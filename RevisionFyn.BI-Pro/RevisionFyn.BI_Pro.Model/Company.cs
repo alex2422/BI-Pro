@@ -19,5 +19,16 @@ namespace RevisionFyn.BI_Pro.Model
         public List<AccountCard> accountCards = new List<AccountCard>();
         public List<int> years = new List<int>();
         public Employee MainEmployee { get; set; }
+        public Company()
+        {
+            foreach (AccountCard accCard in accountCards)
+            {
+                if (accCard.CompanyID != CompanyID)
+                {
+                    accountCards.Remove(accCard);
+                }
+            }
+            accountCards.Sort((x, y) => x.Year.CompareTo(y.Year));
+        }
     }
 }

@@ -385,11 +385,12 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 CompanyID = convertedClientID,
                                 CompanyName = clientName,
-                                //CompanyStartYear = Convert.ToInt32(startYear),
-                                //MainEmployee = new Employee
-                                //{
-                                //    EmployeeID = Convert.ToInt32(mainEmployee),
-                                //}
+                                CompanyStartYear = Convert.ToInt32(startYear),
+                                accountCards = Getbalance(convertedClientID),
+                                MainEmployee = new Employee
+                                {
+                                    EmployeeID = Convert.ToInt32(mainEmployee),
+                                }
                             });
                         }
                     }
@@ -423,12 +424,13 @@ namespace RevisionFyn.BI_Pro.Database
                         while (reader.Read())
                         {
                             string employeeID = reader["EmployeeID"].ToString();
-
+                            string employeeName = reader["EmployeeFirstName"].ToString();
                             Int32.TryParse(employeeID, out int convertedEmployeeID);
 
                             employee.Add(new Employee()
                             {
                                 EmployeeID = convertedEmployeeID,
+                                FirstName = employeeName,
                             });
                         }
                     }
@@ -440,7 +442,7 @@ namespace RevisionFyn.BI_Pro.Database
                 return employee;
             }
         }
-        public List<AccountCard> Getbalance()
+        public List<AccountCard> Getbalance(int company)
         {
             List<AccountCard> listBalance = new List<AccountCard>();
 
@@ -454,23 +456,24 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         CommandType = CommandType.StoredProcedure
                     };
+                    getBalance.Parameters.AddWithValue("@ClientID", company);
                     SqlDataReader reader = getBalance.ExecuteReader();
 
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
-                            string clientName = reader["ClientName"].ToString();
                             string balance = reader["Balance"].ToString();
                             int year = (int)reader["Year"];
+                            int companyID = (int)reader["FK_ClientID"];
 
                             Int32.TryParse(balance, out int convertedBalance);
 
                             listBalance.Add(new AccountCard()
                             {
-                                CompanyName = clientName,
                                 Balance = convertedBalance,
                                 Year = year,
+                                CompanyID = companyID
                             });
                         }
                     }
