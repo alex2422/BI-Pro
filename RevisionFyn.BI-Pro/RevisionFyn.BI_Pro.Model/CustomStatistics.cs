@@ -8,6 +8,7 @@ namespace RevisionFyn.BI_Pro.Model
 {
     public class CustomStatistics
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public int ChoosenStatisticsTypeID { get; set; }
         public int ChoosenStatisticsCalculationID { get; set; }
@@ -29,6 +30,11 @@ namespace RevisionFyn.BI_Pro.Model
         }
 
         public double Count()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double Sum()
         {
             throw new NotImplementedException();
         }

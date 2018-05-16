@@ -27,6 +27,7 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
             controller.SetKpiListViewSource(KpiListVIew);
+            controller.LoadValuesIntoKpiDataComboBox(DataComboBox);
             controller.AdjustInitalButtons(SaveKpiButton, DeleteKpiButton, AddKpiButton);
             controller.CreateGraphValues();
             controller.CreateYearsArray();
@@ -83,7 +84,7 @@ namespace RevisionFyn.BI_Pro.View
             {
                 controller.CastSelectedListViewItem((sender as ListView).SelectedItem);
 
-                controller.LoadListViewValuesToChangeable(TitleTextBox, UnitTextBox, ColorComboBox, IsActiveCheckBox);
+                controller.LoadListViewValuesToChangeable(TitleTextBox, UnitTextBox, ColorComboBox, DataComboBox, IsActiveCheckBox);
                 controller.AdjustButtonsAfterSelection(SaveKpiButton, DeleteKpiButton, AddKpiButton);
             }
         }
@@ -95,13 +96,13 @@ namespace RevisionFyn.BI_Pro.View
 
         private void AddKpiButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.AddKpiToDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox);
+            controller.AddKpiToDB(TitleTextBox.Text, UnitTextBox.Text, DataComboBox, ColorComboBox);
             controller.SetKpiListViewSource(KpiListVIew);
         }
 
         private void SaveKpiButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.UpdateKpiInDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox, IsActiveCheckBox.IsChecked.ToString());
+            controller.UpdateKpiInDB(TitleTextBox.Text, UnitTextBox.Text, ColorComboBox, IsActiveCheckBox.IsChecked.ToString(), DataComboBox);
             controller.SetKpiListViewSource(KpiListVIew);
         }
 

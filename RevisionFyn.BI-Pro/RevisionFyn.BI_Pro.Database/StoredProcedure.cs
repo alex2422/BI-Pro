@@ -17,7 +17,7 @@ namespace RevisionFyn.BI_Pro.Database
 
         #region Stored procedures - KPI
 
-        public string AddKPI(string kpiTitle, string kpiUnit, string kpiColor, int colorIndex)
+        public string AddKPI(string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, int dataID)
         {
             string result = "";
 
@@ -33,6 +33,7 @@ namespace RevisionFyn.BI_Pro.Database
                     };
 
                     addKpiCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
+                    addKpiCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", dataID));
                     addKpiCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
                     addKpiCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
                     addKpiCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
@@ -49,7 +50,7 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
-        public string UpdateKPI(int kpiID, string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, string isActive)
+        public string UpdateKPI(int kpiID, string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, string isActive, int dataID)
         {
             string result = "";
 
@@ -66,6 +67,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                     updateKpiCmd.Parameters.Add(new SqlParameter("@ID", kpiID));
                     updateKpiCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
+                    updateKpiCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", dataID));
                     updateKpiCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
                     updateKpiCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
                     updateKpiCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
@@ -171,6 +173,7 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string kpiID = reader["KpiID"].ToString();
                             string kpiTitle = reader["Title"].ToString();
+                            string dataID = reader["FK_StatisticsFavoriteID"].ToString();
                             string kpiUnit = reader["Unit"].ToString();
                             string kpiColor = reader["Color"].ToString();
                             string colorIndex = reader["ColorIndex"].ToString();
@@ -178,6 +181,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Int32.TryParse(kpiID, out int convertedKpiID);
                             Int32.TryParse(colorIndex, out int convertedColorIndex);
+                            Int32.TryParse(dataID, out int convertedDataID);
 
                             if (isActive == "True")
                             {
@@ -192,6 +196,7 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 ID = convertedKpiID,
                                 Title = kpiTitle,
+                                DataID = convertedDataID,
                                 Unit = kpiUnit,
                                 Color = kpiColor,
                                 ColorIndex = convertedColorIndex,
@@ -349,6 +354,54 @@ namespace RevisionFyn.BI_Pro.Database
                 }
             }
 
+            return result;
+        }
+
+        public List<CustomStatistics> GetActiveStatisticsFavorite()
+        {
+            List<CustomStatistics> result = new List<CustomStatistics>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetActiveStatisticsFavorite", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string statisticsFavoriteID = reader["StatisticsFavoriteID"].ToString();
+                            string name = reader["Name"].ToString();
+                            string statisticsTypeID = reader["FK_StatisticsTypeID"].ToString();
+                            string statisticsCalculationID = reader["FK_StatisticsCalculationID"].ToString();
+
+                            Int32.TryParse(statisticsFavoriteID, out int convertedStatisticsFavoriteID);
+                            Int32.TryParse(statisticsTypeID, out int convertedStatisticsTypeID);
+                            Int32.TryParse(statisticsCalculationID, out int convertedStatisticsCalculationID);
+
+                            result.Add(new CustomStatistics()
+                            {
+                                ID = convertedStatisticsFavoriteID,
+                                Name = name,
+                                ChoosenStatisticsTypeID = convertedStatisticsTypeID,
+                                ChoosenStatisticsCalculationID = convertedStatisticsCalculationID
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
             return result;
         }
         #endregion
