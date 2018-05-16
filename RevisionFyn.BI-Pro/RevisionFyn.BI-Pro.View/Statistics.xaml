@@ -37,7 +37,7 @@
         </Grid>
         <Grid x:Name="Step3Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697" Visibility="Hidden">
             <Label Content="Gem valgte statistik som favorit" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>
-            <Grid HorizontalAlignment="Left" Height="60" Margin="31,101,0,0" VerticalAlignment="Top" Width="226">
+            <Grid HorizontalAlignment="Left" Height="60" Margin="31,101,0,0" VerticalAlignment="Top" Width="288">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="28" />
@@ -47,8 +47,8 @@
                     <ColumnDefinition Width="103.354" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Navn:"/>
-                <TextBox x:Name="FavoriteNameTextBox" Grid.Column="1" Grid.Row="0" Margin="3,3,-71,3" />
-                <Button x:Name="AddStatisticsButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" MinWidth="80" Margin="0,6,-71,0" Content="Tilføj til favoriter" Width="172" Click="AddStatisticsButton_Click"/>
+                <TextBox x:Name="FavoriteNameTextBox" Grid.Column="1" Grid.Row="0" Margin="3,3,-133,3" />
+                <Button x:Name="AddStatisticsButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" MinWidth="80" Margin="0,6,-100,0" Content="Tilføj til favoriter" Width="172" Click="AddStatisticsButton_Click"/>
             </Grid>
         </Grid>
     </Grid>

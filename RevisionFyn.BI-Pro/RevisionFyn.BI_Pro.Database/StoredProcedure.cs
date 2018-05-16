@@ -322,6 +322,35 @@ namespace RevisionFyn.BI_Pro.Database
 
             return result;
         }
+
+        public string AddStatisticsFavoriteClientMap(int clientID)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand addStatisticsFavoriteClientMapCmd = new SqlCommand("sp_AddStatisticsFavoriteClientMap", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    addStatisticsFavoriteClientMapCmd.Parameters.Add(new SqlParameter("@ClientID", clientID));
+                    addStatisticsFavoriteClientMapCmd.ExecuteNonQuery();
+
+                    result = "Succes: Mappningen er nu tilføjet";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+
+            return result;
+        }
         #endregion
 
         public List<Company> GetCompanies()

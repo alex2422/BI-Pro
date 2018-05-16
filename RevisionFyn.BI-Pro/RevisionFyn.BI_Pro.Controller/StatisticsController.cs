@@ -27,6 +27,7 @@ namespace RevisionFyn.BI_Pro.Controller
         private bool _IsStep3Done { get; set; }
         private CustomStatistics _CustomStatistics { get; set; }
         private List<StatisticsCalculation> _ListOfActiveCalculations { get; set; }
+        private List<Company> _ListOfCompanies { get; set; }
         #endregion
 
         #region Constructor
@@ -84,20 +85,22 @@ namespace RevisionFyn.BI_Pro.Controller
             }
 
             _ListOfActiveCalculations = _StoredProcedure.GetActiveStatisticsCalculation();
-            List<Company> listOfCompanies = _StoredProcedure.GetCompanies();
+            _ListOfCompanies = _StoredProcedure.GetCompanies();
 
             AddStatisticsCalculationToComboBox(StatisticsCalculationComboBox, _ListOfActiveCalculations);
-            AddCompanyToListBox(DefaultCompaniesListBox, listOfCompanies);
+            AddCompanyToListBox(DefaultCompaniesListBox, _ListOfCompanies);
 
             _IsStep2Done = true;
         }
 
-        public void LoadStep3(ComboBox StatisticsCalculationComboBox)
+        public void LoadStep3(ComboBox StatisticsCalculationComboBox, ListBox SelectedCompanesListBox)
         {
             if (StatisticsCalculationComboBox.SelectedIndex != -1)
             {
                 _CustomStatistics.ChoosenStatisticsCalculationID = _ListOfActiveCalculations.Find(x => x.Name == StatisticsCalculationComboBox.SelectedValue.ToString()).ID;
             }
+
+            _CustomStatistics.ChoosenCompanies = GetSelectedCompanies(SelectedCompanesListBox);
 
             _IsStep3Done = true;
         }
@@ -185,11 +188,34 @@ namespace RevisionFyn.BI_Pro.Controller
             {
                 MessageBox.Show(_StoredProcedure.AddStatisticsFavorite(_CustomStatistics.Name, _CustomStatistics.ChoosenStatisticsTypeID,
                 _CustomStatistics.ChoosenStatisticsCalculationID));
-            }           
+            }
+
+            AddSelectedCompaniesToMap();
         }
         #endregion
 
         #region Private methods
+
+        private List<Company> GetSelectedCompanies(ListBox SelectedCompanesListBox)
+        {
+            List<Company> selectedCompanies = new List<Company>();
+
+            foreach (string item in SelectedCompanesListBox.Items)
+            {
+                selectedCompanies.Add(_ListOfCompanies.Find(x => x.CompanyName == item));
+            }
+
+            return selectedCompanies;
+        }
+
+        private void AddSelectedCompaniesToMap()
+        {
+            foreach (Company c in _CustomStatistics.ChoosenCompanies)
+            {
+                _StoredProcedure.AddStatisticsFavoriteClientMap(c.CompanyID);
+            }
+        }
+
         private void LoadButtonsIntoStackPanel(StackPanel StatisticsTypeStackPanel, List<StatisticsType> activeStatisticsType)
         {
             foreach (StatisticsType st in activeStatisticsType)
