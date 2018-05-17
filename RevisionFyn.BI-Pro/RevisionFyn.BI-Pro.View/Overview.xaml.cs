@@ -30,6 +30,8 @@ namespace RevisionFyn.BI_Pro.View
             //controller.ComboBoxYear();
             controller.LoadIntoComoBox(ComboBoxStartYear);
             controller.LoadIntoComoBox(ComboBoxEndYear);
+            controller.LoadIntoListBox(ListBoxCompaniesToBeChosen);
+            
         }
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -44,12 +46,6 @@ namespace RevisionFyn.BI_Pro.View
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
-        }
-
-        private void ButtonTest_Click(object sender, RoutedEventArgs e)
-        {
-            controller.ButtonTest(ListBoxCompaniesToBeChosen);
-
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -71,9 +67,9 @@ namespace RevisionFyn.BI_Pro.View
 
 
 
-        private void ListOfCompaniesToBeChosen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListOfCompaniesToBeChosen(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void ComboEndYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
