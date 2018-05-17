@@ -46,12 +46,6 @@ namespace RevisionFyn.BI_Pro.View
             Environment.Exit(0);
         }
 
-        private void ButtonTest_Click(object sender, RoutedEventArgs e)
-        {
-            controller.ButtonTest(ListBoxCompaniesToBeChosen);
-
-        }
-
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             controller.ButtonAdd();
@@ -71,9 +65,9 @@ namespace RevisionFyn.BI_Pro.View
 
 
 
-        private void ListOfCompaniesToBeChosen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListOfCompaniesToBeChosen_SelectionChanged(object sender, RoutedEventArgs e)
         {
-
+            controller.LoadIntoListBox(ListBoxCompaniesToBeChosen);
         }
 
         private void ComboEndYear_SelectionChanged(object sender, SelectionChangedEventArgs e)

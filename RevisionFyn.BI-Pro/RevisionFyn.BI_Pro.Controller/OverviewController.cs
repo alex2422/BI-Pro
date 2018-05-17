@@ -58,7 +58,7 @@ namespace RevisionFyn.BI_Pro.Controller
             return controllerInstance;
         }
 
-        public void ButtonTest(ListBox companies)
+        public void LoadIntoListBox(ListBox companies)
         {
             companies.ItemsSource = _StoreProcedure.GetCompanies();
         }
