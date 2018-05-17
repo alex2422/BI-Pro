@@ -44,6 +44,12 @@ namespace RevisionFyn.BI_Pro.Controller
         #endregion
 
         #region Public methods
+        public List<Employee> getMainEmployee()
+        {
+            List<Employee> allEmployees = new List<Employee>();
+            allEmployees = _StoreProcedure.getEmployee();
+            return allEmployees;
+        }
         public static OverviewController GetInstance(ListBox leftBox, ListBox rightBox, ComboBox startYear)
         {
             if (controllerInstance == null)
@@ -90,7 +96,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             ExcelExport export = new ExcelExport();
             string path = export.GetExportPath(RightBox);
-            export.Export(RightBox, StartYear, path);
+            export.Export(RightBox, StartYear, path, _StoreProcedure.getEmployee());
         }
         #endregion
 
