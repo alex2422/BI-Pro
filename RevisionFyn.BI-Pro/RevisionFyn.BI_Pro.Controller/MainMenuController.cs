@@ -61,40 +61,6 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void CreateKpiElements(Grid KpiGrid)
         {
-            #region Test data - get from database
-#if DEBUG
-            KPI KPI_1 = new KPI
-            {
-                Title = "Total dækning (+/-)",
-                Value = 304612,
-                Unit = "DKK",
-                Color = "Dodgerblue"
-            };
-            KPI KPI_2 = new KPI
-            {
-                Title = "Kunder med underdækning",
-                Value = 42,
-                Unit = "Antal",
-                Color = "Red"
-            };
-            KPI KPI_3 = new KPI
-            {
-                Title = "Gns. dækning (+/-) pr. kunde",
-                Value = 5840,
-                Unit = "DKK",
-                Color = "Black"
-            };
-
-            List<KPI> listOfKPI = new List<KPI>
-            {
-                KPI_1,
-                KPI_2,
-                KPI_3
-            };
-#endif
-            #endregion
-
-
             List<KPI> activeKPI = _StoredProcedure.GetActiveKPI();
 
             int numberOfActiveKPI = activeKPI.Count;
@@ -108,11 +74,9 @@ namespace RevisionFyn.BI_Pro.Controller
                 {
                     CustomStatistics customStatisticsRelatedToKPI = _StoredProcedure.GetStatisticsFavoriteByID(activeKPI[i].DataID);
 
-                    // TO DO: set double value based on selected companies
                     List<double> kpiRawValue = GetValueBasedOnCalculationSelection(customStatisticsRelatedToKPI);
 
-                    // TO DO: set KPI value based on double value and statistics type
-                    //activeKPI[i].Value = GetValueBasedOnTypeSelection(kpiRawValue, customStatisticsRelatedToKPI.ChoosenStatisticsTypeID);
+                    activeKPI[i].Value = GetValueBasedOnTypeSelection(kpiRawValue, customStatisticsRelatedToKPI.ChoosenStatisticsTypeID);
 
                     Grid KpiContentGrid = new Grid
                     {
@@ -177,9 +141,23 @@ namespace RevisionFyn.BI_Pro.Controller
             KpiGrid.Children.RemoveAt(0);
         }
 
-        private double GetValueBasedOnTypeSelection(double kpiRawValue, int statisticsTypeID)
+        private double GetValueBasedOnTypeSelection(List<double> kpiRawValue, int statisticsTypeID)
         {
-            throw new NotImplementedException();
+            switch (statisticsTypeID)
+            {
+                case 1:
+                    return CustomStatistics.Average(kpiRawValue);
+                case 2:
+                    return CustomStatistics.Highest(kpiRawValue);
+                case 3:
+                    return CustomStatistics.Lowest(kpiRawValue);
+                case 4:
+                    return CustomStatistics.Count(kpiRawValue);
+                case 5:
+                    return CustomStatistics.Sum(kpiRawValue);
+                default:
+                    return 0;
+            }
         }
 
         private List<double> GetValueBasedOnCalculationSelection(CustomStatistics customStatisticsRelatedToKPI)
@@ -206,6 +184,10 @@ namespace RevisionFyn.BI_Pro.Controller
                     case 3:
                         break;
                     case 4:
+                        foreach (double balanceValue in _StoredProcedure.GetNegativeBalanceByClientID(company.CompanyID))
+                        {
+                            valuesFromChoosenCompanies.Add(balanceValue);
+                        }
                         break;
                     default:
                         break;

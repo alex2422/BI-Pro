@@ -23,6 +23,7 @@ namespace RevisionFyn.BI_Pro.Model
         public int CompanyStartYear { get; set; }
         public List<int> Years = new List<int>();
         public List<Company> companies = new List<Company>();
+        public List<Employee> employees = new List<Employee>();
         Encoding encoding;
 
         #endregion
@@ -50,9 +51,10 @@ namespace RevisionFyn.BI_Pro.Model
             }
             else return "fejl";
         }
-        public void Export(ListBox listBox, ComboBox startYear, string path)
+        public void Export(ListBox listBox, ComboBox startYear, string path, List<Employee> employees)
         {
             List<AccountCard> accCards = new List<AccountCard>();
+            List<Employee> employeesList = employees;
             encoding = Encoding.GetEncoding("iso-8859-1");
             Header.Add("Medarbejder");
             Header.Add("Firma");
@@ -105,14 +107,22 @@ namespace RevisionFyn.BI_Pro.Model
                                 }
                             }
                         }
+                        string employeeName = "kunne ikke finde navn";
+                        foreach (Employee employee in employeesList)
+                        {
+                            if (employee.EmployeeID == company.MainEmployee.EmployeeID)
+                            {
+                                employeeName = employee.FirstName;
+                            }
+                        }
                         balanceString += " "+";" + totalBalance;
-                        streamWriter.WriteLine(company.MainEmployee.EmployeeID+";"+company.CompanyName+balanceString);
+                        streamWriter.WriteLine(employeeName+";"+company.CompanyName+balanceString);
                     }
                 }
+                MessageBox.Show("filen blev eksporteret", "Succes");
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

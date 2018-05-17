@@ -14,7 +14,6 @@ namespace RevisionFyn.BI_Pro.Database
     public class StoredProcedure
     {
         private static string connectionString = "Server = EALSQL1.eal.local; Database = DB2017_C07; User Id = USER_C07; Password = SesamLukOp_07";
-        private string statisticsFavoriteID;
 
         #region Stored procedures - KPI
 
@@ -634,11 +633,11 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string clientID = reader["Balance"].ToString();
+                            string balanceValue = reader["Balance"].ToString();
 
-                            Int32.TryParse(clientID, out int convertedClientID);
+                            Double.TryParse(balanceValue, out double convertedBalanceValue);
 
-                            result.Add(convertedClientID);
+                            result.Add(convertedBalanceValue);
                         }
                     }
                 }

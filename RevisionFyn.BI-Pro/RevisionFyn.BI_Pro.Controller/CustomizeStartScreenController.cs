@@ -119,6 +119,8 @@ namespace RevisionFyn.BI_Pro.Controller
                 int colorIndex = ColorComboBox.SelectedIndex;
                 int selectedDataID = _CustomStatistics.Find(x => x.Name == ((CustomStatistics)DataComboBox.SelectedItem).Name).ID;
 
+                // TO DO: Update StatisticsFavoriteClientMap, if data is changed
+
                 if (isActive == "True")
                 {
                     if (!MaximumNumberOfActiveKpiReached())

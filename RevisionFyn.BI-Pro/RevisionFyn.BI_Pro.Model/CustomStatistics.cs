@@ -14,30 +14,27 @@ namespace RevisionFyn.BI_Pro.Model
         public int ChoosenStatisticsCalculationID { get; set; }
         public List<Company> ChoosenCompanies { get; set; }
 
-        public double Average(List<double> listOfInputData)
-        { 
-            // if sql cannot extract value then send AccoundCard and
-            // .Average(x => x.Balance)
-
+        public static double Average(List<double> listOfInputData)
+        {
             return listOfInputData.Average();
         }
 
-        public double Highest(List<double> listOfInputData)
+        public static double Highest(List<double> listOfInputData)
         {
             return listOfInputData.Max();
         }
 
-        public double Lowest(List<double> listOfInputData)
+        public static double Lowest(List<double> listOfInputData)
         {
             return listOfInputData.Min();
         }
 
-        public double Count(List<double> listOfInputData)
+        public static double Count(List<double> listOfInputData)
         {
             return listOfInputData.Count();
         }
 
-        public double Sum(List<double> listOfInputData)
+        public static double Sum(List<double> listOfInputData)
         {
             return listOfInputData.Sum();
         }
