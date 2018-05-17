@@ -28,9 +28,11 @@ namespace RevisionFyn.BI_Pro.View
 
             controller = OverviewController.GetInstance(ListBoxCompaniesToBeChosen, ListBoxChosenCampanies, ComboBoxStartYear);
             //controller.ComboBoxYear();
+            controller.ClearData();
+            controller.PopulateData();
+            controller.LoadIntoListBox(ListBoxCompaniesToBeChosen);
             controller.LoadIntoComoBox(ComboBoxStartYear);
             controller.LoadIntoComoBox(ComboBoxEndYear);
-            controller.LoadIntoListBox(ListBoxCompaniesToBeChosen);
             
         }
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)

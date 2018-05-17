@@ -21,21 +21,19 @@ namespace RevisionFyn.BI_Pro.Controller
         public ListBox RightBox { get; set; }
         public ComboBox StartYear { get; set; }
         ObservableCollection<Company> companyData;
-        ObservableCollection<Company> companyData2 = new ObservableCollection<Company>();
+        ObservableCollection<Company> companyData2;
         #endregion
 
         #region Constructor
         private OverviewController(ListBox leftBox, ListBox rightBox, ComboBox startYear)
         {
-
-
             StartYear = startYear;
             LeftBox = leftBox;
             RightBox = rightBox;
+            companyData2 = new ObservableCollection<Company>();
 
 
             _StoreProcedure = new StoredProcedure();
-            companyData = new ObservableCollection<Company>(_StoreProcedure.GetCompanies());
             rightBox.ItemsSource = companyData2;
             leftBox.ItemsSource = companyData;
             rightBox.DisplayMemberPath = "CompanyName";
@@ -55,10 +53,25 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void LoadIntoListBox(ListBox companies)
         {
-            companies.ItemsSource = _StoreProcedure.GetCompanies();
+            companies.ItemsSource = companyData;
             companies.DisplayMemberPath = "CompanyName";
         }
 
+        public void ClearData()
+        {
+            if (companyData != null)
+            {
+                companyData.Clear();
+            }
+            if (companyData2 != null)
+            {
+                companyData2.Clear();
+            }
+        }
+        public void PopulateData()
+        {
+            companyData = new ObservableCollection<Company>(_StoreProcedure.GetCompanies());
+        }
         public void ButtonAdd()
         {
             companyData2.Add((Company)LeftBox.SelectedItem);
