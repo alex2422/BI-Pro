@@ -14,7 +14,7 @@ namespace RevisionFyn.BI_Pro.Database
 {
     public class StoredProcedure
     {
-        private static string ConnectionString { get; set; }
+        private string ConnectionString { get; set; }
 
         public StoredProcedure()
         {
