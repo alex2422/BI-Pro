@@ -79,7 +79,6 @@
     <Compile Include="CustomizeMainMenu.xaml.cs">
       <DependentUpon>CustomizeMainMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExportView.cs" />
     <Compile Include="Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>

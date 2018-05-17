@@ -14,6 +14,7 @@ namespace RevisionFyn.BI_Pro.Database
     public class StoredProcedure
     {
         private static string connectionString = "Server = EALSQL1.eal.local; Database = DB2017_C07; User Id = USER_C07; Password = SesamLukOp_07";
+        private string statisticsFavoriteID;
 
         #region Stored procedures - KPI
 
@@ -517,6 +518,137 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
+
+        public List<int> GetClientMapByStatisticsFavoriteID (int requestedStatisticsFavoriteID)
+        {
+            List<int> result = new List<int>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetClientMapByStatisticsFavoriteID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", requestedStatisticsFavoriteID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string clientID = reader["FK_ClientID"].ToString();
+
+                            Int32.TryParse(clientID, out int convertedClientID);
+
+                            result.Add(convertedClientID);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+
+        public Company GetCompaniesByID(int requestedClientID)
+        {
+            Company company = new Company();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getClient = new SqlCommand("sp_GetClientByID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getClient.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getClient.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string clientID = reader["ClientID"].ToString();
+                            string clientName = reader["ClientName"].ToString();
+                            string mainEmployee = reader["FK_MainEmployeeID"].ToString();
+                            string startYear = reader["StartYear"].ToString();
+
+                            Int32.TryParse(clientID, out int convertedClientID);
+
+
+                            company = new Company()
+                            {
+                                CompanyID = convertedClientID,
+                                CompanyName = clientName,
+                                CompanyStartYear = Convert.ToInt32(startYear),
+                                accountCards = Getbalance(convertedClientID),
+                                MainEmployee = new Employee
+                                {
+                                    EmployeeID = Convert.ToInt32(mainEmployee),
+                                }
+                            };
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return company;
+            }
+        }
+
+        public List<double> GetNegativeBalanceByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetNegativeBalanceByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string clientID = reader["Balance"].ToString();
+
+                            Int32.TryParse(clientID, out int convertedClientID);
+
+                            result.Add(convertedClientID);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
         #endregion
 
         public List<Company> GetCompanies()
@@ -567,8 +699,8 @@ namespace RevisionFyn.BI_Pro.Database
                 }
                 return companies;
             }
-
         }
+
         public List<Employee> getEmployee()
         {
             List<Employee> employee = new List<Employee>();

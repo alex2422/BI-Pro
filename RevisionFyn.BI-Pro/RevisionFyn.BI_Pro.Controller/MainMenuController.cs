@@ -109,10 +109,10 @@ namespace RevisionFyn.BI_Pro.Controller
                     CustomStatistics customStatisticsRelatedToKPI = _StoredProcedure.GetStatisticsFavoriteByID(activeKPI[i].DataID);
 
                     // TO DO: set double value based on selected companies
-                    double kpiRawValue = GetValueBasedOnCalculationSelection(customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID);
+                    List<double> kpiRawValue = GetValueBasedOnCalculationSelection(customStatisticsRelatedToKPI);
 
                     // TO DO: set KPI value based on double value and statistics type
-                    activeKPI[i].Value = GetValueBasedOnTypeSelection(kpiRawValue, customStatisticsRelatedToKPI.ChoosenStatisticsTypeID);
+                    //activeKPI[i].Value = GetValueBasedOnTypeSelection(kpiRawValue, customStatisticsRelatedToKPI.ChoosenStatisticsTypeID);
 
                     Grid KpiContentGrid = new Grid
                     {
@@ -182,9 +182,37 @@ namespace RevisionFyn.BI_Pro.Controller
             throw new NotImplementedException();
         }
 
-        private double GetValueBasedOnCalculationSelection(int statisticsCalculationID)
+        private List<double> GetValueBasedOnCalculationSelection(CustomStatistics customStatisticsRelatedToKPI)
         {
-            throw new NotImplementedException();
+            List<double> valuesFromChoosenCompanies = new List<double>();
+            List<int> mappedClientID = _StoredProcedure.GetClientMapByStatisticsFavoriteID(customStatisticsRelatedToKPI.ID);
+            List<Company> tempCompanies = new List<Company>();
+
+            foreach (int clientID in mappedClientID)
+            {
+                tempCompanies.Add(_StoredProcedure.GetCompaniesByID(clientID));
+            }
+
+            customStatisticsRelatedToKPI.ChoosenCompanies = tempCompanies;
+
+            foreach (Company company in customStatisticsRelatedToKPI.ChoosenCompanies)
+            {
+                switch (customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return valuesFromChoosenCompanies;
         }
         #endregion
     }
