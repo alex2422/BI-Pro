@@ -14,7 +14,6 @@ namespace RevisionFyn.BI_Pro.Database
     public class StoredProcedure
     {
         private static string connectionString = "Server = EALSQL1.eal.local; Database = DB2017_C07; User Id = USER_C07; Password = SesamLukOp_07";
-        private string statisticsFavoriteID;
 
         #region Stored procedures - KPI
 
