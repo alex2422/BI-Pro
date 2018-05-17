@@ -634,11 +634,11 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string clientID = reader["Balance"].ToString();
+                            string balanceValue = reader["Balance"].ToString();
 
-                            Int32.TryParse(clientID, out int convertedClientID);
+                            Double.TryParse(balanceValue, out double convertedBalanceValue);
 
-                            result.Add(convertedClientID);
+                            result.Add(convertedBalanceValue);
                         }
                     }
                 }
