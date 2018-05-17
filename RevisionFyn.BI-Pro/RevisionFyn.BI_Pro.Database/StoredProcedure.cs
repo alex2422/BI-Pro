@@ -212,6 +212,69 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
+
+        public List<KPI> GetActiveKPI()
+        {
+            List<KPI> result = new List<KPI>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getKpiCmd = new SqlCommand("sp_GetActiveSystemKPI", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = getKpiCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string kpiID = reader["KpiID"].ToString();
+                            string kpiTitle = reader["Title"].ToString();
+                            string dataID = reader["FK_StatisticsFavoriteID"].ToString();
+                            string kpiUnit = reader["Unit"].ToString();
+                            string kpiColor = reader["Color"].ToString();
+                            string colorIndex = reader["ColorIndex"].ToString();
+                            string isActive = reader["IsActive"].ToString();
+
+                            Int32.TryParse(kpiID, out int convertedKpiID);
+                            Int32.TryParse(colorIndex, out int convertedColorIndex);
+                            Int32.TryParse(dataID, out int convertedDataID);
+
+                            if (isActive == "True")
+                            {
+                                isActive = "Ja";
+                            }
+                            else
+                            {
+                                isActive = "Nej";
+                            }
+
+                            result.Add(new KPI()
+                            {
+                                ID = convertedKpiID,
+                                Title = kpiTitle,
+                                DataID = convertedDataID,
+                                Unit = kpiUnit,
+                                Color = kpiColor,
+                                ColorIndex = convertedColorIndex,
+                                IsActive = isActive
+                            });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
         #endregion
 
         #region Stored procedures - Statistics
@@ -394,6 +457,56 @@ namespace RevisionFyn.BI_Pro.Database
                                 ChoosenStatisticsTypeID = convertedStatisticsTypeID,
                                 ChoosenStatisticsCalculationID = convertedStatisticsCalculationID
                             });
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+
+        public CustomStatistics GetStatisticsFavoriteByID(int requestedStatisticsFavoriteID)
+        {
+            CustomStatistics result = new CustomStatistics();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetStatisticsFavoriteByID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", requestedStatisticsFavoriteID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string statisticsFavoriteID = reader["StatisticsFavoriteID"].ToString();
+                            string name = reader["Name"].ToString();
+                            string statisticsTypeID = reader["FK_StatisticsTypeID"].ToString();
+                            string statisticsCalculationID = reader["FK_StatisticsCalculationID"].ToString();
+
+                            Int32.TryParse(statisticsFavoriteID, out int convertedStatisticsFavoriteID);
+                            Int32.TryParse(statisticsTypeID, out int convertedStatisticsTypeID);
+                            Int32.TryParse(statisticsCalculationID, out int convertedStatisticsCalculationID);
+
+                            result = new CustomStatistics()
+                            {
+                                ID = convertedStatisticsFavoriteID,
+                                Name = name,
+                                ChoosenStatisticsTypeID = convertedStatisticsTypeID,
+                                ChoosenStatisticsCalculationID = convertedStatisticsCalculationID
+                            };
                         }
                     }
                 }
