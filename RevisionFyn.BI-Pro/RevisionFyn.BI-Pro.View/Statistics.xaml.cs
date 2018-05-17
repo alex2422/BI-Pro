@@ -74,8 +74,13 @@ namespace RevisionFyn.BI_Pro.View
 
         private void Step3CircleImage_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            controller.LoadStep3();
+            controller.LoadStep3(StatisticsCalculationComboBox, SelectedCompanesListBox);
             controller.ShowSelectedStep(Step3Grid);
+        }
+
+        private void AddStatisticsButton_Click(object sender, RoutedEventArgs e)
+        {
+            controller.SaveCustomStatistics(FavoriteNameTextBox);
         }
     }
 }

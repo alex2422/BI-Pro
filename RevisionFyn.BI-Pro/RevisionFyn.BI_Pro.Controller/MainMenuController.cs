@@ -14,7 +14,7 @@ namespace RevisionFyn.BI_Pro.Controller
 {
     public class MainMenuController
     {
-        #region Variables
+        #region Variables / Properties
         private static MainMenuController controllerInstance;
         private StoredProcedure _StoredProcedure { get; set; }
         public List<Company> companies = new List<Company>();
@@ -22,11 +22,24 @@ namespace RevisionFyn.BI_Pro.Controller
         List<Company> listOfCompanies = new List<Company>();
         #endregion
 
+        #region Constructor
         private MainMenuController()
         {
             _StoredProcedure = new StoredProcedure();
         }
+        #endregion
+
         #region Public Methods
+        public static MainMenuController GetInstance()
+        {
+            if (controllerInstance == null)
+            {
+                controllerInstance = new MainMenuController();
+            }
+
+            return controllerInstance;
+        }
+
         public void CreateGraph(Grid graphGrid)
         {
             CustomizeStartScreenController cssc = CustomizeStartScreenController.GetInstance();
@@ -44,16 +57,6 @@ namespace RevisionFyn.BI_Pro.Controller
                 lg.StrokeThickness = 2;
                 lg.Plot(company.x, company.y);
             }
-        }
-
-        public static MainMenuController GetInstance()
-        {
-            if (controllerInstance == null)
-            {
-                controllerInstance = new MainMenuController();
-            }
-
-            return controllerInstance;
         }
 
         public void CreateKpiElements(Grid KpiGrid)
