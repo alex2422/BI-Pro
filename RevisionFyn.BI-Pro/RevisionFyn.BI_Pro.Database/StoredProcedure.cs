@@ -4,6 +4,7 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,12 @@ namespace RevisionFyn.BI_Pro.Database
 {
     public class StoredProcedure
     {
-        private static string connectionString = "Server = EALSQL1.eal.local; Database = DB2017_C07; User Id = USER_C07; Password = SesamLukOp_07";
+        private static string ConnectionString { get; set; }
+
+        public StoredProcedure()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["ealSqlServer"].ConnectionString;
+        }
 
         #region Stored procedures - KPI
 
@@ -21,7 +27,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -54,7 +60,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -89,7 +95,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -116,7 +122,7 @@ namespace RevisionFyn.BI_Pro.Database
 
         public int CountActiveKPI()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -154,7 +160,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<KPI> result = new List<KPI>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -217,7 +223,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<KPI> result = new List<KPI>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -282,7 +288,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<StatisticsType> result = new List<StatisticsType>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -323,7 +329,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<StatisticsCalculation> result = new List<StatisticsCalculation>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -364,7 +370,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -395,7 +401,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -424,7 +430,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<CustomStatistics> result = new List<CustomStatistics>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -472,7 +478,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             CustomStatistics result = new CustomStatistics();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -522,7 +528,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<int> result = new List<int>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -561,7 +567,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             Company company = new Company();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -614,7 +620,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<double> result = new List<double>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -654,7 +660,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<Company> companies = new List<Company>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -704,7 +710,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<Employee> employee = new List<Employee>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -743,7 +749,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<AccountCard> listBalance = new List<AccountCard>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -787,7 +793,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<AccountCard> listBalance = new List<AccountCard>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -831,7 +837,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -861,7 +867,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -891,7 +897,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -928,7 +934,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<AccountCard> listYear = new List<AccountCard>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
