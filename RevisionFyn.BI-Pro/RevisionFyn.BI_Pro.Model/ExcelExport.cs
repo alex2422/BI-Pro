@@ -109,6 +109,7 @@ namespace RevisionFyn.BI_Pro.Model
                         streamWriter.WriteLine(company.MainEmployee.EmployeeID+";"+company.CompanyName+balanceString);
                     }
                 }
+                MessageBox.Show("filen blev eksporteret", "Succes");
             }
             catch (Exception)
             {
