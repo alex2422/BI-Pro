@@ -56,6 +56,7 @@ namespace RevisionFyn.BI_Pro.Controller
         public void LoadIntoListBox(ListBox companies)
         {
             companies.ItemsSource = _StoreProcedure.GetCompanies();
+            companies.DisplayMemberPath = "CompanyName";
         }
 
         public void ButtonAdd()
