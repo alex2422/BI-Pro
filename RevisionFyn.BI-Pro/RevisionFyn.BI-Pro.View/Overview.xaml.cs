@@ -26,7 +26,7 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
 
-            controller = OverviewController.GetInstance(ListBoxCompaniesToBeChosen, ListBoxChosenCampanies);
+            controller = OverviewController.GetInstance(ListBoxCompaniesToBeChosen, ListBoxChosenCampanies, ComboBoxStartYear);
             //controller.ComboBoxYear();
             controller.LoadIntoComoBox(ComboBoxStartYear);
             controller.LoadIntoComoBox(ComboBoxEndYear);
@@ -75,11 +75,9 @@ namespace RevisionFyn.BI_Pro.View
 
         }
 
-        //private void ButtonExport_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ExportView expView = new ExportView();
-        //    string path = expView.GetExportPath(ListBoxChosenCampanies);
-        //    controller.CreateFile(path);
-        //}
+        private void ButtonExport_Click(object sender, RoutedEventArgs e)
+        {
+            controller.ExportData();
+        }
     }
 }

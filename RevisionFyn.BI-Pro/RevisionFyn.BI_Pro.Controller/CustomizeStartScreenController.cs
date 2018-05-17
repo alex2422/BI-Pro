@@ -14,47 +14,59 @@ namespace RevisionFyn.BI_Pro.Controller
     {
         #region Variables
         public List<Company> companies = new List<Company>();
-        private static CustomizeStartScreenController controllerInstance;
-        public KPI KpiInstance { get; set; }
+        private static CustomizeStartScreenController _ControllerInstance { get; set; }
+        private StoredProcedure _StoredProcedure { get; set; }
+        private KPI _KpiInstance { get; set; }
+        private List<CustomStatistics> _CustomStatistics { get; set; }
         #endregion
 
         #region Constructor
         private CustomizeStartScreenController()
-        { }
+        {
+            _StoredProcedure = new StoredProcedure();
+        }
         #endregion
 
         #region Public Methods
         public static CustomizeStartScreenController GetInstance()
         {
-            if (controllerInstance == null)
+            if (_ControllerInstance == null)
             {
-                controllerInstance = new CustomizeStartScreenController();
+                _ControllerInstance = new CustomizeStartScreenController();
             }
 
-            return controllerInstance;
+            return _ControllerInstance;
         }
 
         #region KPI
         public void SetKpiListViewSource(ListView KpiListView)
         {
-            StoredProcedure sp = new StoredProcedure();
+            KpiListView.ItemsSource = _StoredProcedure.GetKPI();
+        }
 
-            KpiListView.ItemsSource = sp.GetKPI();
+        public void LoadValuesIntoKpiDataComboBox(ComboBox DataComboBox)
+        {
+            _CustomStatistics = _StoredProcedure.GetActiveStatisticsFavorite();
+
+            DataComboBox.ItemsSource = _CustomStatistics;
+            DataComboBox.DisplayMemberPath = "Name";
         }
 
         public void CastSelectedListViewItem(object selectedItem)
         {
-            KpiInstance = (KPI)selectedItem;
+            _KpiInstance = (KPI)selectedItem;
         }
 
-        public void LoadListViewValuesToChangeable(TextBox TitleTextBox, TextBox UnitTextBox, ComboBox ColorComboBox, CheckBox IsActiveCheckBox)
+        public void LoadListViewValuesToChangeable(TextBox TitleTextBox, TextBox UnitTextBox, ComboBox ColorComboBox, ComboBox DataComboBox, CheckBox IsActiveCheckBox)
         {
-            TitleTextBox.Text = KpiInstance.Title;
-            UnitTextBox.Text = KpiInstance.Unit;
+            TitleTextBox.Text = _KpiInstance.Title;
+            UnitTextBox.Text = _KpiInstance.Unit;
 
-            ColorComboBox.SelectedIndex = KpiInstance.ColorIndex;
+            ColorComboBox.SelectedIndex = _KpiInstance.ColorIndex;
+
+            DataComboBox.SelectedItem = _CustomStatistics.Find(x => x.ID == _KpiInstance.DataID);
             
-            if (KpiInstance.IsActive == "Ja")
+            if (_KpiInstance.IsActive == "Ja")
             {
                 IsActiveCheckBox.IsChecked = true;
             }
@@ -79,24 +91,25 @@ namespace RevisionFyn.BI_Pro.Controller
             DeleteKpiButton.Visibility = Visibility.Visible;
         }
 
-        public void AddKpiToDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox)
+        public void AddKpiToDB(string kpiTitle, string kpiUnit, ComboBox DataComboBox, ComboBox ColorComboBox)
         {
-            if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
+            if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && DataComboBox.SelectedItem != null && ColorComboBox.SelectedItem != null)
             {
                 StoredProcedure sp = new StoredProcedure();
 
                 string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
                 int colorIndex = ColorComboBox.SelectedIndex;
+                int selectedDataID = _CustomStatistics.Find(x => x.Name == ((CustomStatistics)DataComboBox.SelectedItem).Name).ID;
 
-                MessageBox.Show(sp.AddKPI(kpiTitle, kpiUnit, kpiColor, colorIndex), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(sp.AddKPI(kpiTitle, kpiUnit, kpiColor, colorIndex, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Angiv venligst titel, enhed og farve", "Mangler information", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Angiv venligst titel, enhed, data og farve", "Mangler information", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        public void UpdateKpiInDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive)
+        public void UpdateKpiInDB(string kpiTitle, string kpiUnit, ComboBox ColorComboBox, string isActive, ComboBox DataComboBox)
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
             {
@@ -104,12 +117,13 @@ namespace RevisionFyn.BI_Pro.Controller
 
                 string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
                 int colorIndex = ColorComboBox.SelectedIndex;
+                int selectedDataID = _CustomStatistics.Find(x => x.Name == ((CustomStatistics)DataComboBox.SelectedItem).Name).ID;
 
                 if (isActive == "True")
                 {
                     if (!MaximumNumberOfActiveKpiReached())
                     {
-                        MessageBox.Show(sp.UpdateKPI(KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(sp.UpdateKPI(_KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
@@ -118,7 +132,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 }
                 else
                 {
-                    MessageBox.Show(sp.UpdateKPI(KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(sp.UpdateKPI(_KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             else
@@ -135,7 +149,7 @@ namespace RevisionFyn.BI_Pro.Controller
             {
                 StoredProcedure sp = new StoredProcedure();
 
-                MessageBox.Show(sp.DeleteKPI(KpiInstance.ID), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(sp.DeleteKPI(_KpiInstance.ID), "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         #endregion

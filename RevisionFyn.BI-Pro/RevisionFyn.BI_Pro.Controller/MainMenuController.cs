@@ -94,17 +94,26 @@ namespace RevisionFyn.BI_Pro.Controller
 #endif
             #endregion
 
-            // Get this from database later
-            int numberOfKPI = 3;
 
+            List<KPI> activeKPI = _StoredProcedure.GetActiveKPI();
+
+            int numberOfActiveKPI = activeKPI.Count;
             int kpiDisplacement = 10;
 
-            if (numberOfKPI != 0)
+            if (numberOfActiveKPI != 0)
             {
                 HideDefaultKpiGrid(KpiGrid);
 
-                for (int i = 0; i < numberOfKPI; i++)
+                for (int i = 0; i < numberOfActiveKPI; i++)
                 {
+                    CustomStatistics customStatisticsRelatedToKPI = _StoredProcedure.GetStatisticsFavoriteByID(activeKPI[i].DataID);
+
+                    // TO DO: set double value based on selected companies
+                    double kpiRawValue = GetValueBasedOnCalculationSelection(customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID);
+
+                    // TO DO: set KPI value based on double value and statistics type
+                    activeKPI[i].Value = GetValueBasedOnTypeSelection(kpiRawValue, customStatisticsRelatedToKPI.ChoosenStatisticsTypeID);
+
                     Grid KpiContentGrid = new Grid
                     {
                         Name = "KpiContentGrid" + (i + 1),
@@ -112,14 +121,14 @@ namespace RevisionFyn.BI_Pro.Controller
                         Width = 180,
                         HorizontalAlignment = HorizontalAlignment.Left,
                         Margin = new Thickness(kpiDisplacement, 0, 0, 0),
-                        Background = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfKPI[i].Color),
-                        ToolTip = listOfKPI[i].Title
+                        Background = (SolidColorBrush)new BrushConverter().ConvertFromString(activeKPI[i].Color),
+                        ToolTip = activeKPI[i].Title
                     };
 
                     TextBlock KpiTitle = new TextBlock
                     {
                         Name = "KpiTitleTextBlock",
-                        Text = listOfKPI[i].Title,
+                        Text = activeKPI[i].Title,
                         Foreground = Brushes.White,
                         Margin = new Thickness(10, 10, 0, 0),
                         FontSize = 17,
@@ -131,7 +140,7 @@ namespace RevisionFyn.BI_Pro.Controller
                     Label KpiValueLabel = new Label
                     {
                         Name = "KpiValueLabel",
-                        Content = listOfKPI[i].Value.ToString(),
+                        Content = activeKPI[i].Value.ToString(),
                         Foreground = Brushes.White,
                         FontSize = 45,
                         Margin = new Thickness(4, 47, 0, 0),
@@ -141,7 +150,7 @@ namespace RevisionFyn.BI_Pro.Controller
                     TextBlock KpiUnitTextBlock = new TextBlock
                     {
                         Name = "KpiUnitTextBlock",
-                        Text = listOfKPI[i].Unit,
+                        Text = activeKPI[i].Unit,
                         Foreground = Brushes.White,
                         Margin = new Thickness(10, 132, 0, 0),
                         FontSize = 15,
@@ -166,6 +175,16 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             KpiGrid.Background = Brushes.White;
             KpiGrid.Children.RemoveAt(0);
+        }
+
+        private double GetValueBasedOnTypeSelection(double kpiRawValue, int statisticsTypeID)
+        {
+            throw new NotImplementedException();
+        }
+
+        private double GetValueBasedOnCalculationSelection(int statisticsCalculationID)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

@@ -11,7 +11,7 @@ namespace RevisionFyn.BI_Pro.Model
         public int ID { get; set; }
         public string Title { get; set; }
         public double Value { get; set; }
-        public string Data { get; set; }
+        public int DataID { get; set; }
         public string Unit { get; set; }
         public string Color { get; set; }
         public int ColorIndex { get; set; }
