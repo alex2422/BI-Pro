@@ -28,7 +28,7 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
             controller.CreateKpiElements(KpiGrid);
-            controller.CreateGraph(lines);
+            controller.createGraph(lines, LabelClient1, LabelClient2, LabelClient3);
         }
 
         private void OverviewButton_Click(object sender, RoutedEventArgs e)

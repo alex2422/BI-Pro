@@ -793,9 +793,9 @@ namespace RevisionFyn.BI_Pro.Database
                 return listBalance;
             }
         }
-        public List<AccountCard> GetGraphData()
+        public List<GraphData> GetGraphData()
         {
-            List<AccountCard> listBalance = new List<AccountCard>();
+            List<GraphData> listGraphData = new List<GraphData>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -813,17 +813,18 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string clientName = reader["ClientName"].ToString();
-                            string balance = reader["Balance"].ToString();
-                            int year = (int)reader["Year"];
-
-                            Int32.TryParse(balance, out int convertedBalance);
-
-                            listBalance.Add(new AccountCard()
+                            string clientName = reader["Company"].ToString();
+                            int startYear = Convert.ToInt32(reader["StartYear"]);
+                            int lastyear = Convert.ToInt32(reader["LastYear"]);
+                            string color = reader["Color"].ToString();
+                            int colorIndex = (int)reader["ColorIndex"];
+                            listGraphData.Add(new GraphData()
                             {
-                                CompanyName = clientName,
-                                Balance = convertedBalance,
-                                Year = year,
+                                Company = clientName,
+                                StartYear = startYear,
+                                LastYear = lastyear,
+                                Color = color,
+                                ColorIndex = colorIndex
                             });
                         }
                     }
@@ -832,9 +833,32 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                listBalance.Sort((x, y) => x.Year.CompareTo(y.Year)); ;
-                return listBalance;
+                return listGraphData;
             }
+        }
+        public string ClearGraphData()
+        {
+            string result = "";
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand ClearGraph= new SqlCommand("sp_ClearGraphdata", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    ClearGraph.ExecuteNonQuery();
+
+                    result = "Succes: graphData er nu cleared";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+            return result;
         }
 
         public string AddClient(int clientID, string clientName, int startYear, int mainEmployeeID)
@@ -970,6 +994,37 @@ namespace RevisionFyn.BI_Pro.Database
                 }
                 return listYear;
             }
+        }
+        public string AddGraphData(Company client, int startYear, int lastYear, string color, int colorIndex)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand addGraphData = new SqlCommand("sp_AddToGraphData", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    addGraphData.Parameters.Add(new SqlParameter("@Company", client.CompanyName));
+                    addGraphData.Parameters.Add(new SqlParameter("@StartYear", startYear));
+                    addGraphData.Parameters.Add(new SqlParameter("@LastYear", lastYear));
+                    addGraphData.Parameters.Add(new SqlParameter("@Color", color));
+                    addGraphData.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
+                    addGraphData.ExecuteNonQuery();
+
+                    result = "Succes: Grafdataen er nu tilføjet";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+            return result;
         }
     }
 }

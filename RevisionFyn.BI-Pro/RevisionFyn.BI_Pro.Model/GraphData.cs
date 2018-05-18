@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace RevisionFyn.BI_Pro.Model
 {
-    class GraphData
+    public class GraphData
     {
-        public string Company1 { get; set; }
-        public string Company2 { get; set; }
-        public string Company3 { get; set; }
-        public int StartYear1 { get; set; }
-        public int StartYear2 { get; set; }
-        public int StartYear3 { get; set; }
+        public string Company { get; set; }
+        public int StartYear { get; set; }
+        public int LastYear { get; set; }
+        public string Color { get; set; }
+        public int ColorIndex { get; set; }
     }
 }

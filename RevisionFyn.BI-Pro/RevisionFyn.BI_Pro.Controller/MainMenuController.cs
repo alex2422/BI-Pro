@@ -40,25 +40,6 @@ namespace RevisionFyn.BI_Pro.Controller
             return controllerInstance;
         }
 
-        public void CreateGraph(Grid graphGrid)
-        {
-            CustomizeStartScreenController cssc = CustomizeStartScreenController.GetInstance();
-            companies=cssc.companies;
-            if (companies.Count <= 0)
-            {
-                companies = cssc.companies;
-            }
-            foreach (var company in companies)
-            {
-                LineGraph lg = new LineGraph();
-                graphGrid.Children.Add(lg);
-                lg.Description = company.CompanyName;
-                lg.Stroke = Brushes.Red;
-                lg.StrokeThickness = 2;
-                lg.Plot(company.x, company.y);
-            }
-        }
-
         public void CreateKpiElements(Grid KpiGrid)
         {
             List<KPI> activeKPI = _StoredProcedure.GetActiveKPI();
@@ -128,6 +109,47 @@ namespace RevisionFyn.BI_Pro.Controller
                     KpiGrid.Children.Add(KpiContentGrid);
 
                     kpiDisplacement = kpiDisplacement + 226;
+                }
+            }
+        }
+        public void createGraph(Grid graphGrid, Label label1, Label label2, Label label3)
+        {
+            List<GraphData> listOfGraphData = _StoredProcedure.GetGraphData();
+            if (listOfGraphData.Count != 0)
+            {
+                label1.Content = listOfGraphData[0].Company;
+                label1.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[0].Color);
+                label2.Content = listOfGraphData[1].Company;
+                label2.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[1].Color);
+                label3.Content = listOfGraphData[2].Company;
+                label3.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[2].Color);
+                foreach (GraphData graphData in listOfGraphData)
+                {
+                    List<int> xList = new List<int>();
+                    List<int> yList = new List<int>();
+                    List<AccountCard> accCardList = new List<AccountCard>();
+                    List<Company> companyList = new List<Company>();
+                    for (int i = graphData.StartYear; i <= graphData.LastYear; i++)
+                    {
+                        xList.Add(i);
+                    }
+                    companyList = _StoredProcedure.GetCompanies();
+                    companyList.RemoveAll(s => s.CompanyName != graphData.Company);
+                    accCardList = _StoredProcedure.Getbalance(companyList[0].CompanyID);
+                    accCardList.RemoveAll(s => s.Year > xList.Last());
+                    accCardList.RemoveAll(s => s.Year < xList[0]);
+                    foreach (AccountCard accCard in accCardList)
+                    {
+                        yList.Add(accCard.Balance);
+                    }
+                    yList.ToArray<int>();
+                    xList.ToArray<int>();
+                    LineGraph lg = new LineGraph();
+                    graphGrid.Children.Add(lg);
+                    lg.Description = graphData.Company;
+                    lg.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(graphData.Color);
+                    lg.StrokeThickness = 2;
+                    lg.Plot(xList, yList);
                 }
             }
         }

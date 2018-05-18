@@ -26,11 +26,6 @@
                 <d3:LegendItemsPanel>
                     <d3:LegendItemsPanel.Resources>
                         <DataTemplate x:Key="InteractiveDataDisplay.WPF.LineGraph">
-                            <StackPanel  Orientation="Horizontal">
-                                <CheckBox  IsChecked="{Binding Path=Visibility, Converter={StaticResource VisibilityToCheckedConverter}, Mode=TwoWay}" IsThreeState="False"/>
-                                <Line Width="15" Height="15" X1="0" Y1="0" X2="15" Y2="15" Stroke="{Binding Path=Stroke}" StrokeThickness="2"/>
-                                <TextBlock Margin="5,0,0,0" Text="{Binding Path=Description}"/>
-                            </StackPanel>
                         </DataTemplate>
                     </d3:LegendItemsPanel.Resources>
                 </d3:LegendItemsPanel>
@@ -40,5 +35,8 @@
         <Grid x:Name="KpiGrid" HorizontalAlignment="Left" Height="185" Margin="208,81,0,0" VerticalAlignment="Top" Width="658" Background="DimGray">
             <Label x:Name="Standard" Content="Ingen KPI'er fundet" FontSize="40" Foreground="White" HorizontalAlignment="Left" Margin="149,56,0,0" VerticalAlignment="Top"/>
         </Grid>
+        <Label Content="Intet firma" FontWeight="Bold" x:Name="LabelClient1" HorizontalAlignment="Left" Margin="260,290,0,0" VerticalAlignment="Top" Width="202"/>
+        <Label Content="Intet firma" FontWeight="Bold" x:Name="LabelClient2" HorizontalAlignment="Left" Margin="260,308,0,0" VerticalAlignment="Top" Width="202"/>
+        <Label Content="Intet firma" FontWeight="Bold" x:Name="LabelClient3" HorizontalAlignment="Left" Margin="260,328,0,0" VerticalAlignment="Top" Width="202"/>
     </Grid>
 </Page>
