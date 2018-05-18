@@ -710,7 +710,7 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getEmployee = new SqlCommand("sp_´GetEmployee", con)
+                    SqlCommand getEmployee = new SqlCommand("sp_GetEmployee", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
@@ -722,12 +722,16 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string employeeID = reader["EmployeeID"].ToString();
                             string employeeName = reader["EmployeeFirstName"].ToString();
+                            string employeeLastName = reader["EmployeeLastName"].ToString();
+                            string position = reader["EmployeePosition"].ToString();
                             Int32.TryParse(employeeID, out int convertedEmployeeID);
 
                             employee.Add(new Employee()
                             {
                                 EmployeeID = convertedEmployeeID,
                                 FirstName = employeeName,
+                                LastName = employeeLastName,
+                                Position = position
                             });
                         }
                     }
