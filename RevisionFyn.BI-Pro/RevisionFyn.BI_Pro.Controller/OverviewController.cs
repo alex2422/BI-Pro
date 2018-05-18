@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using RevisionFyn.BI_Pro.Database;
 using RevisionFyn.BI_Pro.Model;
@@ -17,27 +18,14 @@ namespace RevisionFyn.BI_Pro.Controller
         public StoredProcedure _StoreProcedure { get; set; }
 
         public List<int> yearList = new List<int>();
-        public ListBox LeftBox { get; set; }
-        public ListBox RightBox { get; set; }
-        public ComboBox StartYear { get; set; }
         ObservableCollection<Company> companyData;
         ObservableCollection<Company> companyData2;
         #endregion
 
         #region Constructor
-        private OverviewController(ListBox leftBox, ListBox rightBox, ComboBox startYear)
+        private OverviewController()
         {
-            StartYear = startYear;
-            LeftBox = leftBox;
-            RightBox = rightBox;
-            companyData2 = new ObservableCollection<Company>();
-
-
             _StoreProcedure = new StoredProcedure();
-            rightBox.ItemsSource = companyData2;
-            leftBox.ItemsSource = companyData;
-            rightBox.DisplayMemberPath = "CompanyName";
-            leftBox.DisplayMemberPath = "CompanyName";
         }
         #endregion
 
@@ -48,19 +36,21 @@ namespace RevisionFyn.BI_Pro.Controller
             allEmployees = _StoreProcedure.getEmployee();
             return allEmployees;
         }
-        public static OverviewController GetInstance(ListBox leftBox, ListBox rightBox, ComboBox startYear)
+        public static OverviewController GetInstance()
         {
             if (controllerInstance == null)
             {
-                controllerInstance = new OverviewController(leftBox, rightBox, startYear);
+                controllerInstance = new OverviewController();
             }
             return controllerInstance;
         }
 
-        public void LoadIntoListBox(ListBox companies)
+        public void LoadIntoListBox(ListBox leftBox, ListBox rightBox)
         {
-            companies.ItemsSource = companyData;
-            companies.DisplayMemberPath = "CompanyName";
+            leftBox.ItemsSource = companyData;
+            leftBox.DisplayMemberPath = "CompanyName";
+            rightBox.ItemsSource = companyData2;
+            rightBox.DisplayMemberPath = "CompanyName";
         }
 
         public void ClearData()
@@ -77,17 +67,38 @@ namespace RevisionFyn.BI_Pro.Controller
         public void PopulateData()
         {
             companyData = new ObservableCollection<Company>(_StoreProcedure.GetCompanies());
+            companyData2 = new ObservableCollection<Company>();
         }
-        public void ButtonAdd()
+        public void ButtonAdd(ListBox LeftBox)
         {
             companyData2.Add((Company)LeftBox.SelectedItem);
             companyData.Remove((Company)LeftBox.SelectedItem);
         }
 
-        public void ButtonRemove()
+        public void ButtonRemove(ListBox RightBox)
         {
             companyData.Add((Company)RightBox.SelectedItem);
             companyData2.Remove((Company)RightBox.SelectedItem);
+        }
+
+        public void ButtonAddAll(ListBox LeftBox)
+        {
+            int timesToDo = companyData.Count();
+            for (int i = 0; i < timesToDo; i++)
+            {
+                companyData2.Add((Company)companyData[0]);
+                companyData.Remove((Company)companyData[0]);
+            }
+        }
+
+        public void ButtonRemoveAll(ListBox RightBox)
+        {
+            int timesToDo = companyData2.Count();
+            for (int i = 0; i < timesToDo; i++)
+            {
+                companyData.Add((Company)companyData2[0]);
+                companyData2.Remove((Company)companyData2[0]);
+            }
         }
 
 
@@ -102,14 +113,29 @@ namespace RevisionFyn.BI_Pro.Controller
             }
             yearList.Sort();
             yearsBox.ItemsSource = yearList;
+            yearsBox.SelectedItem = yearList[0];
         }
 
 
-        public void ExportData()
+        public void ExportData(ListBox rightBox, ComboBox StartYear)
         {
-            ExcelExport export = new ExcelExport();
-            string path = export.GetExportPath(RightBox);
-            export.Export(RightBox, StartYear, path, _StoreProcedure.getEmployee());
+            if (rightBox.Items.Count != 0)
+            {
+                ExcelExport export = new ExcelExport();
+                string path = export.GetExportPath(rightBox);
+                if (path != null && path != "")
+                {
+                    export.Export(rightBox, StartYear, path, _StoreProcedure.getEmployee());
+                }
+                else
+                {
+                    MessageBox.Show("Eksportering annulleret");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vælg venligst firmaer");
+            }
         }
         #endregion
 

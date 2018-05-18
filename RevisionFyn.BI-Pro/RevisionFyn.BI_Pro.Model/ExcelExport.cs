@@ -37,19 +37,15 @@ namespace RevisionFyn.BI_Pro.Model
 
         #region Public methods
         public string GetExportPath(ListBox rightBox)
-        {
-            if (rightBox != null)
-            {
-                SaveFileDialog saveDlg = new SaveFileDialog();
+        { 
+            SaveFileDialog saveDlg = new SaveFileDialog();
 
-                saveDlg.Filter = "CSV filer (*.csv)|*.csv|All files (*.*)|*.*";
-                saveDlg.InitialDirectory = @"C:\%USERNAME%\";
-                saveDlg.ShowDialog();
+            saveDlg.Filter = "CSV filer (*.csv)|*.csv|All files (*.*)|*.*";
+            saveDlg.InitialDirectory = @"C:\%USERNAME%\";
+            saveDlg.ShowDialog();
 
-                string path = saveDlg.FileName;
-                return path;
-            }
-            else return "fejl";
+            string path = saveDlg.FileName;
+            return path;
         }
         public void Export(ListBox listBox, ComboBox startYear, string path, List<Employee> employees)
         {
