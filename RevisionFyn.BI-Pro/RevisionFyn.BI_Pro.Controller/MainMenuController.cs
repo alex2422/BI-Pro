@@ -73,7 +73,6 @@ namespace RevisionFyn.BI_Pro.Controller
                 for (int i = 0; i < numberOfActiveKPI; i++)
                 {
                     CustomStatistics customStatisticsRelatedToKPI = _StoredProcedure.GetStatisticsFavoriteByID(activeKPI[i].DataID);
-
                     List<double> kpiRawValue = GetValueBasedOnCalculationSelection(customStatisticsRelatedToKPI);
 
                     activeKPI[i].Value = GetValueBasedOnTypeSelection(kpiRawValue, customStatisticsRelatedToKPI.ChoosenStatisticsTypeID);
@@ -177,17 +176,19 @@ namespace RevisionFyn.BI_Pro.Controller
             {
                 switch (customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID)
                 {
-                    case 1:
+                    case 1: // Time spent
                         break;
-                    case 2:
+                    case 2: // Sales
                         break;
-                    case 3:
+                    case 3: // Total cunsumption
                         break;
                     case 4:
                         foreach (double balanceValue in _StoredProcedure.GetNegativeBalanceByClientID(company.CompanyID))
                         {
                             valuesFromChoosenCompanies.Add(balanceValue);
                         }
+                        break;
+                    case 5: // Positivte balance
                         break;
                     default:
                         break;
