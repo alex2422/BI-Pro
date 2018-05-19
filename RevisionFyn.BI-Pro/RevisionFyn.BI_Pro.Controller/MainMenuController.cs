@@ -198,11 +198,23 @@ namespace RevisionFyn.BI_Pro.Controller
             {
                 switch (customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID)
                 {
-                    case 1: // Time spent
+                    case 1:
+                        foreach (double totalHoursValue in _StoredProcedure.GetTotalHoursByClientID(company.CompanyID))
+                        {
+                            valuesFromChoosenCompanies.Add(totalHoursValue);
+                        }
                         break;
-                    case 2: // Sales
+                    case 2:
+                        foreach (double salesAmountValue in _StoredProcedure.GetSalesAmountByClientID(company.CompanyID))
+                        {
+                            valuesFromChoosenCompanies.Add(salesAmountValue);
+                        }
                         break;
-                    case 3: // Total cunsumption
+                    case 3:
+                        foreach (double totalConsumptionValue in _StoredProcedure.GetTotalConsumptionByClientID(company.CompanyID))
+                        {
+                            valuesFromChoosenCompanies.Add(totalConsumptionValue);
+                        }
                         break;
                     case 4:
                         foreach (double balanceValue in _StoredProcedure.GetNegativeBalanceByClientID(company.CompanyID))
@@ -210,7 +222,11 @@ namespace RevisionFyn.BI_Pro.Controller
                             valuesFromChoosenCompanies.Add(balanceValue);
                         }
                         break;
-                    case 5: // Positivte balance
+                    case 5:
+                        foreach (double balanceValue in _StoredProcedure.GetPositiveBalanceByClientID(company.CompanyID))
+                        {
+                            valuesFromChoosenCompanies.Add(balanceValue);
+                        }
                         break;
                     default:
                         break;

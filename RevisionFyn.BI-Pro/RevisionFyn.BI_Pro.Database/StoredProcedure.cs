@@ -654,6 +654,162 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
+
+        public List<double> GetPositiveBalanceByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetPositiveBalanceByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string balanceValue = reader["Balance"].ToString();
+
+                            Double.TryParse(balanceValue, out double convertedBalanceValue);
+
+                            result.Add(convertedBalanceValue);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+
+        public List<double> GetTotalHoursByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetTotalHoursByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string totalHoursValue = reader["TotalHours"].ToString();
+
+                            Double.TryParse(totalHoursValue, out double convertedTotalHoursValue);
+
+                            result.Add(convertedTotalHoursValue);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+
+        public List<double> GetSalesAmountByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetSalesAmountByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string salesAmountValue = reader["SalesAmount"].ToString();
+
+                            Double.TryParse(salesAmountValue, out double convertedSalesAmountValue);
+
+                            result.Add(convertedSalesAmountValue);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+
+        public List<double> GetTotalConsumptionByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetTotalConsumptionByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string totalConsumptionValue = reader["TotalConsumption"].ToString();
+
+                            Double.TryParse(totalConsumptionValue, out double convertedTotalConsumptionValue);
+
+                            result.Add(convertedTotalConsumptionValue);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
         #endregion
 
         public List<Company> GetCompanies()
