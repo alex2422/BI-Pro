@@ -14,14 +14,14 @@ namespace RevisionFyn.BI_Pro.Controller
     {
         #region Variables
         private static OverviewController controllerInstance;
-        public StoredProcedure _StoreProcedure { get; set; }
+        public StoredProcedure _StoredProcedure { get; set; }
 
         public List<int> yearList = new List<int>();
         public ListBox LeftBox { get; set; }
         public ListBox RightBox { get; set; }
         public ComboBox StartYear { get; set; }
-        ObservableCollection<Company> companyData;
-        ObservableCollection<Company> companyData2;
+        ObservableCollection<Company> clientData;
+        ObservableCollection<Company> clientData2;
         #endregion
 
         #region Constructor
@@ -30,12 +30,12 @@ namespace RevisionFyn.BI_Pro.Controller
             StartYear = startYear;
             LeftBox = leftBox;
             RightBox = rightBox;
-            companyData2 = new ObservableCollection<Company>();
+            clientData2 = new ObservableCollection<Company>();
 
 
-            _StoreProcedure = new StoredProcedure();
-            rightBox.ItemsSource = companyData2;
-            leftBox.ItemsSource = companyData;
+            _StoredProcedure = new StoredProcedure();
+            rightBox.ItemsSource = clientData2;
+            leftBox.ItemsSource = clientData;
             rightBox.DisplayMemberPath = "CompanyName";
             leftBox.DisplayMemberPath = "CompanyName";
         }
@@ -45,7 +45,7 @@ namespace RevisionFyn.BI_Pro.Controller
         public List<Employee> getMainEmployee()
         {
             List<Employee> allEmployees = new List<Employee>();
-            allEmployees = _StoreProcedure.getEmployee();
+            allEmployees = _StoredProcedure.getEmployee();
             return allEmployees;
         }
         public static OverviewController GetInstance(ListBox leftBox, ListBox rightBox, ComboBox startYear)
@@ -59,41 +59,41 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void LoadIntoListBox(ListBox companies)
         {
-            companies.ItemsSource = companyData;
+            companies.ItemsSource = clientData;
             companies.DisplayMemberPath = "CompanyName";
         }
 
         public void ClearData()
         {
-            if (companyData != null)
+            if (clientData != null)
             {
-                companyData.Clear();
+                clientData.Clear();
             }
-            if (companyData2 != null)
+            if (clientData2 != null)
             {
-                companyData2.Clear();
+                clientData2.Clear();
             }
         }
         public void PopulateData()
         {
-            companyData = new ObservableCollection<Company>(_StoreProcedure.GetCompanies());
+            clientData = new ObservableCollection<Company>(_StoredProcedure.GetCompanies());
         }
         public void ButtonAdd()
         {
-            companyData2.Add((Company)LeftBox.SelectedItem);
-            companyData.Remove((Company)LeftBox.SelectedItem);
+            clientData2.Add((Company)LeftBox.SelectedItem);
+            clientData.Remove((Company)LeftBox.SelectedItem);
         }
 
         public void ButtonRemove()
         {
-            companyData.Add((Company)RightBox.SelectedItem);
-            companyData2.Remove((Company)RightBox.SelectedItem);
+            clientData.Add((Company)RightBox.SelectedItem);
+            clientData2.Remove((Company)RightBox.SelectedItem);
         }
 
 
         public void LoadIntoComoBox(ComboBox yearsBox)
         {
-            foreach (var accCard in _StoreProcedure.GetYear())
+            foreach (var accCard in _StoredProcedure.GetYear())
             {
                 if (!yearList.Contains(accCard.Year))
                 {
@@ -109,7 +109,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             ExcelExport export = new ExcelExport();
             string path = export.GetExportPath(RightBox);
-            export.Export(RightBox, StartYear, path, _StoreProcedure.getEmployee());
+            export.Export(RightBox, StartYear, path, _StoredProcedure.getEmployee());
         }
         #endregion
 
