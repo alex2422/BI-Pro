@@ -190,7 +190,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
             foreach (int clientID in mappedClientID)
             {
-                tempCompanies.Add(_StoredProcedure.GetClientsByID(clientID));
+                tempCompanies.Add(_StoredProcedure.GetClientByID(clientID));
             }
 
             customStatisticsRelatedToKPI.ChoosenCompanies = tempCompanies;

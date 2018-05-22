@@ -146,7 +146,7 @@ namespace RevisionFyn.BI_Pro.Database
 
         public List<KPI> GetKPI()
         {
-            List<KPI> listOfKPI = new List<KPI>();
+            List<KPI> listOfKPIs = new List<KPI>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -186,7 +186,7 @@ namespace RevisionFyn.BI_Pro.Database
                                 isActive = "Nej";
                             }
 
-                            listOfKPI.Add(new KPI()
+                            listOfKPIs.Add(new KPI()
                             {
                                 ID = convertedKpiID,
                                 Title = kpiTitle,
@@ -205,12 +205,12 @@ namespace RevisionFyn.BI_Pro.Database
                 }
             }
 
-            return listOfKPI;
+            return listOfKPIs;
         }
 
         public List<KPI> GetActiveKPI()
         {
-            List<KPI> listOfActiveKPI = new List<KPI>();
+            List<KPI> listOfActiveKPIs = new List<KPI>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -250,7 +250,7 @@ namespace RevisionFyn.BI_Pro.Database
                                 isActive = "Nej";
                             }
 
-                            listOfActiveKPI.Add(new KPI()
+                            listOfActiveKPIs.Add(new KPI()
                             {
                                 ID = convertedKpiID,
                                 Title = kpiTitle,
@@ -269,14 +269,14 @@ namespace RevisionFyn.BI_Pro.Database
                 }
             }
 
-            return listOfActiveKPI;
+            return listOfActiveKPIs;
         }
         #endregion
 
         #region Stored procedures - Statistics
         public List<StatisticsType> GetActiveStatisticsType()
         {
-            List<StatisticsType> result = new List<StatisticsType>();
+            List<StatisticsType> listOfActiveStatisticsTypes = new List<StatisticsType>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -284,12 +284,12 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetStatisticsType", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetStatisticsType", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -300,7 +300,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Int32.TryParse(statisticsTypeID, out int convertedStatisticsTypeID);
 
-                            result.Add(new StatisticsType()
+                            listOfActiveStatisticsTypes.Add(new StatisticsType()
                             {
                                 ID = convertedStatisticsTypeID,
                                 Name = typeName,
@@ -313,11 +313,13 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfActiveStatisticsTypes;
         }
+
         public List<StatisticsCalculation> GetActiveStatisticsCalculation()
         {
-            List<StatisticsCalculation> result = new List<StatisticsCalculation>();
+            List<StatisticsCalculation> listOfActiveStatisticsCalculations = new List<StatisticsCalculation>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -325,12 +327,12 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsCalculationCmd = new SqlCommand("sp_GetActiveStatisticsCalculation", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetActiveStatisticsCalculation", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    SqlDataReader reader = getActiveStatisticsCalculationCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -341,7 +343,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Int32.TryParse(statisticsCalculationID, out int convertedStatisticsTypeID);
 
-                            result.Add(new StatisticsCalculation()
+                            listOfActiveStatisticsCalculations.Add(new StatisticsCalculation()
                             {
                                 ID = convertedStatisticsTypeID,
                                 Name = calculationName
@@ -354,71 +356,65 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfActiveStatisticsCalculations;
         }
+
         public string AddStatisticsFavorite(string favoriteName, int statisticsTypeID, int statisticsCalculationID)
         {
-            string result = "";
-
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
                     con.Open();
 
-                    SqlCommand addStatisticsFavoriteCmd = new SqlCommand("sp_AddStatisticsFavorite", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_AddStatisticsFavorite", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addStatisticsFavoriteCmd.Parameters.Add(new SqlParameter("@Name", favoriteName));
-                    addStatisticsFavoriteCmd.Parameters.Add(new SqlParameter("@StatisticsTypeID", statisticsTypeID));
-                    addStatisticsFavoriteCmd.Parameters.Add(new SqlParameter("@StatisticsCalculationID", statisticsCalculationID));
-                    addStatisticsFavoriteCmd.ExecuteNonQuery();
+                    sqlCmd.Parameters.Add(new SqlParameter("@Name", favoriteName));
+                    sqlCmd.Parameters.Add(new SqlParameter("@StatisticsTypeID", statisticsTypeID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@StatisticsCalculationID", statisticsCalculationID));
+                    sqlCmd.ExecuteNonQuery();
 
-                    result = "Succes: Statistikken er nu tilføjet til favoriter";
+                    return "Succes: Statistikken er nu tilføjet til favoriter";
                 }
                 catch (SqlException e)
                 {
                     return "Fejl: " + e.Message;
                 }
             }
-
-            return result;
         }
 
         public string AddStatisticsFavoriteClientMap(int clientID)
         {
-            string result = "";
-
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
                     con.Open();
 
-                    SqlCommand addStatisticsFavoriteClientMapCmd = new SqlCommand("sp_AddStatisticsFavoriteClientMap", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_AddStatisticsFavoriteClientMap", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addStatisticsFavoriteClientMapCmd.Parameters.Add(new SqlParameter("@ClientID", clientID));
-                    addStatisticsFavoriteClientMapCmd.ExecuteNonQuery();
+                    sqlCmd.Parameters.Add(new SqlParameter("@ClientID", clientID));
+                    sqlCmd.ExecuteNonQuery();
 
-                    result = "Succes: Mappningen er nu tilføjet";
+                    return "Succes: Mappningen er nu tilføjet";
                 }
                 catch (SqlException e)
                 {
                     return "Fejl: " + e.Message;
                 }
             }
-
-            return result;
         }
 
         public List<CustomStatistics> GetActiveStatisticsFavorite()
         {
-            List<CustomStatistics> result = new List<CustomStatistics>();
+            List<CustomStatistics> listOfActiveStatisticsFavorites = new List<CustomStatistics>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -426,12 +422,12 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetActiveStatisticsFavorite", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetActiveStatisticsFavorite", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -446,7 +442,7 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(statisticsTypeID, out int convertedStatisticsTypeID);
                             Int32.TryParse(statisticsCalculationID, out int convertedStatisticsCalculationID);
 
-                            result.Add(new CustomStatistics()
+                            listOfActiveStatisticsFavorites.Add(new CustomStatistics()
                             {
                                 ID = convertedStatisticsFavoriteID,
                                 Name = name,
@@ -461,12 +457,13 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfActiveStatisticsFavorites;
         }
 
         public CustomStatistics GetStatisticsFavoriteByID(int requestedStatisticsFavoriteID)
         {
-            CustomStatistics result = new CustomStatistics();
+            CustomStatistics listOfStatisticsFavorites = new CustomStatistics();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -474,14 +471,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetStatisticsFavoriteByID", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetStatisticsFavoriteByID", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", requestedStatisticsFavoriteID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", requestedStatisticsFavoriteID));
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -496,7 +493,7 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(statisticsTypeID, out int convertedStatisticsTypeID);
                             Int32.TryParse(statisticsCalculationID, out int convertedStatisticsCalculationID);
 
-                            result = new CustomStatistics()
+                            listOfStatisticsFavorites = new CustomStatistics()
                             {
                                 ID = convertedStatisticsFavoriteID,
                                 Name = name,
@@ -511,12 +508,13 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfStatisticsFavorites;
         }
 
-        public List<int> GetClientMapByStatisticsFavoriteID (int requestedStatisticsFavoriteID)
+        public List<int> GetClientMapByStatisticsFavoriteID(int requestedStatisticsFavoriteID)
         {
-            List<int> result = new List<int>();
+            List<int> listOfClientMappings = new List<int>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -524,14 +522,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetClientMapByStatisticsFavoriteID", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetClientMapByStatisticsFavoriteID", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", requestedStatisticsFavoriteID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", requestedStatisticsFavoriteID));
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -541,7 +539,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Int32.TryParse(clientID, out int convertedClientID);
 
-                            result.Add(convertedClientID);
+                            listOfClientMappings.Add(convertedClientID);
                         }
                     }
                 }
@@ -550,10 +548,11 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfClientMappings;
         }
 
-        public Client GetClientsByID(int requestedClientID)
+        public Client GetClientByID(int requestedClientID)
         {
             Client client = new Client();
 
@@ -563,14 +562,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getClient = new SqlCommand("sp_GetClientByID", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetClientByID", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    getClient.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
 
-                    SqlDataReader reader = getClient.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -582,7 +581,6 @@ namespace RevisionFyn.BI_Pro.Database
                             string startYear = reader["StartYear"].ToString();
 
                             Int32.TryParse(clientID, out int convertedClientID);
-
 
                             client = new Client()
                             {
@@ -602,13 +600,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+
                 return client;
             }
         }
 
         public List<double> GetNegativeBalanceByClientID(int requestedClientID)
         {
-            List<double> result = new List<double>();
+            List<double> listOfNegativeBalanceValues = new List<double>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -616,14 +615,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetNegativeBalanceByClientID", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetNegativeBalanceByClientID", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -633,7 +632,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Double.TryParse(balanceValue, out double convertedBalanceValue);
 
-                            result.Add(convertedBalanceValue);
+                            listOfNegativeBalanceValues.Add(convertedBalanceValue);
                         }
                     }
                 }
@@ -642,12 +641,13 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfNegativeBalanceValues;
         }
 
         public List<double> GetPositiveBalanceByClientID(int requestedClientID)
         {
-            List<double> result = new List<double>();
+            List<double> listOfPositiveBalanceValues = new List<double>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -655,14 +655,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetPositiveBalanceByClientID", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetPositiveBalanceByClientID", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -672,7 +672,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Double.TryParse(balanceValue, out double convertedBalanceValue);
 
-                            result.Add(convertedBalanceValue);
+                            listOfPositiveBalanceValues.Add(convertedBalanceValue);
                         }
                     }
                 }
@@ -681,12 +681,13 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfPositiveBalanceValues;
         }
 
         public List<double> GetTotalHoursByClientID(int requestedClientID)
         {
-            List<double> result = new List<double>();
+            List<double> listOfTotalHourValues = new List<double>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -694,14 +695,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetTotalHoursByClientID", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetTotalHoursByClientID", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -711,7 +712,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Double.TryParse(totalHoursValue, out double convertedTotalHoursValue);
 
-                            result.Add(convertedTotalHoursValue);
+                            listOfTotalHourValues.Add(convertedTotalHoursValue);
                         }
                     }
                 }
@@ -720,12 +721,13 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfTotalHourValues;
         }
 
         public List<double> GetSalesAmountByClientID(int requestedClientID)
         {
-            List<double> result = new List<double>();
+            List<double> listOfSalesAmountValues = new List<double>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -733,14 +735,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetSalesAmountByClientID", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetSalesAmountByClientID", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -750,7 +752,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Double.TryParse(salesAmountValue, out double convertedSalesAmountValue);
 
-                            result.Add(convertedSalesAmountValue);
+                            listOfSalesAmountValues.Add(convertedSalesAmountValue);
                         }
                     }
                 }
@@ -759,12 +761,13 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfSalesAmountValues;
         }
 
         public List<double> GetTotalConsumptionByClientID(int requestedClientID)
         {
-            List<double> result = new List<double>();
+            List<double> listOfTotalConsumptionValues = new List<double>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -772,14 +775,14 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetTotalConsumptionByClientID", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetTotalConsumptionByClientID", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
 
-                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -789,7 +792,7 @@ namespace RevisionFyn.BI_Pro.Database
 
                             Double.TryParse(totalConsumptionValue, out double convertedTotalConsumptionValue);
 
-                            result.Add(convertedTotalConsumptionValue);
+                            listOfTotalConsumptionValues.Add(convertedTotalConsumptionValue);
                         }
                     }
                 }
@@ -798,7 +801,8 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfTotalConsumptionValues;
         }
         #endregion
 
