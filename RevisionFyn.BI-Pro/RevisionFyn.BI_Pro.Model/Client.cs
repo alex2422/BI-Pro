@@ -12,12 +12,12 @@ namespace RevisionFyn.BI_Pro.Model
         public string CompanyName { get; set; }
         public int CompanyStartYear { get; set; }
         public int CompanyEndYear { get; set; }
-        public List<double> Coverages = new List<double>();
-        public double[] x;
-        public double[] y;
-        public string colour;
-        public List<AccountCard> accountCards = new List<AccountCard>();
-        public List<int> years = new List<int>();
+        public List<double> Coverages { get; set; } = new List<double>();
+        public double[] x { get; set; }
+        public double[] y { get; set; }
+        public string colour { get; set; }
+        public List<AccountCard> accountCards { get; set; } = new List<AccountCard>();
+        public List<int> years { get; set; } = new List<int>();
         public Employee MainEmployee { get; set; }
         public Client()
         {

@@ -563,9 +563,9 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
-        public Client GetCompaniesByID(int requestedClientID)
+        public Client GetClientsByID(int requestedClientID)
         {
-            Client company = new Client();
+            Client client = new Client();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -594,7 +594,7 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(clientID, out int convertedClientID);
 
 
-                            company = new Client()
+                            client = new Client()
                             {
                                 CompanyID = convertedClientID,
                                 CompanyName = clientName,
@@ -612,7 +612,7 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                return company;
+                return client;
             }
         }
 
@@ -812,7 +812,7 @@ namespace RevisionFyn.BI_Pro.Database
         }
         #endregion
 
-        public List<Client> GetCompanies()
+        public List<Client> GetClient()
         {
             List<Client> companies = new List<Client>();
 
@@ -976,7 +976,7 @@ namespace RevisionFyn.BI_Pro.Database
                             int colorIndex = (int)reader["ColorIndex"];
                             listGraphData.Add(new GraphData()
                             {
-                                Company = clientName,
+                                Client = clientName,
                                 StartYear = startYear,
                                 LastYear = lastyear,
                                 Color = color,

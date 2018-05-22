@@ -66,7 +66,7 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         public void PopulateData()
         {
-            companyData = new ObservableCollection<Client>(_StoreProcedure.GetCompanies());
+            companyData = new ObservableCollection<Client>(_StoreProcedure.GetClient());
             companyData2 = new ObservableCollection<Client>();
         }
         public void ButtonAdd(ListBox LeftBox)
