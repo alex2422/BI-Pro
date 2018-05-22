@@ -15,9 +15,9 @@ namespace RevisionFyn.BI_Pro.Model
         StringBuilder csvImport { get; set; }
         List<string> Header { get; set; } = new List<string>();
 
-        public int CompanyStartYear { get; set; }
+        public int ClientStartYear { get; set; }
         public List<int> Years = new List<int>();
-        public List<Client> companies = new List<Client>();
+        public List<Client> clients = new List<Client>();
         public List<Employee> employees = new List<Employee>();
         Encoding encoding;
 
@@ -70,30 +70,30 @@ namespace RevisionFyn.BI_Pro.Model
                     streamWriter.WriteLine("sep=;");
                     streamWriter.WriteLine(String.Join<string>(";", Header));
                     streamWriter.WriteLine("");
-                    List<Client> listOfCompanies = new List<Client>();
-                    foreach (Client company in listBox.Items)
+                    List<Client> listOfClients = new List<Client>();
+                    foreach (Client client in listBox.Items)
                     {
-                        listOfCompanies.Add(company);
+                        listOfClients.Add(client);
                     }
-                    listOfCompanies.Sort((x, y) => x.MainEmployee.EmployeeID.CompareTo(y.MainEmployee.EmployeeID));
-                    foreach (Client company in listOfCompanies)
+                    listOfClients.Sort((x, y) => x.MainEmployee.EmployeeID.CompareTo(y.MainEmployee.EmployeeID));
+                    foreach (Client clients in listOfClients)
                     {
                         string balanceString = ";";
                         int totalBalance = 0;
                         foreach (int year in Years)
                         {
-                            if (company.accountCards[0].Year > year)
+                            if (clients.accountCards[0].Year > year)
                             {
                                 balanceString += "N/A ;";
                             }
                             else
                             {
-                                if (company.accountCards[0].Year == year)
+                                if (clients.accountCards[0].Year == year)
                                 {
-                                    for (int i = 0; i < company.accountCards.Count; i++)
+                                    for (int i = 0; i < clients.accountCards.Count; i++)
                                     {
-                                        totalBalance += company.accountCards[i].Balance;
-                                        balanceString +=company.accountCards[i].Balance + ";";
+                                        totalBalance += clients.accountCards[i].Balance;
+                                        balanceString +=clients.accountCards[i].Balance + ";";
                                     }
                                 }
                             }
@@ -101,13 +101,13 @@ namespace RevisionFyn.BI_Pro.Model
                         string employeeName = "kunne ikke finde navn";
                         foreach (Employee employee in employeesList)
                         {
-                            if (employee.EmployeeID == company.MainEmployee.EmployeeID)
+                            if (employee.EmployeeID == clients.MainEmployee.EmployeeID)
                             {
                                 employeeName = employee.FirstName;
                             }
                         }
                         balanceString += " "+";" + totalBalance;
-                        streamWriter.WriteLine(employeeName+";"+company.ClientName+balanceString);
+                        streamWriter.WriteLine(employeeName+";"+clients.ClientName+balanceString);
                     }
                 }
                 MessageBox.Show("filen blev eksporteret", "Succes");

@@ -8,15 +8,18 @@ namespace RevisionFyn.BI_Pro.Model
         public string ClientName { get; set; }
         public int ClientStartYear { get; set; }
         public int ClientEndYear { get; set; }
-        public List<double> Coverages = new List<double>();
-        public double[] x;
-        public double[] y;
-        public string colour;
-        public List<AccountCard> accountCards = new List<AccountCard>();
-        public List<int> years = new List<int>();
+        public List<double> Coverages { get; set; }
+        public double[] x { get; set; }
+        public double[] y { get; set; }
+        public string color { get; set; }
+        public List<AccountCard> accountCards { get; set; }
+        public List<int> years { get; set; }
         public Employee MainEmployee { get; set; }
         public Client()
         {
+            Coverages = new List<double>();
+            years = new List<int>();
+            accountCards = new List<AccountCard>();
             foreach (AccountCard accCard in accountCards)
             {
                 if (accCard.ClientID != ClientID)
