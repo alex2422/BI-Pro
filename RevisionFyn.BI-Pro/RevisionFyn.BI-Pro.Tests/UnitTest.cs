@@ -8,28 +8,46 @@ namespace RevisionFyn.BI_Pro.Tests
     [TestClass]
     public class UnitTest
     {
-        // TO DO: Test negative listOfData
-        // TO DO: Test long deciamal listOfData
-        // TO DO: Test empty listOfData
-
+        #region CustomStatistics - Average
         [TestMethod]
-        public void Should_CalculateAverage_When_StraightListProvided()
+        public void Should_ComputeAverage_When_PositiveListProvided()
         {
-            //CustomStatistics customStatistics = new CustomStatistics();
-
-            List<double> listOfData = new List<double>() { 10, 5, 3, 6};
+            List<double> listOfData = new List<double>() { 10, 5, 3, 6 };
 
             Assert.AreEqual(6, CustomStatistics.Average(listOfData));
         }
 
         [TestMethod]
-        public void Should_CalculateAverage_When_DecimalListProvided()
+        public void Should_ComputeeAverage_When_NegativeListProvided()
         {
-            //CustomStatistics customStatistics = new CustomStatistics();
+            List<double> listOfData = new List<double>() { -10, -5, -3, -6 };
 
+            Assert.AreEqual(-6, CustomStatistics.Average(listOfData));
+        }
+
+        [TestMethod]
+        public void Should_ComputeAverage_When_DecimalListProvided()
+        {
             List<double> listOfData = new List<double>() { 10.0, 5, 3, 6.0, 4.5 };
 
             Assert.AreEqual(5.7, CustomStatistics.Average(listOfData));
         }
+
+        [TestMethod]
+        public void Should_ComputeAverage_When_OverTwoDecimalListProvided()
+        {
+            List<double> listOfData = new List<double>() { 10.0, 5, 3, 6.78, 4.5 };
+
+            Assert.AreEqual(5.86, CustomStatistics.Average(listOfData));
+        }
+
+        [TestMethod]
+        public void Should_ReturnZeroAverage_When_EmptyListProvided()
+        {
+            List<double> listOfData = new List<double>() { };
+
+            Assert.AreEqual(0, CustomStatistics.Average(listOfData));
+        }
+        #endregion
     }
 }
