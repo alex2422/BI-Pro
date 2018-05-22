@@ -48,27 +48,27 @@ namespace RevisionFyn.BI_Pro.View
             Environment.Exit(0);
         }
 
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             controller.ButtonAdd(ClientsToBeChosenListBox);
         }
 
-        private void ButtonRemove_Click(object sender, RoutedEventArgs e)
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             controller.ButtonRemove(ClientsCampaniesListBox);
         }
 
-        private void ButtonExport_Click(object sender, RoutedEventArgs e)
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
             controller.ExportData(ClientsCampaniesListBox, StartYearComboBox);
         }
 
-        private void ButtonRemoveAll_Click(object sender, RoutedEventArgs e)
+        private void RemoveAllButton_Click(object sender, RoutedEventArgs e)
         {
             controller.ButtonRemoveAll(ClientsCampaniesListBox);
         }
 
-        private void ButtonAddAll_Click(object sender, RoutedEventArgs e)
+        private void AddAllButton_Click(object sender, RoutedEventArgs e)
         {
             controller.ButtonAddAll(ClientsToBeChosenListBox);
         }
