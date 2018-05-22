@@ -596,9 +596,9 @@ namespace RevisionFyn.BI_Pro.Database
 
                             company = new Client()
                             {
-                                CompanyID = convertedClientID,
-                                CompanyName = clientName,
-                                CompanyStartYear = Convert.ToInt32(startYear),
+                                ClientID = convertedClientID,
+                                ClientName = clientName,
+                                ClientStartYear = Convert.ToInt32(startYear),
                                 accountCards = Getbalance(convertedClientID),
                                 MainEmployee = new Employee
                                 {
@@ -842,9 +842,9 @@ namespace RevisionFyn.BI_Pro.Database
 
                             companies.Add(new Client()
                             {
-                                CompanyID = convertedClientID,
-                                CompanyName = clientName,
-                                CompanyStartYear = Convert.ToInt32(startYear),
+                                ClientID = convertedClientID,
+                                ClientName = clientName,
+                                ClientStartYear = Convert.ToInt32(startYear),
                                 accountCards = Getbalance(convertedClientID),
                                 MainEmployee = new Employee
                                 {
@@ -1166,7 +1166,7 @@ namespace RevisionFyn.BI_Pro.Database
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addGraphData.Parameters.Add(new SqlParameter("@Company", client.CompanyName));
+                    addGraphData.Parameters.Add(new SqlParameter("@Company", client.ClientName));
                     addGraphData.Parameters.Add(new SqlParameter("@StartYear", startYear));
                     addGraphData.Parameters.Add(new SqlParameter("@LastYear", lastYear));
                     addGraphData.Parameters.Add(new SqlParameter("@Color", color));
