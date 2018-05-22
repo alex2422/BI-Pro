@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using System.Windows;
-
-
-
 
 namespace RevisionFyn.BI_Pro.Model
 {
@@ -136,7 +131,5 @@ namespace RevisionFyn.BI_Pro.Model
         }
 
         #endregion
-
-
     }
 }
