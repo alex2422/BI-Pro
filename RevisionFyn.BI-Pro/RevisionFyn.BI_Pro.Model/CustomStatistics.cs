@@ -29,12 +29,26 @@ namespace RevisionFyn.BI_Pro.Model
 
         public static double Highest(List<double> inputData)
         {
-            return inputData.Max();
+            try
+            {
+                return Math.Round(inputData.Max(), 2);
+            }
+            catch (InvalidOperationException)
+            {
+                return 0;
+            }           
         }
 
         public static double Lowest(List<double> inputData)
         {
-            return inputData.Min();
+            try
+            {
+                return Math.Round(inputData.Min(), 2);
+            }
+            catch (InvalidOperationException)
+            {
+                return 0;
+            }
         }
 
         public static double Count(List<double> inputData)
@@ -44,7 +58,7 @@ namespace RevisionFyn.BI_Pro.Model
 
         public static double Sum(List<double> inputData)
         {
-            return inputData.Sum();
+            return Math.Round(inputData.Sum(), 2);
         }
         #endregion
     }
