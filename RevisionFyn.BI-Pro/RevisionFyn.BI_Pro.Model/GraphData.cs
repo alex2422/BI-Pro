@@ -8,7 +8,7 @@ namespace RevisionFyn.BI_Pro.Model
 {
     public class GraphData
     {
-        public string Company { get; set; }
+        public string Client { get; set; }
         public int StartYear { get; set; }
         public int LastYear { get; set; }
         public string Color { get; set; }

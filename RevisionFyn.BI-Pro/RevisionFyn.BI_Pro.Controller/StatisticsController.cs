@@ -85,7 +85,7 @@ namespace RevisionFyn.BI_Pro.Controller
             }
 
             _ListOfActiveCalculations = _StoredProcedure.GetActiveStatisticsCalculation();
-            _ListOfCompanies = _StoredProcedure.GetCompanies();
+            _ListOfCompanies = _StoredProcedure.GetClient();
 
             AddStatisticsCalculationToComboBox(StatisticsCalculationComboBox, _ListOfActiveCalculations);
             AddCompanyToListBox(DefaultCompaniesListBox, _ListOfCompanies);

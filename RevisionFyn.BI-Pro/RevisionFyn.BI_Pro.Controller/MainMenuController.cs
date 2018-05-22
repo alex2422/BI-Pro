@@ -17,9 +17,9 @@ namespace RevisionFyn.BI_Pro.Controller
         #region Variables / Properties
         private static MainMenuController controllerInstance;
         private StoredProcedure _StoredProcedure { get; set; }
-        public List<Client> companies = new List<Client>();
+        public List<Client> clients = new List<Client>();
         List<double> hourValues = new List<double>() { 0.25, 0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75 };
-        List<Client> listOfCompanies = new List<Client>();
+        List<Client> listOfClients = new List<Client>();
         #endregion
 
         #region Constructor
@@ -118,25 +118,25 @@ namespace RevisionFyn.BI_Pro.Controller
             List<GraphData> listOfGraphData = _StoredProcedure.GetGraphData();
             if (listOfGraphData.Count != 0)
             {
-                label1.Content = listOfGraphData[0].Company;
+                label1.Content = listOfGraphData[0].Client;
                 label1.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[0].Color);
-                label2.Content = listOfGraphData[1].Company;
+                label2.Content = listOfGraphData[1].Client;
                 label2.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[1].Color);
-                label3.Content = listOfGraphData[2].Company;
+                label3.Content = listOfGraphData[2].Client;
                 label3.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[2].Color);
                 foreach (GraphData graphData in listOfGraphData)
                 {
                     List<int> xList = new List<int>();
                     List<int> yList = new List<int>();
                     List<AccountCard> accCardList = new List<AccountCard>();
-                    List<Client> companyList = new List<Client>();
+                    List<Client> clientList = new List<Client>();
                     for (int i = graphData.StartYear; i <= graphData.LastYear; i++)
                     {
                         xList.Add(i);
                     }
-                    companyList = _StoredProcedure.GetCompanies();
-                    companyList.RemoveAll(s => s.ClientName != graphData.Company);
-                    accCardList = _StoredProcedure.Getbalance(companyList[0].ClientID);
+                    clientList = _StoredProcedure.GetClient();
+                    clientList.RemoveAll(s => s.ClientName != graphData.Client);
+                    accCardList = _StoredProcedure.Getbalance(clientList[0].ClientID);
                     accCardList.RemoveAll(s => s.Year > xList.Last());
                     accCardList.RemoveAll(s => s.Year < xList[0]);
                     foreach (AccountCard accCard in accCardList)
@@ -147,7 +147,7 @@ namespace RevisionFyn.BI_Pro.Controller
                     xList.ToArray<int>();
                     LineGraph lg = new LineGraph();
                     graphGrid.Children.Add(lg);
-                    lg.Description = graphData.Company;
+                    lg.Description = graphData.Client;
                     lg.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(graphData.Color);
                     lg.StrokeThickness = 2;
                     lg.Plot(xList, yList);
@@ -190,41 +190,41 @@ namespace RevisionFyn.BI_Pro.Controller
 
             foreach (int clientID in mappedClientID)
             {
-                tempCompanies.Add(_StoredProcedure.GetCompaniesByID(clientID));
+                tempCompanies.Add(_StoredProcedure.GetClientsByID(clientID));
             }
 
             customStatisticsRelatedToKPI.ChoosenCompanies = tempCompanies;
 
-            foreach (Client company in customStatisticsRelatedToKPI.ChoosenCompanies)
+            foreach (Client client in customStatisticsRelatedToKPI.ChoosenCompanies)
             {
                 switch (customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID)
                 {
                     case 1:
-                        foreach (double totalHoursValue in _StoredProcedure.GetTotalHoursByClientID(company.ClientID))
+                        foreach (double totalHoursValue in _StoredProcedure.GetTotalHoursByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(totalHoursValue);
                         }
                         break;
                     case 2:
-                        foreach (double salesAmountValue in _StoredProcedure.GetSalesAmountByClientID(company.ClientID))
+                        foreach (double salesAmountValue in _StoredProcedure.GetSalesAmountByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(salesAmountValue);
                         }
                         break;
                     case 3:
-                        foreach (double totalConsumptionValue in _StoredProcedure.GetTotalConsumptionByClientID(company.ClientID))
+                        foreach (double totalConsumptionValue in _StoredProcedure.GetTotalConsumptionByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(totalConsumptionValue);
                         }
                         break;
                     case 4:
-                        foreach (double balanceValue in _StoredProcedure.GetNegativeBalanceByClientID(company.ClientID))
+                        foreach (double balanceValue in _StoredProcedure.GetNegativeBalanceByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(balanceValue);
                         }
                         break;
                     case 5:
-                        foreach (double balanceValue in _StoredProcedure.GetPositiveBalanceByClientID(company.ClientID))
+                        foreach (double balanceValue in _StoredProcedure.GetPositiveBalanceByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(balanceValue);
                         }

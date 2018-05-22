@@ -51,16 +51,16 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         public void LoadCompaniesToComboBox(ComboBox dropDownClient1, ComboBox dropDownClient2, ComboBox dropDownClient3)
         {
-            List<Client> listOfClients = _StoredProcedure.GetCompanies();
+            List<Client> listOfClients = _StoredProcedure.GetClient();
             List<GraphData> listOfData = _StoredProcedure.GetGraphData();
             dropDownClient1.ItemsSource = listOfClients;
             dropDownClient2.ItemsSource = listOfClients;
             dropDownClient3.ItemsSource = listOfClients;
             if (listOfData.Count != 0)
             {
-                dropDownClient1.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[0].Company).FirstOrDefault();
-                dropDownClient2.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[1].Company).FirstOrDefault();
-                dropDownClient3.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[2].Company).FirstOrDefault();
+                dropDownClient1.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[0].Client).FirstOrDefault();
+                dropDownClient2.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[1].Client).FirstOrDefault();
+                dropDownClient3.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[2].Client).FirstOrDefault();
             }
             dropDownClient1.DisplayMemberPath = "ClientName";
             dropDownClient2.DisplayMemberPath = "ClientName";

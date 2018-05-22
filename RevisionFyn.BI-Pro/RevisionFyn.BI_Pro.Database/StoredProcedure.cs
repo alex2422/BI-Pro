@@ -551,9 +551,9 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
-        public Client GetCompaniesByID(int requestedClientID)
+        public Client GetClientsByID(int requestedClientID)
         {
-            Client company = new Client();
+            Client client = new Client();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -582,7 +582,7 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(clientID, out int convertedClientID);
 
 
-                            company = new Client()
+                            client = new Client()
                             {
                                 ClientID = convertedClientID,
                                 ClientName = clientName,
@@ -600,7 +600,7 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                return company;
+                return client;
             }
         }
 
@@ -800,7 +800,7 @@ namespace RevisionFyn.BI_Pro.Database
         }
         #endregion
 
-        public List<Client> GetCompanies()
+        public List<Client> GetClient()
         {
             List<Client> companies = new List<Client>();
 
@@ -916,7 +916,7 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string balance = reader["Balance"].ToString();
                             int year = (int)reader["Year"];
-                            int companyID = (int)reader["FK_ClientID"];
+                            int clientID = (int)reader["FK_ClientID"];
 
                             Int32.TryParse(balance, out int convertedBalance);
 
@@ -924,7 +924,7 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 Balance = convertedBalance,
                                 Year = year,
-                                CompanyID = companyID
+                                ClientID = clientID
                             });
                         }
                     }
@@ -957,14 +957,14 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string clientName = reader["Company"].ToString();
+                            string clientName = reader["Client"].ToString();
                             int startYear = Convert.ToInt32(reader["StartYear"]);
                             int lastyear = Convert.ToInt32(reader["LastYear"]);
                             string color = reader["Color"].ToString();
                             int colorIndex = (int)reader["ColorIndex"];
                             listGraphData.Add(new GraphData()
                             {
-                                Company = clientName,
+                                Client = clientName,
                                 StartYear = startYear,
                                 LastYear = lastyear,
                                 Color = color,
@@ -1154,7 +1154,7 @@ namespace RevisionFyn.BI_Pro.Database
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addGraphData.Parameters.Add(new SqlParameter("@Company", client.ClientName));
+                    addGraphData.Parameters.Add(new SqlParameter("@Client", client.ClientName));
                     addGraphData.Parameters.Add(new SqlParameter("@StartYear", startYear));
                     addGraphData.Parameters.Add(new SqlParameter("@LastYear", lastYear));
                     addGraphData.Parameters.Add(new SqlParameter("@Color", color));
