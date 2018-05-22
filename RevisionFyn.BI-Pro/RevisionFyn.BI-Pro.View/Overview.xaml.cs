@@ -29,9 +29,9 @@ namespace RevisionFyn.BI_Pro.View
             controller = OverviewController.GetInstance();
             controller.ClearData();
             controller.PopulateData();
-            controller.LoadIntoListBox(ListBoxClientsToBeChosen, ListBoxClientsCampanies);
-            controller.LoadIntoComoBox(ComboBoxStartYear);
-            controller.LoadIntoComoBox(ComboBoxEndYear);
+            controller.LoadIntoListBox(ClientsToBeChosenListBox, ClientsCampaniesListBox);
+            controller.LoadIntoComoBox(StartYearComboBox);
+            controller.LoadIntoComoBox(EndYearComboBox);
         }
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -50,27 +50,27 @@ namespace RevisionFyn.BI_Pro.View
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonAdd(ListBoxClientsToBeChosen);
+            controller.ButtonAdd(ClientsToBeChosenListBox);
         }
 
         private void ButtonRemove_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonRemove(ListBoxClientsCampanies);
+            controller.ButtonRemove(ClientsCampaniesListBox);
         }
 
         private void ButtonExport_Click(object sender, RoutedEventArgs e)
         {
-            controller.ExportData(ListBoxClientsCampanies, ComboBoxStartYear);
+            controller.ExportData(ClientsCampaniesListBox, StartYearComboBox);
         }
 
         private void ButtonRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonRemoveAll(ListBoxClientsCampanies);
+            controller.ButtonRemoveAll(ClientsCampaniesListBox);
         }
 
         private void ButtonAddAll_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonAddAll(ListBoxClientsToBeChosen);
+            controller.ButtonAddAll(ClientsToBeChosenListBox);
         }
     }
 }

@@ -14,15 +14,15 @@
         <Button x:Name="StatisticsButton" Content="Button" HorizontalAlignment="Left" Margin="0,274,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="StatisticsButton_Click"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
         <Button x:Name="MainMenuButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="MainMenuButton_Click"/>
-        <ComboBox x:Name="dropDownComp1" HorizontalAlignment="Left" Margin="250,428,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="dropDownComp2" HorizontalAlignment="Left" Margin="250,455,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="dropDownComp3" HorizontalAlignment="Left" Margin="250,482,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="dropDownStartYear1" HorizontalAlignment="Left" Margin="417,428,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownStartYear2" HorizontalAlignment="Left" Margin="417,455,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownStartYear3" HorizontalAlignment="Left" Margin="417,482,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownEndYear1" HorizontalAlignment="Left" Margin="537,428,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownEndYear2" HorizontalAlignment="Left" Margin="537,455,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="dropDownEndYear3" HorizontalAlignment="Left" Margin="537,482,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="Client1ComboBox" HorizontalAlignment="Left" Margin="250,428,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="Client2ComboBox" HorizontalAlignment="Left" Margin="250,455,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="Client3ComboBox" HorizontalAlignment="Left" Margin="250,482,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="Year1ComboBox" HorizontalAlignment="Left" Margin="417,428,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="Year2ComboBox" HorizontalAlignment="Left" Margin="417,455,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="Year3ComboBox" HorizontalAlignment="Left" Margin="417,482,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="EndYear1ComboBox" HorizontalAlignment="Left" Margin="537,428,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="EndYear2ComboBox" HorizontalAlignment="Left" Margin="537,455,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="EndYear3ComboBox" HorizontalAlignment="Left" Margin="537,482,0,0" VerticalAlignment="Top" Width="75"/>
         <Label Content="Tilpas KPI'er" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="206,73,0,0" VerticalAlignment="Top" Width="662"/>
         <ListView x:Name="KpiListVIew" HorizontalAlignment="Left" Height="220" Margin="206,121,0,0" VerticalAlignment="Top" Width="406" SelectionChanged="KpiListVIew_SelectionChanged">
             <ListView.Resources>
@@ -77,7 +77,7 @@
             <Button x:Name="AddKpiButton" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" MinWidth="80" Margin="0,29,16,-23" Content="Tilføj ny KPI" Width="174" Click="AddKpiButton_Click"  />
         </Grid>
         <Button x:Name="SaveButton" Content="Gem Ændringer" HorizontalAlignment="Left" Margin="768,484,0,0" VerticalAlignment="Top" Width="100" Click="SaveButton_Click"/>
-        <ComboBox x:Name="dropDownColour1" HorizontalAlignment="Left" Margin="628,428,0,0" VerticalAlignment="Top" Width="75">
+        <ComboBox x:Name="Color1ComboBox" HorizontalAlignment="Left" Margin="628,428,0,0" VerticalAlignment="Top" Width="75">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -87,7 +87,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox x:Name="dropDownColour2" HorizontalAlignment="Left" Margin="628,455,0,0" VerticalAlignment="Top" Width="75">
+        <ComboBox x:Name="Color2ComboBox" HorizontalAlignment="Left" Margin="628,455,0,0" VerticalAlignment="Top" Width="75">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -97,7 +97,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox x:Name="dropDownColour3" HorizontalAlignment="Left" Margin="628,482,0,0" VerticalAlignment="Top" Width="75">
+        <ComboBox x:Name="Color3ComboBox" HorizontalAlignment="Left" Margin="628,482,0,0" VerticalAlignment="Top" Width="75">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

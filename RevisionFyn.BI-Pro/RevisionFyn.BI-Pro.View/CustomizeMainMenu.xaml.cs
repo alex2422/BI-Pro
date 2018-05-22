@@ -31,14 +31,14 @@ namespace RevisionFyn.BI_Pro.View
             controller.AdjustInitalButtons(SaveKpiButton, DeleteKpiButton, AddKpiButton);
             controller.CreateGraphValues();
             controller.CreateYearsArray();
-            controller.LoadCompaniesToComboBox(dropDownComp1, dropDownComp2, dropDownComp3);
-            controller.LoadYearToComboBox(dropDownStartYear1, dropDownStartYear2, dropDownStartYear3);
-            controller.LoadYearToComboBox(dropDownEndYear1, dropDownEndYear2, dropDownEndYear3);
+            controller.LoadCompaniesToComboBox(Client1ComboBox, Client2ComboBox, Client3ComboBox);
+            controller.LoadYearToComboBox(Year1ComboBox, Year2ComboBox, Year3ComboBox);
+            controller.LoadYearToComboBox(EndYear1ComboBox, EndYear2ComboBox, EndYear3ComboBox);
             ColorComboBox.ItemsSource = typeof(Colors).GetProperties();
-            dropDownColour1.ItemsSource = typeof(Colors).GetProperties();
-            dropDownColour2.ItemsSource = typeof(Colors).GetProperties();
-            dropDownColour3.ItemsSource = typeof(Colors).GetProperties();
-            controller.LoadColorsForGraph(dropDownColour1, dropDownColour2, dropDownColour3);
+            Color1ComboBox.ItemsSource = typeof(Colors).GetProperties();
+            Color2ComboBox.ItemsSource = typeof(Colors).GetProperties();
+            Color3ComboBox.ItemsSource = typeof(Colors).GetProperties();
+            controller.LoadColorsForGraph(Color1ComboBox, Color2ComboBox, Color3ComboBox);
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
@@ -75,9 +75,9 @@ namespace RevisionFyn.BI_Pro.View
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             controller.clearGraph();
-            controller.SaveButton(dropDownComp1, dropDownStartYear1, dropDownEndYear1, dropDownColour1);
-            controller.SaveButton(dropDownComp2, dropDownStartYear2, dropDownEndYear2, dropDownColour2);
-            controller.SaveButton(dropDownComp3, dropDownStartYear3, dropDownEndYear3, dropDownColour3);
+            controller.SaveButton(Client1ComboBox, Year1ComboBox, EndYear1ComboBox, Color1ComboBox);
+            controller.SaveButton(Client2ComboBox, Year2ComboBox, EndYear2ComboBox, Color2ComboBox);
+            controller.SaveButton(Client3ComboBox, Year3ComboBox, EndYear3ComboBox, Color3ComboBox);
         }
 
         private void AddKpiButton_Click(object sender, RoutedEventArgs e)
