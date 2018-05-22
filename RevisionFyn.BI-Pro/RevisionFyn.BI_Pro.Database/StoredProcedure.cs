@@ -33,17 +33,17 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand addKpiCmd = new SqlCommand("sp_AddSystemKPI", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_AddSystemKPI", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addKpiCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
-                    addKpiCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", dataID));
-                    addKpiCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
-                    addKpiCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
-                    addKpiCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
-                    addKpiCmd.ExecuteNonQuery();
+                    sqlCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
+                    sqlCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", dataID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
+                    sqlCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
+                    sqlCmd.ExecuteNonQuery();
 
                     result = "Succes: KPI'en er nu tilføjet";
                 }
