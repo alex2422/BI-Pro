@@ -58,13 +58,13 @@ namespace RevisionFyn.BI_Pro.Controller
             dropDownClient3.ItemsSource = listOfClients;
             if (listOfData.Count != 0)
             {
-                dropDownClient1.SelectedItem = listOfClients.Where(company => company.CompanyName == listOfData[0].Company).FirstOrDefault();
-                dropDownClient2.SelectedItem = listOfClients.Where(company => company.CompanyName == listOfData[1].Company).FirstOrDefault();
-                dropDownClient3.SelectedItem = listOfClients.Where(company => company.CompanyName == listOfData[2].Company).FirstOrDefault();
+                dropDownClient1.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[0].Company).FirstOrDefault();
+                dropDownClient2.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[1].Company).FirstOrDefault();
+                dropDownClient3.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[2].Company).FirstOrDefault();
             }
-            dropDownClient1.DisplayMemberPath = "CompanyName";
-            dropDownClient2.DisplayMemberPath = "CompanyName";
-            dropDownClient3.DisplayMemberPath = "CompanyName";
+            dropDownClient1.DisplayMemberPath = "ClientName";
+            dropDownClient2.DisplayMemberPath = "ClientName";
+            dropDownClient3.DisplayMemberPath = "ClientName";
         }
         public void LoadYearToComboBox(ComboBox dropDownYear1, ComboBox dropDownYear2, ComboBox dropDownYear3)
         {
@@ -248,7 +248,7 @@ namespace RevisionFyn.BI_Pro.Controller
             for (int company = 0; company < companies.Count; company++)
             {
                 placeHolder.Clear();
-                for (int i = companies[company].CompanyStartYear - 1; i < companies[company].CompanyEndYear; i++)
+                for (int i = companies[company].ClientStartYear - 1; i < companies[company].ClientEndYear; i++)
                 {
                     placeHolder.Add(i);
                 }
@@ -267,25 +267,25 @@ namespace RevisionFyn.BI_Pro.Controller
             List<double> Comp3Coverage = new List<double>() { 50, 0, -50, 0, -5, -30};
             Client Comp1 = new Client
             {
-                CompanyName = "Firma1",
-                CompanyStartYear = 2012,
-                CompanyEndYear = 2017,
+                ClientName = "Firma1",
+                ClientStartYear = 2012,
+                ClientEndYear = 2017,
                 Coverages = Comp1Coverage,
                 y = Comp1Coverage.ToArray()
             };
             Client Comp2 = new Client
             {
-                CompanyName = "Firma2",
-                CompanyStartYear = 2012,
-                CompanyEndYear = 2017,
+                ClientName = "Firma2",
+                ClientStartYear = 2012,
+                ClientEndYear = 2017,
                 Coverages = Comp2Coverage,
                 y = Comp2Coverage.ToArray()
             };
             Client Comp3 = new Client
             {
-                CompanyName = "Firma3",
-                CompanyStartYear = 2012,
-                CompanyEndYear = 2017,
+                ClientName = "Firma3",
+                ClientStartYear = 2012,
+                ClientEndYear = 2017,
                 Coverages = Comp3Coverage,
                 y = Comp3Coverage.ToArray()
             };
@@ -297,13 +297,13 @@ namespace RevisionFyn.BI_Pro.Controller
         public void LoadValuesIntoCompanyComboBox(ComboBox comboBox)
         {
             comboBox.ItemsSource = companies;
-            comboBox.DisplayMemberPath = "CompanyName";
+            comboBox.DisplayMemberPath = "ClientName";
         }
 
         public void LoadColoursIntoCompanyComboBox(ComboBox comboBox)
         {
             comboBox.ItemsSource = companies;
-            comboBox.DisplayMemberPath = "CompanyName";
+            comboBox.DisplayMemberPath = "ClientName";
         }
 
         public void LoadValuesIntoCompanyStartYearBox(ComboBox comboBox, ComboBox companyBox)

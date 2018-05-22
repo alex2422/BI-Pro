@@ -27,13 +27,11 @@ namespace RevisionFyn.BI_Pro.View
             InitializeComponent();
 
             controller = OverviewController.GetInstance();
-            //controller.ComboBoxYear();
             controller.ClearData();
             controller.PopulateData();
-            controller.LoadIntoListBox(ListBoxCompaniesToBeChosen, ListBoxChosenCampanies);
+            controller.LoadIntoListBox(ListBoxClientsToBeChosen, ListBoxClientsCampanies);
             controller.LoadIntoComoBox(ComboBoxStartYear);
             controller.LoadIntoComoBox(ComboBoxEndYear);
-            
         }
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -52,39 +50,27 @@ namespace RevisionFyn.BI_Pro.View
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonAdd(ListBoxCompaniesToBeChosen);
-
-
-        }
-
-        private void ListOfChosenCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            controller.ButtonAdd(ListBoxClientsToBeChosen);
         }
 
         private void ButtonRemove_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonRemove(ListBoxChosenCampanies);
-        }
-
-        private void ComboEndYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            controller.ButtonRemove(ListBoxClientsCampanies);
         }
 
         private void ButtonExport_Click(object sender, RoutedEventArgs e)
         {
-            controller.ExportData(ListBoxChosenCampanies, ComboBoxStartYear);
+            controller.ExportData(ListBoxClientsCampanies, ComboBoxStartYear);
         }
 
         private void ButtonRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonRemoveAll(ListBoxChosenCampanies);
+            controller.ButtonRemoveAll(ListBoxClientsCampanies);
         }
 
         private void ButtonAddAll_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonAddAll(ListBoxCompaniesToBeChosen);
+            controller.ButtonAddAll(ListBoxClientsToBeChosen);
         }
     }
 }
