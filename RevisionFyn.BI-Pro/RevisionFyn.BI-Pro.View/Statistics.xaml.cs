@@ -78,7 +78,7 @@ namespace RevisionFyn.BI_Pro.View
             controller.ShowSelectedStep(Step3Grid);
         }
 
-        private void AddStatisticsButton_Click(object sender, RoutedEventArgs e)
+        private void AddCustomStatisticsButton_Click(object sender, RoutedEventArgs e)
         {
             controller.SaveCustomStatistics(FavoriteNameTextBox);
         }

@@ -21,7 +21,7 @@
             <Image x:Name="Step3CircleImage" HorizontalAlignment="Left" Height="64" Width="64" Margin="580,13,0,0" VerticalAlignment="Top" Source="Images/DefaultCircle.png" MouseUp="Step3CircleImage_MouseUp" />
         </Grid>
         <Grid x:Name="Step1Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697">
-            <Label Content="Vælg statistik type" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>
+            <Label x:Name="GridTitleLabel" Content="Vælg statistik type" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,-1.446" Width="677"/>
             <StackPanel x:Name="StatisticsTypeStackPanel" HorizontalAlignment="Left" Height="340" Margin="183,92,0,0" VerticalAlignment="Top" Width="326"/>
         </Grid>
         <Grid x:Name="Step2Grid" HorizontalAlignment="Left" Height="442" Margin="193,158,0,0" VerticalAlignment="Top" Width="697" Visibility="Hidden">
@@ -48,7 +48,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Navn:"/>
                 <TextBox x:Name="FavoriteNameTextBox" Grid.Column="1" Grid.Row="0" Margin="3,3,-133,3" />
-                <Button x:Name="AddStatisticsButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" MinWidth="80" Margin="0,6,-100,0" Content="Tilføj til favoriter" Width="172" Click="AddStatisticsButton_Click"/>
+                <Button x:Name="AddCustomStatisticsButton" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" MinWidth="80" Margin="0,6,-100,0" Content="Tilføj til favoriter" Width="172" Click="AddCustomStatisticsButton_Click"/>
             </Grid>
         </Grid>
     </Grid>

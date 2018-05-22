@@ -193,9 +193,9 @@ namespace RevisionFyn.BI_Pro.Controller
                 tempCompanies.Add(_StoredProcedure.GetClientByID(clientID));
             }
 
-            customStatisticsRelatedToKPI.ChoosenCompanies = tempCompanies;
+            customStatisticsRelatedToKPI.ChoosenClients = tempCompanies;
 
-            foreach (Client client in customStatisticsRelatedToKPI.ChoosenCompanies)
+            foreach (Client client in customStatisticsRelatedToKPI.ChoosenClients)
             {
                 switch (customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID)
                 {

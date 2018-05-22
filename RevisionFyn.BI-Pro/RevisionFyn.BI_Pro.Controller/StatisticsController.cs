@@ -27,7 +27,7 @@ namespace RevisionFyn.BI_Pro.Controller
         private bool _IsStep3Done { get; set; }
         private CustomStatistics _CustomStatistics { get; set; }
         private List<StatisticsCalculation> _ListOfActiveCalculations { get; set; }
-        private List<Client> _ListOfCompanies { get; set; }
+        private List<Client> _ListOfClients { get; set; }
         #endregion
 
         #region Constructor
@@ -64,18 +64,18 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void LoadStep1(StackPanel StatisticsTypeStackPanel)
         {
-            LoadButtonsIntoStackPanel(StatisticsTypeStackPanel, _StoredProcedure.GetActiveStatisticsType());
+            LoadElementsIntoStackPanel(StatisticsTypeStackPanel, _StoredProcedure.GetActiveStatisticsType());
             UpdateProgress(_ProgressGrid, 0);
             _IsStep1Done = true;
         }
 
-        public void LoadStep2(ListBox DefaultCompaniesListBox, ComboBox StatisticsCalculationComboBox)
+        public void LoadStep2(ListBox DefaultClientsListBox, ComboBox StatisticsCalculationComboBox)
         {
             foreach (Control control in _Step2Controls)
             {
                 if (control is ListBox)
                 {
-                    DefaultCompaniesListBox = (ListBox)control;
+                    DefaultClientsListBox = (ListBox)control;
                 }
 
                 if (control is ComboBox)
@@ -85,22 +85,22 @@ namespace RevisionFyn.BI_Pro.Controller
             }
 
             _ListOfActiveCalculations = _StoredProcedure.GetActiveStatisticsCalculation();
-            _ListOfCompanies = _StoredProcedure.GetClient();
+            _ListOfClients = _StoredProcedure.GetClient();
 
             AddStatisticsCalculationToComboBox(StatisticsCalculationComboBox, _ListOfActiveCalculations);
-            AddCompanyToListBox(DefaultCompaniesListBox, _ListOfCompanies);
+            AddClientsToListBox(DefaultClientsListBox, _ListOfClients);
 
             _IsStep2Done = true;
         }
 
-        public void LoadStep3(ComboBox StatisticsCalculationComboBox, ListBox SelectedCompanesListBox)
+        public void LoadStep3(ComboBox StatisticsCalculationComboBox, ListBox SelectedClientsListBox)
         {
             if (StatisticsCalculationComboBox.SelectedIndex != -1)
             {
                 _CustomStatistics.ChoosenStatisticsCalculationID = _ListOfActiveCalculations.Find(x => x.Name == StatisticsCalculationComboBox.SelectedValue.ToString()).ID;
             }
 
-            _CustomStatistics.ChoosenCompanies = GetSelectedCompanies(SelectedCompanesListBox);
+            _CustomStatistics.ChoosenClients = GetSelectedClients(SelectedClientsListBox);
 
             _IsStep3Done = true;
         }
@@ -190,43 +190,43 @@ namespace RevisionFyn.BI_Pro.Controller
                 _CustomStatistics.ChoosenStatisticsCalculationID));
             }
 
-            AddSelectedCompaniesToMap();
+            AddSelectedClientsToMap();
         }
         #endregion
 
         #region Private methods
 
-        private List<Client> GetSelectedCompanies(ListBox SelectedCompanesListBox)
+        private List<Client> GetSelectedClients(ListBox SelectedClientsListBox)
         {
-            List<Client> selectedCompanies = new List<Client>();
+            List<Client> selectedClients = new List<Client>();
 
-            foreach (string item in SelectedCompanesListBox.Items)
+            foreach (string item in SelectedClientsListBox.Items)
             {
-                selectedCompanies.Add(_ListOfCompanies.Find(x => x.ClientName == item));
+                selectedClients.Add(_ListOfClients.Find(x => x.ClientName == item));
             }
 
-            return selectedCompanies;
+            return selectedClients;
         }
 
-        private void AddSelectedCompaniesToMap()
+        private void AddSelectedClientsToMap()
         {
-            foreach (Client c in _CustomStatistics.ChoosenCompanies)
+            foreach (Client client in _CustomStatistics.ChoosenClients)
             {
-                _StoredProcedure.AddStatisticsFavoriteClientMap(c.ClientID);
+                _StoredProcedure.AddStatisticsFavoriteClientMap(client.ClientID);
             }
         }
 
-        private void LoadButtonsIntoStackPanel(StackPanel StatisticsTypeStackPanel, List<StatisticsType> activeStatisticsType)
+        private void LoadElementsIntoStackPanel(StackPanel StatisticsTypeStackPanel, List<StatisticsType> listOfActiveStatisticsType)
         {
-            foreach (StatisticsType st in activeStatisticsType)
+            foreach (StatisticsType sType in listOfActiveStatisticsType)
             {
                 Button typeChooseButton = new Button
                 {
-                    Name = String.Format("TypeChoose{0}Button", st.ID),
-                    Content = st.Name,
+                    Name = String.Format("TypeChoose{0}Button", sType.ID),
+                    Content = sType.Name,
                     Margin = new Thickness(10),
                     FontSize = 30,
-                    Tag = st.ID
+                    Tag = sType.ID
                 };
 
                 typeChooseButton.Click += TypeChooseButton_Click;
@@ -237,8 +237,8 @@ namespace RevisionFyn.BI_Pro.Controller
 
         private void TypeChooseButton_Click(object sender, RoutedEventArgs e)
         {
-            Button statisticsTypeSender = (Button)sender;
-            _CustomStatistics.ChoosenStatisticsTypeID = (int)statisticsTypeSender.Tag;
+            Button statisticsTypeSenderButton = (Button)sender;
+            _CustomStatistics.ChoosenStatisticsTypeID = (int)statisticsTypeSenderButton.Tag;
 
             _Step1Grid.Visibility = Visibility.Hidden;
             _Step2Grid.Visibility = Visibility.Visible;
@@ -257,19 +257,19 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             StatisticsCalculationComboBox.Items.Clear();
 
-            foreach (StatisticsCalculation sc in listOfActiveCalculations)
+            foreach (StatisticsCalculation sCalculation in listOfActiveCalculations)
             {
-                StatisticsCalculationComboBox.Items.Add(sc.Name);
+                StatisticsCalculationComboBox.Items.Add(sCalculation.Name);
             }
         }
 
-        private void AddCompanyToListBox(ListBox DefaultCompaniesListBox, List<Client> listOfCompanies)
+        private void AddClientsToListBox(ListBox DefaultClientListBox, List<Client> listOfClients)
         {
-            DefaultCompaniesListBox.Items.Clear();
+            DefaultClientListBox.Items.Clear();
 
-            foreach (Client company in listOfCompanies)
+            foreach (Client client in listOfClients)
             {
-                DefaultCompaniesListBox.Items.Add(company.ClientName);
+                DefaultClientListBox.Items.Add(client.ClientName);
             }
         }
         #endregion
