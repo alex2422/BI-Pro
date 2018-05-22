@@ -969,14 +969,14 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string clientName = reader["Company"].ToString();
+                            string clientName = reader["Client"].ToString();
                             int startYear = Convert.ToInt32(reader["StartYear"]);
                             int lastyear = Convert.ToInt32(reader["LastYear"]);
                             string color = reader["Color"].ToString();
                             int colorIndex = (int)reader["ColorIndex"];
                             listGraphData.Add(new GraphData()
                             {
-                                Company = clientName,
+                                Client = clientName,
                                 StartYear = startYear,
                                 LastYear = lastyear,
                                 Color = color,
@@ -1166,7 +1166,7 @@ namespace RevisionFyn.BI_Pro.Database
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addGraphData.Parameters.Add(new SqlParameter("@Company", client.ClientName));
+                    addGraphData.Parameters.Add(new SqlParameter("@Client", client.ClientName));
                     addGraphData.Parameters.Add(new SqlParameter("@StartYear", startYear));
                     addGraphData.Parameters.Add(new SqlParameter("@LastYear", lastYear));
                     addGraphData.Parameters.Add(new SqlParameter("@Color", color));

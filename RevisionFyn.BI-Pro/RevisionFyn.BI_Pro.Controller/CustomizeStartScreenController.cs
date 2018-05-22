@@ -58,9 +58,9 @@ namespace RevisionFyn.BI_Pro.Controller
             dropDownClient3.ItemsSource = listOfClients;
             if (listOfData.Count != 0)
             {
-                dropDownClient1.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[0].Company).FirstOrDefault();
-                dropDownClient2.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[1].Company).FirstOrDefault();
-                dropDownClient3.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[2].Company).FirstOrDefault();
+                dropDownClient1.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[0].Client).FirstOrDefault();
+                dropDownClient2.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[1].Client).FirstOrDefault();
+                dropDownClient3.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[2].Client).FirstOrDefault();
             }
             dropDownClient1.DisplayMemberPath = "ClientName";
             dropDownClient2.DisplayMemberPath = "ClientName";

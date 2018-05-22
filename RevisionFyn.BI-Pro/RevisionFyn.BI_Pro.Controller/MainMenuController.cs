@@ -118,11 +118,11 @@ namespace RevisionFyn.BI_Pro.Controller
             List<GraphData> listOfGraphData = _StoredProcedure.GetGraphData();
             if (listOfGraphData.Count != 0)
             {
-                label1.Content = listOfGraphData[0].Company;
+                label1.Content = listOfGraphData[0].Client;
                 label1.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[0].Color);
-                label2.Content = listOfGraphData[1].Company;
+                label2.Content = listOfGraphData[1].Client;
                 label2.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[1].Color);
-                label3.Content = listOfGraphData[2].Company;
+                label3.Content = listOfGraphData[2].Client;
                 label3.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[2].Color);
                 foreach (GraphData graphData in listOfGraphData)
                 {
@@ -135,7 +135,7 @@ namespace RevisionFyn.BI_Pro.Controller
                         xList.Add(i);
                     }
                     companyList = _StoredProcedure.GetCompanies();
-                    companyList.RemoveAll(s => s.ClientName != graphData.Company);
+                    companyList.RemoveAll(s => s.ClientName != graphData.Client);
                     accCardList = _StoredProcedure.Getbalance(companyList[0].ClientID);
                     accCardList.RemoveAll(s => s.Year > xList.Last());
                     accCardList.RemoveAll(s => s.Year < xList[0]);
@@ -147,7 +147,7 @@ namespace RevisionFyn.BI_Pro.Controller
                     xList.ToArray<int>();
                     LineGraph lg = new LineGraph();
                     graphGrid.Children.Add(lg);
-                    lg.Description = graphData.Company;
+                    lg.Description = graphData.Client;
                     lg.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(graphData.Color);
                     lg.StrokeThickness = 2;
                     lg.Plot(xList, yList);
