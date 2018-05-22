@@ -45,7 +45,7 @@ namespace RevisionFyn.BI_Pro.Controller
             List<KPI> activeKPI = _StoredProcedure.GetActiveKPI();
 
             int numberOfActiveKPI = activeKPI.Count;
-            int kpiDisplacement = 10;
+            int kpiDisplacement = 15;
 
             if (numberOfActiveKPI != 0)
             {
@@ -62,7 +62,7 @@ namespace RevisionFyn.BI_Pro.Controller
                     {
                         Name = "KpiContentGrid" + (i + 1),
                         Height = 160,
-                        Width = 180,
+                        Width = 200,
                         HorizontalAlignment = HorizontalAlignment.Left,
                         Margin = new Thickness(kpiDisplacement, 0, 0, 0),
                         Background = (SolidColorBrush)new BrushConverter().ConvertFromString(activeKPI[i].Color),
@@ -83,10 +83,11 @@ namespace RevisionFyn.BI_Pro.Controller
 
                     Label KpiValueLabel = new Label
                     {
+
                         Name = "KpiValueLabel",
-                        Content = activeKPI[i].Value.ToString(),
+                        Content = String.Format("{0:0,0.##}", activeKPI[i].Value),
                         Foreground = Brushes.White,
-                        FontSize = 45,
+                        FontSize = 40,
                         Margin = new Thickness(4, 47, 0, 0),
                         HorizontalAlignment = HorizontalAlignment.Left,
                     };

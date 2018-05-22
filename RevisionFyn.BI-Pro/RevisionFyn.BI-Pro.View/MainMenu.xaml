@@ -32,7 +32,7 @@
             </d3:Chart.LegendContent>
             <Grid Name="lines"/>
         </d3:Chart>
-        <Grid x:Name="KpiGrid" HorizontalAlignment="Left" Height="185" Margin="208,81,0,0" VerticalAlignment="Top" Width="658" Background="DimGray">
+        <Grid x:Name="KpiGrid" HorizontalAlignment="Left" Height="185" Margin="208,74,0,0" VerticalAlignment="Top" Width="658" Background="DimGray">
             <Label x:Name="Standard" Content="Ingen KPI'er fundet" FontSize="40" Foreground="White" HorizontalAlignment="Left" Margin="149,56,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Label Content="Intet firma" FontWeight="Bold" x:Name="LabelClient1" HorizontalAlignment="Left" Margin="260,284,0,0" VerticalAlignment="Top" Width="202"/>
