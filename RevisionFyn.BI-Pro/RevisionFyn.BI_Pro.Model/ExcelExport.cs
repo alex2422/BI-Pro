@@ -112,7 +112,7 @@ namespace RevisionFyn.BI_Pro.Model
                             }
                         }
                         balanceString += " "+";" + totalBalance;
-                        streamWriter.WriteLine(employeeName+";"+company.CompanyName+balanceString);
+                        streamWriter.WriteLine(employeeName+";"+company.ClientName+balanceString);
                     }
                 }
                 MessageBox.Show("filen blev eksporteret", "Succes");

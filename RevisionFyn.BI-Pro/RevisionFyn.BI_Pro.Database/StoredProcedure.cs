@@ -33,17 +33,17 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand addKpiCmd = new SqlCommand("sp_AddSystemKPI", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_AddSystemKPI", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addKpiCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
-                    addKpiCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", dataID));
-                    addKpiCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
-                    addKpiCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
-                    addKpiCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
-                    addKpiCmd.ExecuteNonQuery();
+                    sqlCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
+                    sqlCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", dataID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
+                    sqlCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
+                    sqlCmd.ExecuteNonQuery();
 
                     result = "Succes: KPI'en er nu tilføjet";
                 }
@@ -596,9 +596,9 @@ namespace RevisionFyn.BI_Pro.Database
 
                             client = new Client()
                             {
-                                CompanyID = convertedClientID,
-                                CompanyName = clientName,
-                                CompanyStartYear = Convert.ToInt32(startYear),
+                                ClientID = convertedClientID,
+                                ClientName = clientName,
+                                ClientStartYear = Convert.ToInt32(startYear),
                                 accountCards = Getbalance(convertedClientID),
                                 MainEmployee = new Employee
                                 {
@@ -842,9 +842,9 @@ namespace RevisionFyn.BI_Pro.Database
 
                             companies.Add(new Client()
                             {
-                                CompanyID = convertedClientID,
-                                CompanyName = clientName,
-                                CompanyStartYear = Convert.ToInt32(startYear),
+                                ClientID = convertedClientID,
+                                ClientName = clientName,
+                                ClientStartYear = Convert.ToInt32(startYear),
                                 accountCards = Getbalance(convertedClientID),
                                 MainEmployee = new Employee
                                 {
@@ -928,7 +928,7 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string balance = reader["Balance"].ToString();
                             int year = (int)reader["Year"];
-                            int companyID = (int)reader["FK_ClientID"];
+                            int clientID = (int)reader["FK_ClientID"];
 
                             Int32.TryParse(balance, out int convertedBalance);
 
@@ -936,7 +936,7 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 Balance = convertedBalance,
                                 Year = year,
-                                CompanyID = companyID
+                                ClientID = clientID
                             });
                         }
                     }
@@ -969,7 +969,7 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string clientName = reader["Company"].ToString();
+                            string clientName = reader["Client"].ToString();
                             int startYear = Convert.ToInt32(reader["StartYear"]);
                             int lastyear = Convert.ToInt32(reader["LastYear"]);
                             string color = reader["Color"].ToString();
@@ -1166,7 +1166,7 @@ namespace RevisionFyn.BI_Pro.Database
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    addGraphData.Parameters.Add(new SqlParameter("@Company", client.CompanyName));
+                    addGraphData.Parameters.Add(new SqlParameter("@Client", client.ClientName));
                     addGraphData.Parameters.Add(new SqlParameter("@StartYear", startYear));
                     addGraphData.Parameters.Add(new SqlParameter("@LastYear", lastYear));
                     addGraphData.Parameters.Add(new SqlParameter("@Color", color));

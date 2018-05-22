@@ -202,7 +202,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
             foreach (string item in SelectedCompanesListBox.Items)
             {
-                selectedCompanies.Add(_ListOfCompanies.Find(x => x.CompanyName == item));
+                selectedCompanies.Add(_ListOfCompanies.Find(x => x.ClientName == item));
             }
 
             return selectedCompanies;
@@ -212,7 +212,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             foreach (Client c in _CustomStatistics.ChoosenCompanies)
             {
-                _StoredProcedure.AddStatisticsFavoriteClientMap(c.CompanyID);
+                _StoredProcedure.AddStatisticsFavoriteClientMap(c.ClientID);
             }
         }
 
@@ -269,7 +269,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
             foreach (Client company in listOfCompanies)
             {
-                DefaultCompaniesListBox.Items.Add(company.CompanyName);
+                DefaultCompaniesListBox.Items.Add(company.ClientName);
             }
         }
         #endregion
