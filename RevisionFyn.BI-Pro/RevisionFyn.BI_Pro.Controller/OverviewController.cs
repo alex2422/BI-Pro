@@ -15,17 +15,17 @@ namespace RevisionFyn.BI_Pro.Controller
     {
         #region Variables
         private static OverviewController controllerInstance;
-        public StoredProcedure _StoreProcedure { get; set; }
+        public StoredProcedure _StoredProcedure { get; set; }
 
         public List<int> yearList = new List<int>();
-        ObservableCollection<Client> companyData;
-        ObservableCollection<Client> companyData2;
+        ObservableCollection<Client> clientData;
+        ObservableCollection<Client> clientData2;
         #endregion
 
         #region Constructor
         private OverviewController()
         {
-            _StoreProcedure = new StoredProcedure();
+            _StoredProcedure = new StoredProcedure();
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace RevisionFyn.BI_Pro.Controller
         public List<Employee> getMainEmployee()
         {
             List<Employee> allEmployees = new List<Employee>();
-            allEmployees = _StoreProcedure.getEmployee();
+            allEmployees = _StoredProcedure.getEmployee();
             return allEmployees;
         }
         public static OverviewController GetInstance()
@@ -47,64 +47,64 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void LoadIntoListBox(ListBox leftBox, ListBox rightBox)
         {
-            leftBox.ItemsSource = companyData;
-            leftBox.DisplayMemberPath = "CompanyName";
-            rightBox.ItemsSource = companyData2;
-            rightBox.DisplayMemberPath = "CompanyName";
+            leftBox.ItemsSource = clientData;
+            leftBox.DisplayMemberPath = "ClientName";
+            rightBox.ItemsSource = clientData2;
+            rightBox.DisplayMemberPath = "ClientName";
         }
 
         public void ClearData()
         {
-            if (companyData != null)
+            if (clientData != null)
             {
-                companyData.Clear();
+                clientData.Clear();
             }
-            if (companyData2 != null)
+            if (clientData2 != null)
             {
-                companyData2.Clear();
+                clientData2.Clear();
             }
         }
         public void PopulateData()
         {
-            companyData = new ObservableCollection<Client>(_StoreProcedure.GetCompanies());
-            companyData2 = new ObservableCollection<Client>();
+            clientData = new ObservableCollection<Client>(_StoredProcedure.GetCompanies());
+            clientData2 = new ObservableCollection<Client>();
         }
         public void ButtonAdd(ListBox LeftBox)
         {
-            companyData2.Add((Client)LeftBox.SelectedItem);
-            companyData.Remove((Client)LeftBox.SelectedItem);
+            clientData2.Add((Client)LeftBox.SelectedItem);
+            clientData.Remove((Client)LeftBox.SelectedItem);
         }
 
         public void ButtonRemove(ListBox RightBox)
         {
-            companyData.Add((Client)RightBox.SelectedItem);
-            companyData2.Remove((Client)RightBox.SelectedItem);
+            clientData.Add((Client)RightBox.SelectedItem);
+            clientData2.Remove((Client)RightBox.SelectedItem);
         }
 
         public void ButtonAddAll(ListBox LeftBox)
         {
-            int timesToDo = companyData.Count();
+            int timesToDo = clientData.Count();
             for (int i = 0; i < timesToDo; i++)
             {
-                companyData2.Add((Client)companyData[0]);
-                companyData.Remove((Client)companyData[0]);
+                clientData2.Add((Client)clientData[0]);
+                clientData.Remove((Client)clientData[0]);
             }
         }
 
         public void ButtonRemoveAll(ListBox RightBox)
         {
-            int timesToDo = companyData2.Count();
+            int timesToDo = clientData2.Count();
             for (int i = 0; i < timesToDo; i++)
             {
-                companyData.Add((Client)companyData2[0]);
-                companyData2.Remove((Client)companyData2[0]);
+                clientData.Add((Client)clientData2[0]);
+                clientData2.Remove((Client)clientData2[0]);
             }
         }
 
 
         public void LoadIntoComoBox(ComboBox yearsBox)
         {
-            foreach (var accCard in _StoreProcedure.GetYear())
+            foreach (var accCard in _StoredProcedure.GetYear())
             {
                 if (!yearList.Contains(accCard.Year))
                 {
@@ -125,7 +125,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 string path = export.GetExportPath(rightBox);
                 if (path != null && path != "")
                 {
-                    export.Export(rightBox, StartYear, path, _StoreProcedure.getEmployee());
+                    export.Export(rightBox, StartYear, path, _StoredProcedure.getEmployee());
                 }
                 else
                 {

@@ -13,8 +13,8 @@
         <Button x:Name="MainMenuButton" Content="Button" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="MainMenuButton_Click"/>
         <Button x:Name="StatisticsButton" Content="Button" HorizontalAlignment="Left" Margin="0,274,0,0" VerticalAlignment="Top" Width="188" Height="72" Opacity="0" Click="StatisticsButton_Click"/>
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
-        <ListBox x:Name="ListBoxCompaniesToBeChosen" HorizontalAlignment="Left" Height="220" Margin="233,126,0,0" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.478,0.538"/>
-        <ListBox x:Name="ListBoxChosenCampanies" HorizontalAlignment="Left" Height="220" Margin="660,126,0,0" VerticalAlignment="Top" Width="197"/>
+        <ListBox x:Name="ListBoxClientsToBeChosen" HorizontalAlignment="Left" Height="220" Margin="233,126,0,0" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.478,0.538"/>
+        <ListBox x:Name="ListBoxClientsCampanies" HorizontalAlignment="Left" Height="220" Margin="660,126,0,0" VerticalAlignment="Top" Width="197"/>
         <Button x:Name="ButtonAdd" Content="&gt;" HorizontalAlignment="Left" Margin="484,146,0,0" VerticalAlignment="Top" Width="119" Height="32" Click="ButtonAdd_Click"/>
         <Button x:Name="ButtonRemove" Content="&lt;" HorizontalAlignment="Left" Margin="484,253,0,0" VerticalAlignment="Top" Width="119" Height="32" Click="ButtonRemove_Click"/>
         <ComboBox x:Name="ComboBoxStartYear" HorizontalAlignment="Left" Margin="233,424,0,0" VerticalAlignment="Top" Width="120"/>
