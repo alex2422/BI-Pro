@@ -135,8 +135,8 @@ namespace RevisionFyn.BI_Pro.Controller
                         xList.Add(i);
                     }
                     clientList = _StoredProcedure.GetClient();
-                    clientList.RemoveAll(s => s.CompanyName != graphData.Client);
-                    accCardList = _StoredProcedure.Getbalance(clientList[0].CompanyID);
+                    clientList.RemoveAll(s => s.ClientName != graphData.Client);
+                    accCardList = _StoredProcedure.Getbalance(clientList[0].ClientID);
                     accCardList.RemoveAll(s => s.Year > xList.Last());
                     accCardList.RemoveAll(s => s.Year < xList[0]);
                     foreach (AccountCard accCard in accCardList)
@@ -195,36 +195,36 @@ namespace RevisionFyn.BI_Pro.Controller
 
             customStatisticsRelatedToKPI.ChoosenCompanies = tempCompanies;
 
-            foreach (Client company in customStatisticsRelatedToKPI.ChoosenCompanies)
+            foreach (Client client in customStatisticsRelatedToKPI.ChoosenCompanies)
             {
                 switch (customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID)
                 {
                     case 1:
-                        foreach (double totalHoursValue in _StoredProcedure.GetTotalHoursByClientID(company.CompanyID))
+                        foreach (double totalHoursValue in _StoredProcedure.GetTotalHoursByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(totalHoursValue);
                         }
                         break;
                     case 2:
-                        foreach (double salesAmountValue in _StoredProcedure.GetSalesAmountByClientID(company.CompanyID))
+                        foreach (double salesAmountValue in _StoredProcedure.GetSalesAmountByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(salesAmountValue);
                         }
                         break;
                     case 3:
-                        foreach (double totalConsumptionValue in _StoredProcedure.GetTotalConsumptionByClientID(company.CompanyID))
+                        foreach (double totalConsumptionValue in _StoredProcedure.GetTotalConsumptionByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(totalConsumptionValue);
                         }
                         break;
                     case 4:
-                        foreach (double balanceValue in _StoredProcedure.GetNegativeBalanceByClientID(company.CompanyID))
+                        foreach (double balanceValue in _StoredProcedure.GetNegativeBalanceByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(balanceValue);
                         }
                         break;
                     case 5:
-                        foreach (double balanceValue in _StoredProcedure.GetPositiveBalanceByClientID(company.CompanyID))
+                        foreach (double balanceValue in _StoredProcedure.GetPositiveBalanceByClientID(client.ClientID))
                         {
                             valuesFromChoosenCompanies.Add(balanceValue);
                         }

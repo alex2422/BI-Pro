@@ -51,7 +51,7 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         public void LoadCompaniesToComboBox(ComboBox dropDownClient1, ComboBox dropDownClient2, ComboBox dropDownClient3)
         {
-            List<Client> listOfClients = _StoredProcedure.GetCompanies();
+            List<Client> listOfClients = _StoredProcedure.GetClient();
             List<GraphData> listOfData = _StoredProcedure.GetGraphData();
             dropDownClient1.ItemsSource = listOfClients;
             dropDownClient2.ItemsSource = listOfClients;
