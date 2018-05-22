@@ -22,7 +22,7 @@ namespace RevisionFyn.BI_Pro.Model
 
         public int CompanyStartYear { get; set; }
         public List<int> Years = new List<int>();
-        public List<Company> companies = new List<Company>();
+        public List<Client> companies = new List<Client>();
         public List<Employee> employees = new List<Employee>();
         Encoding encoding;
 
@@ -75,13 +75,13 @@ namespace RevisionFyn.BI_Pro.Model
                     streamWriter.WriteLine("sep=;");
                     streamWriter.WriteLine(String.Join<string>(";", Header));
                     streamWriter.WriteLine("");
-                    List<Company> listOfCompanies = new List<Company>();
-                    foreach (Company company in listBox.Items)
+                    List<Client> listOfCompanies = new List<Client>();
+                    foreach (Client company in listBox.Items)
                     {
                         listOfCompanies.Add(company);
                     }
                     listOfCompanies.Sort((x, y) => x.MainEmployee.EmployeeID.CompareTo(y.MainEmployee.EmployeeID));
-                    foreach (Company company in listOfCompanies)
+                    foreach (Client company in listOfCompanies)
                     {
                         string balanceString = ";";
                         int totalBalance = 0;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RevisionFyn.BI_Pro.Model
 {
-    public class Company
+    public class Client
     {
         public int CompanyID { get; set; }
         public string CompanyName { get; set; }
@@ -19,7 +19,7 @@ namespace RevisionFyn.BI_Pro.Model
         public List<AccountCard> accountCards = new List<AccountCard>();
         public List<int> years = new List<int>();
         public Employee MainEmployee { get; set; }
-        public Company()
+        public Client()
         {
             foreach (AccountCard accCard in accountCards)
             {

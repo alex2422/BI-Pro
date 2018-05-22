@@ -18,8 +18,8 @@ namespace RevisionFyn.BI_Pro.Controller
         public StoredProcedure _StoreProcedure { get; set; }
 
         public List<int> yearList = new List<int>();
-        ObservableCollection<Company> companyData;
-        ObservableCollection<Company> companyData2;
+        ObservableCollection<Client> companyData;
+        ObservableCollection<Client> companyData2;
         #endregion
 
         #region Constructor
@@ -66,19 +66,19 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         public void PopulateData()
         {
-            companyData = new ObservableCollection<Company>(_StoreProcedure.GetCompanies());
-            companyData2 = new ObservableCollection<Company>();
+            companyData = new ObservableCollection<Client>(_StoreProcedure.GetCompanies());
+            companyData2 = new ObservableCollection<Client>();
         }
         public void ButtonAdd(ListBox LeftBox)
         {
-            companyData2.Add((Company)LeftBox.SelectedItem);
-            companyData.Remove((Company)LeftBox.SelectedItem);
+            companyData2.Add((Client)LeftBox.SelectedItem);
+            companyData.Remove((Client)LeftBox.SelectedItem);
         }
 
         public void ButtonRemove(ListBox RightBox)
         {
-            companyData.Add((Company)RightBox.SelectedItem);
-            companyData2.Remove((Company)RightBox.SelectedItem);
+            companyData.Add((Client)RightBox.SelectedItem);
+            companyData2.Remove((Client)RightBox.SelectedItem);
         }
 
         public void ButtonAddAll(ListBox LeftBox)
@@ -86,8 +86,8 @@ namespace RevisionFyn.BI_Pro.Controller
             int timesToDo = companyData.Count();
             for (int i = 0; i < timesToDo; i++)
             {
-                companyData2.Add((Company)companyData[0]);
-                companyData.Remove((Company)companyData[0]);
+                companyData2.Add((Client)companyData[0]);
+                companyData.Remove((Client)companyData[0]);
             }
         }
 
@@ -96,8 +96,8 @@ namespace RevisionFyn.BI_Pro.Controller
             int timesToDo = companyData2.Count();
             for (int i = 0; i < timesToDo; i++)
             {
-                companyData.Add((Company)companyData2[0]);
-                companyData2.Remove((Company)companyData2[0]);
+                companyData.Add((Client)companyData2[0]);
+                companyData2.Remove((Client)companyData2[0]);
             }
         }
 

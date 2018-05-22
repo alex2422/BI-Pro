@@ -14,7 +14,7 @@ namespace RevisionFyn.BI_Pro.Controller
     public class CustomizeStartScreenController
     {
         #region Variables
-        public List<Company> companies = new List<Company>();
+        public List<Client> companies = new List<Client>();
         private static CustomizeStartScreenController _ControllerInstance { get; set; }
         private StoredProcedure _StoredProcedure { get; set; }
         private KPI _KpiInstance { get; set; }
@@ -51,7 +51,7 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         public void LoadCompaniesToComboBox(ComboBox dropDownClient1, ComboBox dropDownClient2, ComboBox dropDownClient3)
         {
-            List<Company> listOfClients = _StoredProcedure.GetCompanies();
+            List<Client> listOfClients = _StoredProcedure.GetCompanies();
             List<GraphData> listOfData = _StoredProcedure.GetGraphData();
             dropDownClient1.ItemsSource = listOfClients;
             dropDownClient2.ItemsSource = listOfClients;
@@ -120,7 +120,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
         public void SaveButton(ComboBox client, ComboBox startYear, ComboBox lastYear, ComboBox color)
         {
-            _StoredProcedure.AddGraphData((Company)client.SelectedItem, (int)startYear.SelectedItem, (int)lastYear.SelectedItem, color.SelectedItem.ToString().Split(' ')[1], color.SelectedIndex);
+            _StoredProcedure.AddGraphData((Client)client.SelectedItem, (int)startYear.SelectedItem, (int)lastYear.SelectedItem, color.SelectedItem.ToString().Split(' ')[1], color.SelectedIndex);
         }
 
         #region KPI
@@ -265,7 +265,7 @@ namespace RevisionFyn.BI_Pro.Controller
             List<double> Comp1Coverage = new List<double>() { 120, 150, -200, -90, -10, -30};
             List<double> Comp2Coverage = new List<double>() { 110, 140, -210, -100, -20, 20 };
             List<double> Comp3Coverage = new List<double>() { 50, 0, -50, 0, -5, -30};
-            Company Comp1 = new Company
+            Client Comp1 = new Client
             {
                 CompanyName = "Firma1",
                 CompanyStartYear = 2012,
@@ -273,7 +273,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 Coverages = Comp1Coverage,
                 y = Comp1Coverage.ToArray()
             };
-            Company Comp2 = new Company
+            Client Comp2 = new Client
             {
                 CompanyName = "Firma2",
                 CompanyStartYear = 2012,
@@ -281,7 +281,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 Coverages = Comp2Coverage,
                 y = Comp2Coverage.ToArray()
             };
-            Company Comp3 = new Company
+            Client Comp3 = new Client
             {
                 CompanyName = "Firma3",
                 CompanyStartYear = 2012,
@@ -310,7 +310,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             if (companyBox.SelectedItem != null)
             {
-                Company comp = (Company)companyBox.SelectedItem;
+                Client comp = (Client)companyBox.SelectedItem;
                 for (int i = 0; i < comp.x.Length; i++)
                 {
                     if (!comboBox.Items.Contains(comp.x[i]))
@@ -324,7 +324,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             if (companyBox.SelectedItem != null)
             {
-                Company comp = (Company)companyBox.SelectedItem;
+                Client comp = (Client)companyBox.SelectedItem;
                 for (int i = 0; i < comp.x.Length; i++)
                 {
                     if (!comboBox.Items.Contains(comp.x[i]))

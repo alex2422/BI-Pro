@@ -12,7 +12,7 @@ namespace RevisionFyn.BI_Pro.Model
         public string Name { get; set; }
         public int ChoosenStatisticsTypeID { get; set; }
         public int ChoosenStatisticsCalculationID { get; set; }
-        public List<Company> ChoosenCompanies { get; set; }
+        public List<Client> ChoosenCompanies { get; set; }
 
         public static double Average(List<double> inputData)
         {

@@ -17,9 +17,9 @@ namespace RevisionFyn.BI_Pro.Controller
         #region Variables / Properties
         private static MainMenuController controllerInstance;
         private StoredProcedure _StoredProcedure { get; set; }
-        public List<Company> companies = new List<Company>();
+        public List<Client> companies = new List<Client>();
         List<double> hourValues = new List<double>() { 0.25, 0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75 };
-        List<Company> listOfCompanies = new List<Company>();
+        List<Client> listOfCompanies = new List<Client>();
         #endregion
 
         #region Constructor
@@ -129,7 +129,7 @@ namespace RevisionFyn.BI_Pro.Controller
                     List<int> xList = new List<int>();
                     List<int> yList = new List<int>();
                     List<AccountCard> accCardList = new List<AccountCard>();
-                    List<Company> companyList = new List<Company>();
+                    List<Client> companyList = new List<Client>();
                     for (int i = graphData.StartYear; i <= graphData.LastYear; i++)
                     {
                         xList.Add(i);
@@ -186,7 +186,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             List<double> valuesFromChoosenCompanies = new List<double>();
             List<int> mappedClientID = _StoredProcedure.GetClientMapByStatisticsFavoriteID(customStatisticsRelatedToKPI.ID);
-            List<Company> tempCompanies = new List<Company>();
+            List<Client> tempCompanies = new List<Client>();
 
             foreach (int clientID in mappedClientID)
             {
@@ -195,7 +195,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
             customStatisticsRelatedToKPI.ChoosenCompanies = tempCompanies;
 
-            foreach (Company company in customStatisticsRelatedToKPI.ChoosenCompanies)
+            foreach (Client company in customStatisticsRelatedToKPI.ChoosenCompanies)
             {
                 switch (customStatisticsRelatedToKPI.ChoosenStatisticsCalculationID)
                 {

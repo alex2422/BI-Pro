@@ -563,9 +563,9 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
-        public Company GetCompaniesByID(int requestedClientID)
+        public Client GetCompaniesByID(int requestedClientID)
         {
-            Company company = new Company();
+            Client company = new Client();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -594,7 +594,7 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(clientID, out int convertedClientID);
 
 
-                            company = new Company()
+                            company = new Client()
                             {
                                 CompanyID = convertedClientID,
                                 CompanyName = clientName,
@@ -812,9 +812,9 @@ namespace RevisionFyn.BI_Pro.Database
         }
         #endregion
 
-        public List<Company> GetCompanies()
+        public List<Client> GetCompanies()
         {
-            List<Company> companies = new List<Company>();
+            List<Client> companies = new List<Client>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -840,7 +840,7 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(clientID, out int convertedClientID);
 
 
-                            companies.Add(new Company()
+                            companies.Add(new Client()
                             {
                                 CompanyID = convertedClientID,
                                 CompanyName = clientName,
@@ -1151,7 +1151,7 @@ namespace RevisionFyn.BI_Pro.Database
                 return listYear;
             }
         }
-        public string AddGraphData(Company client, int startYear, int lastYear, string color, int colorIndex)
+        public string AddGraphData(Client client, int startYear, int lastYear, string color, int colorIndex)
         {
             string result = "";
 
