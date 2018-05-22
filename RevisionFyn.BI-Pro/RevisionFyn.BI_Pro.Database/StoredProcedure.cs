@@ -146,7 +146,7 @@ namespace RevisionFyn.BI_Pro.Database
 
         public List<KPI> GetKPI()
         {
-            List<KPI> result = new List<KPI>();
+            List<KPI> listOfKPI = new List<KPI>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -186,7 +186,7 @@ namespace RevisionFyn.BI_Pro.Database
                                 isActive = "Nej";
                             }
 
-                            result.Add(new KPI()
+                            listOfKPI.Add(new KPI()
                             {
                                 ID = convertedKpiID,
                                 Title = kpiTitle,
@@ -204,12 +204,13 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfKPI;
         }
 
         public List<KPI> GetActiveKPI()
         {
-            List<KPI> result = new List<KPI>();
+            List<KPI> listOfActiveKPI = new List<KPI>();
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
@@ -217,12 +218,12 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getKpiCmd = new SqlCommand("sp_GetActiveSystemKPI", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetActiveSystemKPI", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    SqlDataReader reader = getKpiCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -249,7 +250,7 @@ namespace RevisionFyn.BI_Pro.Database
                                 isActive = "Nej";
                             }
 
-                            result.Add(new KPI()
+                            listOfActiveKPI.Add(new KPI()
                             {
                                 ID = convertedKpiID,
                                 Title = kpiTitle,
@@ -267,7 +268,8 @@ namespace RevisionFyn.BI_Pro.Database
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            return result;
+
+            return listOfActiveKPI;
         }
         #endregion
 
