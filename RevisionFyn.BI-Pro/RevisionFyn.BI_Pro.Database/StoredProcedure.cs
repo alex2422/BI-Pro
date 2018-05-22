@@ -25,8 +25,6 @@ namespace RevisionFyn.BI_Pro.Database
 
         public string AddKPI(string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, int dataID)
         {
-            string result = "";
-
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
@@ -45,79 +43,69 @@ namespace RevisionFyn.BI_Pro.Database
                     sqlCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
                     sqlCmd.ExecuteNonQuery();
 
-                    result = "Succes: KPI'en er nu tilføjet";
+                    return "Succes: KPI'en er nu tilføjet";
                 }
                 catch (SqlException e)
                 {
                     return "Fejl: " + e.Message;
                 }
             }
-
-            return result;
         }
 
         public string UpdateKPI(int kpiID, string kpiTitle, string kpiUnit, string kpiColor, int colorIndex, string isActive, int dataID)
         {
-            string result = "";
-
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
                     con.Open();
 
-                    SqlCommand updateKpiCmd = new SqlCommand("sp_UpdateSystemKPI", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_UpdateSystemKPI", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    updateKpiCmd.Parameters.Add(new SqlParameter("@ID", kpiID));
-                    updateKpiCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
-                    updateKpiCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", dataID));
-                    updateKpiCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
-                    updateKpiCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
-                    updateKpiCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
-                    updateKpiCmd.Parameters.Add(new SqlParameter("@IsActiveInput", isActive));
-                    updateKpiCmd.ExecuteNonQuery();
+                    sqlCmd.Parameters.Add(new SqlParameter("@ID", kpiID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@Title", kpiTitle));
+                    sqlCmd.Parameters.Add(new SqlParameter("@StatisticsFavoriteID", dataID));
+                    sqlCmd.Parameters.Add(new SqlParameter("@Unit", kpiUnit));
+                    sqlCmd.Parameters.Add(new SqlParameter("@Color", kpiColor));
+                    sqlCmd.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
+                    sqlCmd.Parameters.Add(new SqlParameter("@IsActiveInput", isActive));
+                    sqlCmd.ExecuteNonQuery();
 
-                    result = "Succes: KPI'en er nu opdateret";
+                    return "Succes: KPI'en er nu opdateret";
                 }
                 catch (SqlException e)
                 {
                     return "Fejl: " + e.Message;
                 }
             }
-
-            return result;
         }
 
         public string DeleteKPI(int kpiID)
         {
-            string result = "";
-
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
                     con.Open();
 
-                    SqlCommand deleteKpiCmd = new SqlCommand("sp_DeleteSystemKPI", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_DeleteSystemKPI", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    deleteKpiCmd.Parameters.Add(new SqlParameter("@ID", kpiID));
-                    deleteKpiCmd.ExecuteNonQuery();
+                    sqlCmd.Parameters.Add(new SqlParameter("@ID", kpiID));
+                    sqlCmd.ExecuteNonQuery();
 
-                    result = "Succes: KPI'en er nu slettet";
+                    return "Succes: KPI'en er nu slettet";
                 }
                 catch (SqlException e)
                 {
                     return "Fejl: " + e.Message;
                 }
             }
-
-            return result;
         }
 
         public int CountActiveKPI()
@@ -128,12 +116,12 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand countActiveKpiCmd = new SqlCommand("sp_CountActiveSystemKPI", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_CountActiveSystemKPI", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    SqlDataReader reader = countActiveKpiCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -166,12 +154,12 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     con.Open();
 
-                    SqlCommand getKpiCmd = new SqlCommand("sp_GetSystemKPI", con)
+                    SqlCommand sqlCmd = new SqlCommand("sp_GetSystemKPI", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    SqlDataReader reader = getKpiCmd.ExecuteReader();
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {
