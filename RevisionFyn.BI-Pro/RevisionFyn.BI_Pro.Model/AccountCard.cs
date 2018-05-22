@@ -11,7 +11,7 @@ namespace RevisionFyn.BI_Pro.Model
         public string CaseID { get; set; }
         public int Year { get; set; }
         public Employee MainEmployee { get; set; }
-        public List<Employee> otherEmployees = new List<Employee>();
+        public List<Employee> otherEmployees { get; set; } = new List<Employee>();
         public int NumberOfTasks { get; set; }
         public int InvoicePrice { get; set; }
         public int Balance { get; set; }
