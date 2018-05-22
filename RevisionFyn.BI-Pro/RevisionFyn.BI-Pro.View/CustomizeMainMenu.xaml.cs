@@ -31,13 +31,14 @@ namespace RevisionFyn.BI_Pro.View
             controller.AdjustInitalButtons(SaveKpiButton, DeleteKpiButton, AddKpiButton);
             controller.CreateGraphValues();
             controller.CreateYearsArray();
-            controller.LoadValuesIntoCompanyComboBox(dropDownComp1);
-            controller.LoadValuesIntoCompanyComboBox(dropDownComp2);
-            controller.LoadValuesIntoCompanyComboBox(dropDownComp3);
+            controller.LoadCompaniesToComboBox(dropDownComp1, dropDownComp2, dropDownComp3);
+            controller.LoadYearToComboBox(dropDownStartYear1, dropDownStartYear2, dropDownStartYear3);
+            controller.LoadYearToComboBox(dropDownEndYear1, dropDownEndYear2, dropDownEndYear3);
             ColorComboBox.ItemsSource = typeof(Colors).GetProperties();
             dropDownColour1.ItemsSource = typeof(Colors).GetProperties();
             dropDownColour2.ItemsSource = typeof(Colors).GetProperties();
             dropDownColour3.ItemsSource = typeof(Colors).GetProperties();
+            controller.LoadColorsForGraph(dropDownColour1, dropDownColour2, dropDownColour3);
         }
 
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
@@ -60,24 +61,6 @@ namespace RevisionFyn.BI_Pro.View
             Environment.Exit(0);
         }
 
-        private void dropDownComp1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            controller.LoadValuesIntoCompanyStartYearBox(dropDownStartYear1, dropDownComp1);
-            controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear1, dropDownComp1);
-        }
-
-        private void dropDownComp2_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            controller.LoadValuesIntoCompanyStartYearBox(dropDownStartYear2, dropDownComp2);
-            controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear2, dropDownComp2);
-        }
-
-        private void dropDownComp3_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            controller.LoadValuesIntoCompanyStartYearBox(dropDownStartYear3, dropDownComp3);
-            controller.LoadValuesIntoCompanyStartYearBox(dropDownEndYear3, dropDownComp3);
-        }
-
         private void KpiListVIew_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((sender as ListView).SelectedItem != null)
@@ -91,7 +74,10 @@ namespace RevisionFyn.BI_Pro.View
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.SaveChangesGraph();
+            controller.clearGraph();
+            controller.SaveButton(dropDownComp1, dropDownStartYear1, dropDownEndYear1, dropDownColour1);
+            controller.SaveButton(dropDownComp2, dropDownStartYear2, dropDownEndYear2, dropDownColour2);
+            controller.SaveButton(dropDownComp3, dropDownStartYear3, dropDownEndYear3, dropDownColour3);
         }
 
         private void AddKpiButton_Click(object sender, RoutedEventArgs e)

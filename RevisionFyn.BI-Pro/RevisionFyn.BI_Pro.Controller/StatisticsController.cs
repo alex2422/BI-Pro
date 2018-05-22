@@ -27,7 +27,7 @@ namespace RevisionFyn.BI_Pro.Controller
         private bool _IsStep3Done { get; set; }
         private CustomStatistics _CustomStatistics { get; set; }
         private List<StatisticsCalculation> _ListOfActiveCalculations { get; set; }
-        private List<Company> _ListOfCompanies { get; set; }
+        private List<Client> _ListOfCompanies { get; set; }
         #endregion
 
         #region Constructor
@@ -196,9 +196,9 @@ namespace RevisionFyn.BI_Pro.Controller
 
         #region Private methods
 
-        private List<Company> GetSelectedCompanies(ListBox SelectedCompanesListBox)
+        private List<Client> GetSelectedCompanies(ListBox SelectedCompanesListBox)
         {
-            List<Company> selectedCompanies = new List<Company>();
+            List<Client> selectedCompanies = new List<Client>();
 
             foreach (string item in SelectedCompanesListBox.Items)
             {
@@ -210,7 +210,7 @@ namespace RevisionFyn.BI_Pro.Controller
 
         private void AddSelectedCompaniesToMap()
         {
-            foreach (Company c in _CustomStatistics.ChoosenCompanies)
+            foreach (Client c in _CustomStatistics.ChoosenCompanies)
             {
                 _StoredProcedure.AddStatisticsFavoriteClientMap(c.CompanyID);
             }
@@ -263,11 +263,11 @@ namespace RevisionFyn.BI_Pro.Controller
             }
         }
 
-        private void AddCompanyToListBox(ListBox DefaultCompaniesListBox, List<Company> listOfCompanies)
+        private void AddCompanyToListBox(ListBox DefaultCompaniesListBox, List<Client> listOfCompanies)
         {
             DefaultCompaniesListBox.Items.Clear();
 
-            foreach (Company company in listOfCompanies)
+            foreach (Client company in listOfCompanies)
             {
                 DefaultCompaniesListBox.Items.Add(company.CompanyName);
             }

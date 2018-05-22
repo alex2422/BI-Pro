@@ -26,11 +26,11 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
 
-            controller = OverviewController.GetInstance(ListBoxCompaniesToBeChosen, ListBoxChosenCampanies, ComboBoxStartYear);
+            controller = OverviewController.GetInstance();
             //controller.ComboBoxYear();
             controller.ClearData();
             controller.PopulateData();
-            controller.LoadIntoListBox(ListBoxCompaniesToBeChosen);
+            controller.LoadIntoListBox(ListBoxCompaniesToBeChosen, ListBoxChosenCampanies);
             controller.LoadIntoComoBox(ComboBoxStartYear);
             controller.LoadIntoComoBox(ComboBoxEndYear);
             
@@ -52,7 +52,7 @@ namespace RevisionFyn.BI_Pro.View
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonAdd();
+            controller.ButtonAdd(ListBoxCompaniesToBeChosen);
 
 
         }
@@ -64,14 +64,7 @@ namespace RevisionFyn.BI_Pro.View
 
         private void ButtonRemove_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonRemove();
-        }
-
-
-
-        private void ListOfCompaniesToBeChosen(object sender, RoutedEventArgs e)
-        {
-            
+            controller.ButtonRemove(ListBoxChosenCampanies);
         }
 
         private void ComboEndYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -81,7 +74,17 @@ namespace RevisionFyn.BI_Pro.View
 
         private void ButtonExport_Click(object sender, RoutedEventArgs e)
         {
-            controller.ExportData();
+            controller.ExportData(ListBoxChosenCampanies, ComboBoxStartYear);
+        }
+
+        private void ButtonRemoveAll_Click(object sender, RoutedEventArgs e)
+        {
+            controller.ButtonRemoveAll(ListBoxChosenCampanies);
+        }
+
+        private void ButtonAddAll_Click(object sender, RoutedEventArgs e)
+        {
+            controller.ButtonAddAll(ListBoxCompaniesToBeChosen);
         }
     }
 }

@@ -12,31 +12,38 @@ namespace RevisionFyn.BI_Pro.Model
         public string Name { get; set; }
         public int ChoosenStatisticsTypeID { get; set; }
         public int ChoosenStatisticsCalculationID { get; set; }
-        public List<Company> ChoosenCompanies { get; set; }
+        public List<Client> ChoosenCompanies { get; set; }
 
-        public static double Average(List<double> listOfInputData)
+        public static double Average(List<double> inputData)
         {
-            return listOfInputData.Average();
+            try
+            {
+                return Math.Round(inputData.Average(), 2);
+            }
+            catch (InvalidOperationException)
+            {
+                return 0;
+            } 
         }
 
-        public static double Highest(List<double> listOfInputData)
+        public static double Highest(List<double> inputData)
         {
-            return listOfInputData.Max();
+            return inputData.Max();
         }
 
-        public static double Lowest(List<double> listOfInputData)
+        public static double Lowest(List<double> inputData)
         {
-            return listOfInputData.Min();
+            return inputData.Min();
         }
 
-        public static double Count(List<double> listOfInputData)
+        public static double Count(List<double> inputData)
         {
-            return listOfInputData.Count();
+            return inputData.Count();
         }
 
-        public static double Sum(List<double> listOfInputData)
+        public static double Sum(List<double> inputData)
         {
-            return listOfInputData.Sum();
+            return inputData.Sum();
         }
     }
 }

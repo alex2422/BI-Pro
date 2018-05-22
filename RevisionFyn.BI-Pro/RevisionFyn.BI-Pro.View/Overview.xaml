@@ -15,7 +15,7 @@
         <Button x:Name="ExitButton" Content="Button" HorizontalAlignment="Left" Margin="0,554,0,0" VerticalAlignment="Top" Width="188" Height="46" Opacity="0" Click="ExitButton_Click"/>
         <ListBox x:Name="ListBoxCompaniesToBeChosen" HorizontalAlignment="Left" Height="220" Margin="233,126,0,0" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.478,0.538"/>
         <ListBox x:Name="ListBoxChosenCampanies" HorizontalAlignment="Left" Height="220" Margin="660,126,0,0" VerticalAlignment="Top" Width="197"/>
-        <Button x:Name="ButtonAdd" Content="&gt;" HorizontalAlignment="Left" Margin="484,166,0,0" VerticalAlignment="Top" Width="119" Height="32" Click="ButtonAdd_Click"/>
+        <Button x:Name="ButtonAdd" Content="&gt;" HorizontalAlignment="Left" Margin="484,146,0,0" VerticalAlignment="Top" Width="119" Height="32" Click="ButtonAdd_Click"/>
         <Button x:Name="ButtonRemove" Content="&lt;" HorizontalAlignment="Left" Margin="484,253,0,0" VerticalAlignment="Top" Width="119" Height="32" Click="ButtonRemove_Click"/>
         <ComboBox x:Name="ComboBoxStartYear" HorizontalAlignment="Left" Margin="233,424,0,0" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="ComboBoxEndYear" HorizontalAlignment="Left" Margin="737,424,0,0" VerticalAlignment="Top" Width="120"/>
@@ -24,6 +24,8 @@
         <Label x:Name="LabelRight" Content="Valgte Kunder" HorizontalAlignment="Left" Margin="660,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.461,-0.546" FontSize="16"/>
         <Label x:Name="LabelStartYear" Content="Start År" HorizontalAlignment="Left" Margin="233,392,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.796,0.722" FontSize="16"/>
         <Label x:Name="LabelEndYear" Content="Slut År" HorizontalAlignment="Left" Margin="737,392,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Button x:Name="ButtonAddAll" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="484,183,0,0" VerticalAlignment="Top" Width="119" Height="32" Click="ButtonAddAll_Click"/>
+        <Button x:Name="ButtonRemoveAll" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="484,294,0,0" VerticalAlignment="Top" Width="119" Height="32" Click="ButtonRemoveAll_Click"/>
 
     </Grid>
 </Page>

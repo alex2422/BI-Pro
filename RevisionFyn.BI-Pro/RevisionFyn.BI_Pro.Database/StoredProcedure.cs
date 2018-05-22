@@ -4,6 +4,7 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,12 @@ namespace RevisionFyn.BI_Pro.Database
 {
     public class StoredProcedure
     {
-        private static string connectionString = "Server = EALSQL1.eal.local; Database = DB2017_C07; User Id = USER_C07; Password = SesamLukOp_07";
+        private string ConnectionString { get; set; }
+
+        public StoredProcedure()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["ealSqlServer"].ConnectionString;
+        }
 
         #region Stored procedures - KPI
 
@@ -21,7 +27,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -54,7 +60,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -89,7 +95,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -116,7 +122,7 @@ namespace RevisionFyn.BI_Pro.Database
 
         public int CountActiveKPI()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -154,7 +160,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<KPI> result = new List<KPI>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -217,7 +223,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<KPI> result = new List<KPI>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -282,7 +288,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<StatisticsType> result = new List<StatisticsType>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -323,7 +329,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<StatisticsCalculation> result = new List<StatisticsCalculation>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -364,7 +370,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -395,7 +401,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -424,7 +430,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<CustomStatistics> result = new List<CustomStatistics>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -472,7 +478,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             CustomStatistics result = new CustomStatistics();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -522,7 +528,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<int> result = new List<int>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -557,11 +563,11 @@ namespace RevisionFyn.BI_Pro.Database
             return result;
         }
 
-        public Company GetCompaniesByID(int requestedClientID)
+        public Client GetCompaniesByID(int requestedClientID)
         {
-            Company company = new Company();
+            Client company = new Client();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -588,7 +594,7 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(clientID, out int convertedClientID);
 
 
-                            company = new Company()
+                            company = new Client()
                             {
                                 CompanyID = convertedClientID,
                                 CompanyName = clientName,
@@ -614,7 +620,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<double> result = new List<double>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -648,13 +654,169 @@ namespace RevisionFyn.BI_Pro.Database
             }
             return result;
         }
+
+        public List<double> GetPositiveBalanceByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetPositiveBalanceByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string balanceValue = reader["Balance"].ToString();
+
+                            Double.TryParse(balanceValue, out double convertedBalanceValue);
+
+                            result.Add(convertedBalanceValue);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+
+        public List<double> GetTotalHoursByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetTotalHoursByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string totalHoursValue = reader["TotalHours"].ToString();
+
+                            Double.TryParse(totalHoursValue, out double convertedTotalHoursValue);
+
+                            result.Add(convertedTotalHoursValue);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+
+        public List<double> GetSalesAmountByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetSalesAmountByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string salesAmountValue = reader["SalesAmount"].ToString();
+
+                            Double.TryParse(salesAmountValue, out double convertedSalesAmountValue);
+
+                            result.Add(convertedSalesAmountValue);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
+
+        public List<double> GetTotalConsumptionByClientID(int requestedClientID)
+        {
+            List<double> result = new List<double>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand getActiveStatisticsTypeCmd = new SqlCommand("sp_GetTotalConsumptionByClientID", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    getActiveStatisticsTypeCmd.Parameters.Add(new SqlParameter("@ClientID", requestedClientID));
+
+                    SqlDataReader reader = getActiveStatisticsTypeCmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string totalConsumptionValue = reader["TotalConsumption"].ToString();
+
+                            Double.TryParse(totalConsumptionValue, out double convertedTotalConsumptionValue);
+
+                            result.Add(convertedTotalConsumptionValue);
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return result;
+        }
         #endregion
 
-        public List<Company> GetCompanies()
+        public List<Client> GetCompanies()
         {
-            List<Company> companies = new List<Company>();
+            List<Client> companies = new List<Client>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -678,7 +840,7 @@ namespace RevisionFyn.BI_Pro.Database
                             Int32.TryParse(clientID, out int convertedClientID);
 
 
-                            companies.Add(new Company()
+                            companies.Add(new Client()
                             {
                                 CompanyID = convertedClientID,
                                 CompanyName = clientName,
@@ -704,13 +866,13 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<Employee> employee = new List<Employee>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
                     con.Open();
 
-                    SqlCommand getEmployee = new SqlCommand("sp_´GetEmployee", con)
+                    SqlCommand getEmployee = new SqlCommand("sp_GetEmployee", con)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
@@ -722,12 +884,16 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string employeeID = reader["EmployeeID"].ToString();
                             string employeeName = reader["EmployeeFirstName"].ToString();
+                            string employeeLastName = reader["EmployeeLastName"].ToString();
+                            string position = reader["EmployeePosition"].ToString();
                             Int32.TryParse(employeeID, out int convertedEmployeeID);
 
                             employee.Add(new Employee()
                             {
                                 EmployeeID = convertedEmployeeID,
                                 FirstName = employeeName,
+                                LastName = employeeLastName,
+                                Position = position
                             });
                         }
                     }
@@ -743,7 +909,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<AccountCard> listBalance = new List<AccountCard>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -783,11 +949,11 @@ namespace RevisionFyn.BI_Pro.Database
                 return listBalance;
             }
         }
-        public List<AccountCard> GetGraphData()
+        public List<GraphData> GetGraphData()
         {
-            List<AccountCard> listBalance = new List<AccountCard>();
+            List<GraphData> listGraphData = new List<GraphData>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -803,17 +969,18 @@ namespace RevisionFyn.BI_Pro.Database
                     {
                         while (reader.Read())
                         {
-                            string clientName = reader["ClientName"].ToString();
-                            string balance = reader["Balance"].ToString();
-                            int year = (int)reader["Year"];
-
-                            Int32.TryParse(balance, out int convertedBalance);
-
-                            listBalance.Add(new AccountCard()
+                            string clientName = reader["Company"].ToString();
+                            int startYear = Convert.ToInt32(reader["StartYear"]);
+                            int lastyear = Convert.ToInt32(reader["LastYear"]);
+                            string color = reader["Color"].ToString();
+                            int colorIndex = (int)reader["ColorIndex"];
+                            listGraphData.Add(new GraphData()
                             {
-                                CompanyName = clientName,
-                                Balance = convertedBalance,
-                                Year = year,
+                                Company = clientName,
+                                StartYear = startYear,
+                                LastYear = lastyear,
+                                Color = color,
+                                ColorIndex = colorIndex
                             });
                         }
                     }
@@ -822,16 +989,39 @@ namespace RevisionFyn.BI_Pro.Database
                 {
                     MessageBox.Show(e.Message, "Fejl ved forbindelse til database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                listBalance.Sort((x, y) => x.Year.CompareTo(y.Year)); ;
-                return listBalance;
+                return listGraphData;
             }
+        }
+        public string ClearGraphData()
+        {
+            string result = "";
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand ClearGraph= new SqlCommand("sp_ClearGraphdata", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    ClearGraph.ExecuteNonQuery();
+
+                    result = "Succes: graphData er nu cleared";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+            return result;
         }
 
         public string AddClient(int clientID, string clientName, int startYear, int mainEmployeeID)
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -861,7 +1051,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -891,7 +1081,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             string result = "";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -928,7 +1118,7 @@ namespace RevisionFyn.BI_Pro.Database
         {
             List<AccountCard> listYear = new List<AccountCard>();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -960,6 +1150,37 @@ namespace RevisionFyn.BI_Pro.Database
                 }
                 return listYear;
             }
+        }
+        public string AddGraphData(Client client, int startYear, int lastYear, string color, int colorIndex)
+        {
+            string result = "";
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+
+                    SqlCommand addGraphData = new SqlCommand("sp_AddToGraphData", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    addGraphData.Parameters.Add(new SqlParameter("@Company", client.CompanyName));
+                    addGraphData.Parameters.Add(new SqlParameter("@StartYear", startYear));
+                    addGraphData.Parameters.Add(new SqlParameter("@LastYear", lastYear));
+                    addGraphData.Parameters.Add(new SqlParameter("@Color", color));
+                    addGraphData.Parameters.Add(new SqlParameter("@ColorIndex", colorIndex));
+                    addGraphData.ExecuteNonQuery();
+
+                    result = "Succes: Grafdataen er nu tilføjet";
+                }
+                catch (SqlException e)
+                {
+                    return "Fejl: " + e.Message;
+                }
+            }
+            return result;
         }
     }
 }
