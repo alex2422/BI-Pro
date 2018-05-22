@@ -23,7 +23,7 @@ namespace RevisionFyn.BI_Pro.Model
         {
             foreach (AccountCard accCard in accountCards)
             {
-                if (accCard.CompanyID != ClientID)
+                if (accCard.ClientID != ClientID)
                 {
                     accountCards.Remove(accCard);
                 }

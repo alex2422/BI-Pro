@@ -928,7 +928,7 @@ namespace RevisionFyn.BI_Pro.Database
                         {
                             string balance = reader["Balance"].ToString();
                             int year = (int)reader["Year"];
-                            int companyID = (int)reader["FK_ClientID"];
+                            int clientID = (int)reader["FK_ClientID"];
 
                             Int32.TryParse(balance, out int convertedBalance);
 
@@ -936,7 +936,7 @@ namespace RevisionFyn.BI_Pro.Database
                             {
                                 Balance = convertedBalance,
                                 Year = year,
-                                CompanyID = companyID
+                                ClientID = clientID
                             });
                         }
                     }

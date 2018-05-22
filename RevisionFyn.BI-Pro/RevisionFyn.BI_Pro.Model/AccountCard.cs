@@ -16,8 +16,8 @@ namespace RevisionFyn.BI_Pro.Model
         public int InvoicePrice { get; set; }
         public int Balance { get; set; }
         public int TotalConsumption { get; set; }
-        public string CompanyName { get; set; }
-        public int CompanyID { get; set; }
+        public string ClientName { get; set; }
+        public int ClientID { get; set; }
         public double totalHours { get; set; }
     }
 }
