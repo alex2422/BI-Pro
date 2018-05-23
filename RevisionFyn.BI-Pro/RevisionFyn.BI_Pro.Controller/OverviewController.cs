@@ -33,7 +33,7 @@ namespace RevisionFyn.BI_Pro.Controller
         public List<Employee> getMainEmployee()
         {
             List<Employee> allEmployees = new List<Employee>();
-            allEmployees = _StoredProcedure.getEmployee();
+            allEmployees = _StoredProcedure.GetEmployee();
             return allEmployees;
         }
         public static OverviewController GetInstance()
@@ -125,7 +125,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 string path = export.GetExportPath(rightBox);
                 if (path != null && path != "")
                 {
-                    export.Export(rightBox, StartYear, path, _StoredProcedure.getEmployee());
+                    export.Export(rightBox, StartYear, path, _StoredProcedure.GetEmployee());
                 }
                 else
                 {
