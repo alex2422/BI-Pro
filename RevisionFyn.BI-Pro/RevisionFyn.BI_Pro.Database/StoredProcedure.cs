@@ -583,7 +583,7 @@ namespace RevisionFyn.BI_Pro.Database
                                 ClientID = convertedClientID,
                                 ClientName = clientName,
                                 ClientStartYear = Convert.ToInt32(startYear),
-                                accountCards = Getbalance(convertedClientID),
+                                AccountCards = Getbalance(convertedClientID),
                                 MainEmployee = new Employee
                                 {
                                     EmployeeID = Convert.ToInt32(mainEmployee),
@@ -833,7 +833,7 @@ namespace RevisionFyn.BI_Pro.Database
                                 ClientID = convertedClientID,
                                 ClientName = clientName,
                                 ClientStartYear = Convert.ToInt32(startYear),
-                                accountCards = Getbalance(convertedClientID),
+                                AccountCards = Getbalance(convertedClientID),
                                 MainEmployee = new Employee
                                 {
                                     EmployeeID = Convert.ToInt32(mainEmployee),

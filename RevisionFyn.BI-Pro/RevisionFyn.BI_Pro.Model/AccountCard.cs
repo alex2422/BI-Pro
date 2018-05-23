@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace RevisionFyn.BI_Pro.Model
+﻿namespace RevisionFyn.BI_Pro.Model
 {
     public class AccountCard
     {

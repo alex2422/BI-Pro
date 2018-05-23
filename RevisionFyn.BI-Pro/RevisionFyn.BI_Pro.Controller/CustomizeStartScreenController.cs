@@ -252,7 +252,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 {
                     placeHolder.Add(i);
                 }
-                companies[company].x = placeHolder.ToArray();
+                companies[company].CoordinateX = placeHolder.ToArray();
             }
         }
 
@@ -271,7 +271,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 ClientStartYear = 2012,
                 ClientEndYear = 2017,
                 Coverages = Comp1Coverage,
-                y = Comp1Coverage.ToArray()
+                CoordinateY = Comp1Coverage.ToArray()
             };
             Client Comp2 = new Client
             {
@@ -279,7 +279,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 ClientStartYear = 2012,
                 ClientEndYear = 2017,
                 Coverages = Comp2Coverage,
-                y = Comp2Coverage.ToArray()
+                CoordinateY = Comp2Coverage.ToArray()
             };
             Client Comp3 = new Client
             {
@@ -287,7 +287,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 ClientStartYear = 2012,
                 ClientEndYear = 2017,
                 Coverages = Comp3Coverage,
-                y = Comp3Coverage.ToArray()
+                CoordinateY = Comp3Coverage.ToArray()
             };
             companies.Clear();
             companies.Add(Comp1);
@@ -311,11 +311,11 @@ namespace RevisionFyn.BI_Pro.Controller
             if (companyBox.SelectedItem != null)
             {
                 Client comp = (Client)companyBox.SelectedItem;
-                for (int i = 0; i < comp.x.Length; i++)
+                for (int i = 0; i < comp.CoordinateX.Length; i++)
                 {
-                    if (!comboBox.Items.Contains(comp.x[i]))
+                    if (!comboBox.Items.Contains(comp.CoordinateX[i]))
                     {
-                        comboBox.Items.Add(comp.x[i]);
+                        comboBox.Items.Add(comp.CoordinateX[i]);
                     }
                 }
             }
@@ -325,11 +325,11 @@ namespace RevisionFyn.BI_Pro.Controller
             if (companyBox.SelectedItem != null)
             {
                 Client comp = (Client)companyBox.SelectedItem;
-                for (int i = 0; i < comp.x.Length; i++)
+                for (int i = 0; i < comp.CoordinateX.Length; i++)
                 {
-                    if (!comboBox.Items.Contains(comp.x[i]))
+                    if (!comboBox.Items.Contains(comp.CoordinateX[i]))
                     {
-                        comboBox.Items.Add(comp.x[i]);
+                        comboBox.Items.Add(comp.CoordinateX[i]);
                     }
                 }
             }
