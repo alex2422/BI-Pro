@@ -1,37 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using RevisionFyn.BI_Pro.Controller;
 
 namespace RevisionFyn.BI_Pro.View
 {
-    /// <summary>
-    /// Interaction logic for Overview.xaml
-    /// </summary>
     public partial class Overview : Page
     {
-        OverviewController controller;
+        OverviewController controller =  OverviewController.GetInstance();
+
         public Overview()
         {
             InitializeComponent();
 
-            controller = OverviewController.GetInstance();
             controller.ClearData();
-            controller.PopulateData();
-            controller.LoadIntoListBox(ClientsToBeChosenListBox, ClientsCampaniesListBox);
-            controller.LoadIntoComoBox(StartYearComboBox);
-            controller.LoadIntoComoBox(EndYearComboBox);
+            controller.GetDataFromDB();
+            controller.LoadIntoListBox(ClientsToBeChosenListBox, ChoosenClientsListBox);
+            controller.LoadValuesIntoComoBox(StartYearComboBox);
+            controller.LoadValuesIntoComoBox(EndYearComboBox);
         }
         private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -55,22 +41,22 @@ namespace RevisionFyn.BI_Pro.View
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonRemove(ClientsCampaniesListBox);
+            controller.ButtonRemove(ChoosenClientsListBox);
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.ExportData(ClientsCampaniesListBox, StartYearComboBox);
+            controller.ExportData(ChoosenClientsListBox, StartYearComboBox);
         }
 
         private void RemoveAllButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonRemoveAll(ClientsCampaniesListBox);
+            controller.RemoveAllButton();
         }
 
         private void AddAllButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.ButtonAddAll(ClientsToBeChosenListBox);
+            controller.AddAllButton();
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using RevisionFyn.BI_Pro.Database;
@@ -13,119 +10,116 @@ namespace RevisionFyn.BI_Pro.Controller
 {
     public class OverviewController
     {
-        #region Variables
-        private static OverviewController controllerInstance;
-        public StoredProcedure _StoredProcedure { get; set; }
-
-        public List<int> yearList = new List<int>();
-        ObservableCollection<Client> clientData;
-        ObservableCollection<Client> clientData2;
+        #region Variables / Properties
+        private static OverviewController _ControllerInstance { get; set; }
+        private StoredProcedure _StoredProcedure { get; set; }
+        private List<int> _YearList { get; set; }
+        private ObservableCollection<Client> _DefaultClientData { get; set; }
+        private ObservableCollection<Client> _ChoosenClientData { get; set; }
         #endregion
 
         #region Constructor
         private OverviewController()
         {
             _StoredProcedure = new StoredProcedure();
+            _YearList = new List<int>();
         }
         #endregion
 
         #region Public methods
-        public List<Employee> getMainEmployee()
-        {
-            List<Employee> allEmployees = new List<Employee>();
-            allEmployees = _StoredProcedure.GetEmployee();
-            return allEmployees;
-        }
         public static OverviewController GetInstance()
         {
-            if (controllerInstance == null)
+            if (_ControllerInstance == null)
             {
-                controllerInstance = new OverviewController();
+                _ControllerInstance = new OverviewController();
             }
-            return controllerInstance;
+            return _ControllerInstance;
         }
 
-        public void LoadIntoListBox(ListBox leftBox, ListBox rightBox)
+        public void LoadIntoListBox(ListBox ClientsToBeChosenListBox, ListBox ChoosenClientsListBox)
         {
-            leftBox.ItemsSource = clientData;
-            leftBox.DisplayMemberPath = "ClientName";
-            rightBox.ItemsSource = clientData2;
-            rightBox.DisplayMemberPath = "ClientName";
+            ClientsToBeChosenListBox.ItemsSource = _DefaultClientData;
+            ClientsToBeChosenListBox.DisplayMemberPath = "ClientName";
+            ChoosenClientsListBox.ItemsSource = _ChoosenClientData;
+            ChoosenClientsListBox.DisplayMemberPath = "ClientName";
         }
 
         public void ClearData()
         {
-            if (clientData != null)
+            if (_DefaultClientData != null)
             {
-                clientData.Clear();
+                _DefaultClientData.Clear();
             }
-            if (clientData2 != null)
+            if (_ChoosenClientData != null)
             {
-                clientData2.Clear();
+                _ChoosenClientData.Clear();
             }
-        }
-        public void PopulateData()
-        {
-            clientData = new ObservableCollection<Client>(_StoredProcedure.GetClient());
-            clientData2 = new ObservableCollection<Client>();
-        }
-        public void ButtonAdd(ListBox LeftBox)
-        {
-            clientData2.Add((Client)LeftBox.SelectedItem);
-            clientData.Remove((Client)LeftBox.SelectedItem);
         }
 
-        public void ButtonRemove(ListBox RightBox)
+        public void GetDataFromDB()
         {
-            clientData.Add((Client)RightBox.SelectedItem);
-            clientData2.Remove((Client)RightBox.SelectedItem);
+            _DefaultClientData = new ObservableCollection<Client>(_StoredProcedure.GetClient());
+            _ChoosenClientData = new ObservableCollection<Client>();
         }
 
-        public void ButtonAddAll(ListBox LeftBox)
+        public void ButtonAdd(ListBox ClientsToBeChosenListBox)
         {
-            int timesToDo = clientData.Count();
+            _ChoosenClientData.Add((Client)ClientsToBeChosenListBox.SelectedItem);
+            _DefaultClientData.Remove((Client)ClientsToBeChosenListBox.SelectedItem);
+        }
+
+        public void ButtonRemove(ListBox ChoosenClientsListBox)
+        {
+            _DefaultClientData.Add((Client)ChoosenClientsListBox.SelectedItem);
+            _ChoosenClientData.Remove((Client)ChoosenClientsListBox.SelectedItem);
+        }
+
+        public void AddAllButton()
+        {
+            int timesToDo = _DefaultClientData.Count();
+
             for (int i = 0; i < timesToDo; i++)
             {
-                clientData2.Add((Client)clientData[0]);
-                clientData.Remove((Client)clientData[0]);
+                _ChoosenClientData.Add(_DefaultClientData[0]);
+                _DefaultClientData.Remove(_DefaultClientData[0]);
             }
         }
 
-        public void ButtonRemoveAll(ListBox RightBox)
+        public void RemoveAllButton()
         {
-            int timesToDo = clientData2.Count();
+            int timesToDo = _ChoosenClientData.Count();
             for (int i = 0; i < timesToDo; i++)
             {
-                clientData.Add((Client)clientData2[0]);
-                clientData2.Remove((Client)clientData2[0]);
+                _DefaultClientData.Add(_ChoosenClientData[0]);
+                _ChoosenClientData.Remove(_ChoosenClientData[0]);
             }
         }
 
-
-        public void LoadIntoComoBox(ComboBox yearsBox)
+        public void LoadValuesIntoComoBox(ComboBox YearsComboBox)
         {
-            foreach (var accCard in _StoredProcedure.GetYear())
+            foreach (AccountCard accCard in _StoredProcedure.GetYear())
             {
-                if (!yearList.Contains(accCard.Year))
+                if (!_YearList.Contains(accCard.Year))
                 {
-                    yearList.Add(accCard.Year);
+                    _YearList.Add(accCard.Year);
                 }
             }
-            yearList.Sort();
-            yearsBox.ItemsSource = yearList;
-            yearsBox.SelectedItem = yearList[0];
+
+            _YearList.Sort();
+            YearsComboBox.ItemsSource = _YearList;
+            YearsComboBox.SelectedItem = _YearList[0];
         }
 
-
-        public void ExportData(ListBox rightBox, ComboBox StartYear)
+        public void ExportData(ListBox ChoosenClientsListBox, ComboBox StartYearComboBox)
         {
-            if (rightBox.Items.Count != 0)
+            if (ChoosenClientsListBox.Items.Count != 0)
             {
                 ExcelExport export = new ExcelExport();
-                string path = export.GetExportPath(rightBox);
+                string path = export.GetExportPath(ChoosenClientsListBox);
+
                 if (path != null && path != "")
                 {
-                    export.Export(rightBox, StartYear, path, _StoredProcedure.GetEmployee());
+                    export.Export(ChoosenClientsListBox, StartYearComboBox, path, _StoredProcedure.GetEmployee());
                 }
                 else
                 {
@@ -138,9 +132,5 @@ namespace RevisionFyn.BI_Pro.Controller
             }
         }
         #endregion
-
-        #region Private methods
-        #endregion
-
     }
 }

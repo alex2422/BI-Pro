@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using RevisionFyn.BI_Pro.Model;
 using RevisionFyn.BI_Pro.Database;
-using System.Windows.Media;
 
 namespace RevisionFyn.BI_Pro.Controller
 {
     public class CustomizeStartScreenController
     {
-        #region Variables
-        public List<Client> companies = new List<Client>();
+        #region Variables / Properties
         private static CustomizeStartScreenController _ControllerInstance { get; set; }
+        private List<GraphData> _GraphData { get; set; }
         private StoredProcedure _StoredProcedure { get; set; }
         private KPI _KpiInstance { get; set; }
         private List<CustomStatistics> _CustomStatistics { get; set; }
@@ -25,6 +22,7 @@ namespace RevisionFyn.BI_Pro.Controller
         private CustomizeStartScreenController()
         {
             _StoredProcedure = new StoredProcedure();
+            _GraphData = _StoredProcedure.GetGraphData();
         }
         #endregion
 
@@ -39,40 +37,44 @@ namespace RevisionFyn.BI_Pro.Controller
             return _ControllerInstance;
         }
 
-        public void LoadColorsForGraph(ComboBox color1, ComboBox color2, ComboBox color3)
+        #region Graph
+        public void LoadColorsForGraph(ComboBox Color1ComboBox, ComboBox Color2ComboBox, ComboBox Color3ComboBox)
         {
-            List<GraphData> listOfGraphData = _StoredProcedure.GetGraphData();
-            if (listOfGraphData.Count != 0)
+            if (_GraphData.Count != 0)
             {
-                color1.SelectedIndex = listOfGraphData[0].ColorIndex;
-                color2.SelectedIndex = listOfGraphData[1].ColorIndex;
-                color3.SelectedIndex = listOfGraphData[2].ColorIndex;
+                Color1ComboBox.SelectedIndex = _GraphData[0].ColorIndex;
+                Color2ComboBox.SelectedIndex = _GraphData[1].ColorIndex;
+                Color3ComboBox.SelectedIndex = _GraphData[2].ColorIndex;
             }
         }
-        public void LoadCompaniesToComboBox(ComboBox dropDownClient1, ComboBox dropDownClient2, ComboBox dropDownClient3)
+
+        public void LoadClientsToComboBox(ComboBox Client1ComboBox, ComboBox Client2ComboBox, ComboBox Client3ComboBox)
         {
-            List<Client> listOfClients = _StoredProcedure.GetClient();
-            List<GraphData> listOfData = _StoredProcedure.GetGraphData();
-            dropDownClient1.ItemsSource = listOfClients;
-            dropDownClient2.ItemsSource = listOfClients;
-            dropDownClient3.ItemsSource = listOfClients;
-            if (listOfData.Count != 0)
+            List<Client> clients = _StoredProcedure.GetClient();
+
+            Client1ComboBox.ItemsSource = clients;
+            Client2ComboBox.ItemsSource = clients;
+            Client3ComboBox.ItemsSource = clients;
+
+            if (_GraphData.Count != 0)
             {
-                dropDownClient1.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[0].Client).FirstOrDefault();
-                dropDownClient2.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[1].Client).FirstOrDefault();
-                dropDownClient3.SelectedItem = listOfClients.Where(company => company.ClientName == listOfData[2].Client).FirstOrDefault();
+                Client1ComboBox.SelectedItem = clients.Where(company => company.ClientName == _GraphData[0].Client).FirstOrDefault();
+                Client2ComboBox.SelectedItem = clients.Where(company => company.ClientName == _GraphData[1].Client).FirstOrDefault();
+                Client3ComboBox.SelectedItem = clients.Where(company => company.ClientName == _GraphData[2].Client).FirstOrDefault();
             }
-            dropDownClient1.DisplayMemberPath = "ClientName";
-            dropDownClient2.DisplayMemberPath = "ClientName";
-            dropDownClient3.DisplayMemberPath = "ClientName";
+
+            Client1ComboBox.DisplayMemberPath = "ClientName";
+            Client2ComboBox.DisplayMemberPath = "ClientName";
+            Client3ComboBox.DisplayMemberPath = "ClientName";
         }
-        public void LoadYearToComboBox(ComboBox dropDownYear1, ComboBox dropDownYear2, ComboBox dropDownYear3)
+
+        public void LoadYearsToComboBox(ComboBox Year1ComboBox, ComboBox Year2ComboBox, ComboBox Year3ComboBox)
         {
             List<int> yearList1 = new List<int>();
             List<int> yearList2 = new List<int>();
             List<int> yearList3 = new List<int>();
-            List<GraphData> dataList = _StoredProcedure.GetGraphData();
-            foreach (var accCard in _StoredProcedure.GetYear())
+
+            foreach (AccountCard accCard in _StoredProcedure.GetYear())
             {
                 if (!yearList1.Contains(accCard.Year))
                 {
@@ -87,41 +89,46 @@ namespace RevisionFyn.BI_Pro.Controller
                     yearList3.Add(accCard.Year);
                 }
             }
+
             yearList1.Sort();
             yearList2.Sort();
             yearList3.Sort();
-            dropDownYear1.ItemsSource = yearList1;
-            dropDownYear2.ItemsSource = yearList2;
-            dropDownYear3.ItemsSource = yearList3;
-            if (dropDownYear1.Name == "dropDownStartYear1")
+            Year1ComboBox.ItemsSource = yearList1;
+            Year2ComboBox.ItemsSource = yearList2;
+            Year3ComboBox.ItemsSource = yearList3;
+
+            if (Year1ComboBox.Name == "Year1ComboBox")
             {
-                if (dataList.Count != 0)
+                if (_GraphData.Count != 0)
                 {
-                    dropDownYear1.SelectedItem = dataList[0].StartYear;
-                    dropDownYear2.SelectedItem = dataList[1].StartYear;
-                    dropDownYear3.SelectedItem = dataList[2].StartYear;
+                    Year1ComboBox.SelectedItem = _GraphData[0].StartYear;
+                    Year2ComboBox.SelectedItem = _GraphData[1].StartYear;
+                    Year3ComboBox.SelectedItem = _GraphData[2].StartYear;
                 }
             }
-            if (dropDownYear1.Name == "dropDownEndYear1")
+
+            if (Year1ComboBox.Name == "EndYear1ComboBox")
             {
-                if (dataList.Count != 0)
+                if (_GraphData.Count != 0)
                 {
-                    dropDownYear1.SelectedItem = dataList[0].LastYear;
-                    dropDownYear2.SelectedItem = dataList[1].LastYear;
-                    dropDownYear3.SelectedItem = dataList[2].LastYear;
+                    Year1ComboBox.SelectedItem = _GraphData[0].LastYear;
+                    Year2ComboBox.SelectedItem = _GraphData[1].LastYear;
+                    Year3ComboBox.SelectedItem = _GraphData[2].LastYear;
                 }
             }
         }
 
-        public void clearGraph()
+        public void ClearGraph()
         {
             _StoredProcedure.ClearGraphData();
         }
 
-        public void SaveButton(ComboBox client, ComboBox startYear, ComboBox lastYear, ComboBox color)
+        public void SaveGraphButton(ComboBox ClientComboBox, ComboBox StartYearComboBox, ComboBox EndYearComboBox, ComboBox ColorComboBox)
         {
-            _StoredProcedure.AddGraphData((Client)client.SelectedItem, (int)startYear.SelectedItem, (int)lastYear.SelectedItem, color.SelectedItem.ToString().Split(' ')[1], color.SelectedIndex);
+            _StoredProcedure.AddGraphData((Client)ClientComboBox.SelectedItem, (int)StartYearComboBox.SelectedItem, (int)EndYearComboBox.SelectedItem,
+                ColorComboBox.SelectedItem.ToString().Split(' ')[1], ColorComboBox.SelectedIndex);
         }
+        #endregion
 
         #region KPI
         public void SetKpiListViewSource(ListView KpiListView)
@@ -180,13 +187,11 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && DataComboBox.SelectedItem != null && ColorComboBox.SelectedItem != null)
             {
-                StoredProcedure sp = new StoredProcedure();
-
                 string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
                 int colorIndex = ColorComboBox.SelectedIndex;
                 int selectedDataID = _CustomStatistics.Find(x => x.Name == ((CustomStatistics)DataComboBox.SelectedItem).Name).ID;
 
-                MessageBox.Show(sp.AddKPI(kpiTitle, kpiUnit, kpiColor, colorIndex, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(_StoredProcedure.AddKPI(kpiTitle, kpiUnit, kpiColor, colorIndex, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
@@ -198,19 +203,15 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             if (!String.IsNullOrEmpty(kpiTitle) && !String.IsNullOrEmpty(kpiUnit) && ColorComboBox.SelectedItem != null)
             {
-                StoredProcedure sp = new StoredProcedure();
-
                 string kpiColor = ColorComboBox.SelectedItem.ToString().Split(' ')[1];
                 int colorIndex = ColorComboBox.SelectedIndex;
                 int selectedDataID = _CustomStatistics.Find(x => x.Name == ((CustomStatistics)DataComboBox.SelectedItem).Name).ID;
-
-                // TO DO: Update StatisticsFavoriteClientMap, if data is changed
 
                 if (isActive == "True")
                 {
                     if (!MaximumNumberOfActiveKpiReached())
                     {
-                        MessageBox.Show(sp.UpdateKPI(_KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(_StoredProcedure.UpdateKPI(_KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
@@ -219,7 +220,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 }
                 else
                 {
-                    MessageBox.Show(sp.UpdateKPI(_KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(_StoredProcedure.UpdateKPI(_KpiInstance.ID, kpiTitle, kpiUnit, kpiColor, colorIndex, isActive, selectedDataID), "", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             else
@@ -241,109 +242,12 @@ namespace RevisionFyn.BI_Pro.Controller
         }
         #endregion
 
-        #region Statistics
-        public void CreateYearsArray()
-        {
-            List<double> placeHolder = new List<double>();
-            for (int company = 0; company < companies.Count; company++)
-            {
-                placeHolder.Clear();
-                for (int i = companies[company].ClientStartYear - 1; i < companies[company].ClientEndYear; i++)
-                {
-                    placeHolder.Add(i);
-                }
-                companies[company].CoordinateX = placeHolder.ToArray();
-            }
-        }
-
-        public void SaveChangesGraph()
-        {
-
-        }
-        public void CreateGraphValues()
-        {
-            List<double> Comp1Coverage = new List<double>() { 120, 150, -200, -90, -10, -30};
-            List<double> Comp2Coverage = new List<double>() { 110, 140, -210, -100, -20, 20 };
-            List<double> Comp3Coverage = new List<double>() { 50, 0, -50, 0, -5, -30};
-            Client Comp1 = new Client
-            {
-                ClientName = "Firma1",
-                ClientStartYear = 2012,
-                ClientEndYear = 2017,
-                Coverages = Comp1Coverage,
-                CoordinateY = Comp1Coverage.ToArray()
-            };
-            Client Comp2 = new Client
-            {
-                ClientName = "Firma2",
-                ClientStartYear = 2012,
-                ClientEndYear = 2017,
-                Coverages = Comp2Coverage,
-                CoordinateY = Comp2Coverage.ToArray()
-            };
-            Client Comp3 = new Client
-            {
-                ClientName = "Firma3",
-                ClientStartYear = 2012,
-                ClientEndYear = 2017,
-                Coverages = Comp3Coverage,
-                CoordinateY = Comp3Coverage.ToArray()
-            };
-            companies.Clear();
-            companies.Add(Comp1);
-            companies.Add(Comp2);
-            companies.Add(Comp3);
-        }
-        public void LoadValuesIntoCompanyComboBox(ComboBox comboBox)
-        {
-            comboBox.ItemsSource = companies;
-            comboBox.DisplayMemberPath = "ClientName";
-        }
-
-        public void LoadColoursIntoCompanyComboBox(ComboBox comboBox)
-        {
-            comboBox.ItemsSource = companies;
-            comboBox.DisplayMemberPath = "ClientName";
-        }
-
-        public void LoadValuesIntoCompanyStartYearBox(ComboBox comboBox, ComboBox companyBox)
-        {
-            if (companyBox.SelectedItem != null)
-            {
-                Client comp = (Client)companyBox.SelectedItem;
-                for (int i = 0; i < comp.CoordinateX.Length; i++)
-                {
-                    if (!comboBox.Items.Contains(comp.CoordinateX[i]))
-                    {
-                        comboBox.Items.Add(comp.CoordinateX[i]);
-                    }
-                }
-            }
-        }
-        public void LoadValuesIntoCompanyEndYearBox(ComboBox comboBox, ComboBox companyBox)
-        {
-            if (companyBox.SelectedItem != null)
-            {
-                Client comp = (Client)companyBox.SelectedItem;
-                for (int i = 0; i < comp.CoordinateX.Length; i++)
-                {
-                    if (!comboBox.Items.Contains(comp.CoordinateX[i]))
-                    {
-                        comboBox.Items.Add(comp.CoordinateX[i]);
-                    }
-                }
-            }
-        }
-        #endregion
-
         #endregion
 
         #region Private Methods
         private bool MaximumNumberOfActiveKpiReached()
         {
-            StoredProcedure sp = new StoredProcedure();
-
-            int numberOfActiveKPI = sp.CountActiveKPI();
+            int numberOfActiveKPI = _StoredProcedure.CountActiveKPI();
 
             if (numberOfActiveKPI < 3 && numberOfActiveKPI != -1)
             {

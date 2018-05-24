@@ -1,25 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using RevisionFyn.BI_Pro.Controller;
-using InteractiveDataDisplay.WPF;
 
 namespace RevisionFyn.BI_Pro.View
 {
-    /// <summary>
-    /// Interaction logic for MainMenu.xaml
-    /// </summary>
     public partial class MainMenu : Page
     {
         MainMenuController controller = MainMenuController.GetInstance();
@@ -28,7 +13,7 @@ namespace RevisionFyn.BI_Pro.View
         {
             InitializeComponent();
             controller.CreateKpiElements(KpiGrid);
-            controller.createGraph(lines, LabelClient1, LabelClient2, LabelClient3);
+            controller.CreateGraph(linesGrid, Client1Label, Client2Label, Client3Label);
         }
 
         private void OverviewButton_Click(object sender, RoutedEventArgs e)
@@ -51,19 +36,4 @@ namespace RevisionFyn.BI_Pro.View
             this.NavigationService.Navigate(new Uri("CustomizeMainMenu.Xaml", UriKind.Relative));
         }
     }
-
-    #region VisibilityResource
-    public class VisibilityToCheckedConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return ((Visibility)value) == Visibility.Visible;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return ((bool)value) ? Visibility.Visible : Visibility.Collapsed;
-        }
-    }
-    #endregion
 }

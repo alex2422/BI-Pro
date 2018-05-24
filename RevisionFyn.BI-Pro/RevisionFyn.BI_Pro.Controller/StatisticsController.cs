@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using RevisionFyn.BI_Pro.Database;
 using RevisionFyn.BI_Pro.Model;
@@ -66,6 +62,7 @@ namespace RevisionFyn.BI_Pro.Controller
         {
             LoadElementsIntoStackPanel(StatisticsTypeStackPanel, _StoredProcedure.GetActiveStatisticsType());
             UpdateProgress(_ProgressGrid, 0);
+
             _IsStep1Done = true;
         }
 
@@ -216,9 +213,9 @@ namespace RevisionFyn.BI_Pro.Controller
             }
         }
 
-        private void LoadElementsIntoStackPanel(StackPanel StatisticsTypeStackPanel, List<StatisticsType> listOfActiveStatisticsType)
+        private void LoadElementsIntoStackPanel(StackPanel StatisticsTypeStackPanel, List<StatisticsType> activeStatisticsType)
         {
-            foreach (StatisticsType sType in listOfActiveStatisticsType)
+            foreach (StatisticsType sType in activeStatisticsType)
             {
                 Button typeChooseButton = new Button
                 {
@@ -248,26 +245,26 @@ namespace RevisionFyn.BI_Pro.Controller
             UpdateProgress(_ProgressGrid, 1);
         }
 
-        private object FindObjectByName(Grid GridToSearch, string objectName)
+        private object FindObjectByName(Grid SearchInGrid, string objectName)
         {
-            return GridToSearch.FindName(objectName);
+            return SearchInGrid.FindName(objectName);
         }
 
-        private void AddStatisticsCalculationToComboBox(ComboBox StatisticsCalculationComboBox, List<StatisticsCalculation> listOfActiveCalculations)
+        private void AddStatisticsCalculationToComboBox(ComboBox StatisticsCalculationComboBox, List<StatisticsCalculation> activeCalculations)
         {
             StatisticsCalculationComboBox.Items.Clear();
 
-            foreach (StatisticsCalculation sCalculation in listOfActiveCalculations)
+            foreach (StatisticsCalculation sCalculation in activeCalculations)
             {
                 StatisticsCalculationComboBox.Items.Add(sCalculation.Name);
             }
         }
 
-        private void AddClientsToListBox(ListBox DefaultClientListBox, List<Client> listOfClients)
+        private void AddClientsToListBox(ListBox DefaultClientListBox, List<Client> clients)
         {
             DefaultClientListBox.Items.Clear();
 
-            foreach (Client client in listOfClients)
+            foreach (Client client in clients)
             {
                 DefaultClientListBox.Items.Add(client.ClientName);
             }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RevisionFyn.BI_Pro.Model;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,11 +13,8 @@ namespace RevisionFyn.BI_Pro.Controller
     public class MainMenuController
     {
         #region Variables / Properties
-        private static MainMenuController controllerInstance;
+        private static MainMenuController _ControllerInstance { get; set; }
         private StoredProcedure _StoredProcedure { get; set; }
-        public List<Client> clients = new List<Client>();
-        List<double> hourValues = new List<double>() { 0.25, 0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75 };
-        List<Client> listOfClients = new List<Client>();
         #endregion
 
         #region Constructor
@@ -32,12 +27,12 @@ namespace RevisionFyn.BI_Pro.Controller
         #region Public Methods
         public static MainMenuController GetInstance()
         {
-            if (controllerInstance == null)
+            if (_ControllerInstance == null)
             {
-                controllerInstance = new MainMenuController();
+                _ControllerInstance = new MainMenuController();
             }
 
-            return controllerInstance;
+            return _ControllerInstance;
         }
 
         public void CreateKpiElements(Grid KpiGrid)
@@ -113,44 +108,54 @@ namespace RevisionFyn.BI_Pro.Controller
                 }
             }
         }
-        public void createGraph(Grid graphGrid, Label label1, Label label2, Label label3)
+
+        public void CreateGraph(Grid GraphGrid, Label Client1Label, Label Client2Label, Label Client3Label)
         {
-            List<GraphData> listOfGraphData = _StoredProcedure.GetGraphData();
-            if (listOfGraphData.Count != 0)
+            List<GraphData> graphData = _StoredProcedure.GetGraphData();
+
+            if (graphData.Count != 0)
             {
-                label1.Content = listOfGraphData[0].Client;
-                label1.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[0].Color);
-                label2.Content = listOfGraphData[1].Client;
-                label2.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[1].Color);
-                label3.Content = listOfGraphData[2].Client;
-                label3.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listOfGraphData[2].Color);
-                foreach (GraphData graphData in listOfGraphData)
+                Client1Label.Content = graphData[0].Client;
+                Client1Label.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(graphData[0].Color);
+                Client2Label.Content = graphData[1].Client;
+                Client2Label.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(graphData[1].Color);
+                Client3Label.Content = graphData[2].Client;
+                Client3Label.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(graphData[2].Color);
+
+                foreach (GraphData data in graphData)
                 {
-                    List<int> xList = new List<int>();
-                    List<int> yList = new List<int>();
-                    List<AccountCard> accCardList = new List<AccountCard>();
-                    List<Client> clientList = new List<Client>();
-                    for (int i = graphData.StartYear; i <= graphData.LastYear; i++)
+                    List<int> xCoordinates = new List<int>();
+                    List<int> yCoordinates = new List<int>();
+
+                    for (int i = data.StartYear; i <= data.LastYear; i++)
                     {
-                        xList.Add(i);
+                        xCoordinates.Add(i);
                     }
-                    clientList = _StoredProcedure.GetClient();
-                    clientList.RemoveAll(s => s.ClientName != graphData.Client);
-                    accCardList = _StoredProcedure.Getbalance(clientList[0].ClientID);
-                    accCardList.RemoveAll(s => s.Year > xList.Last());
-                    accCardList.RemoveAll(s => s.Year < xList[0]);
-                    foreach (AccountCard accCard in accCardList)
+
+                    List<Client> clients = _StoredProcedure.GetClient();
+                    clients.RemoveAll(s => s.ClientName != data.Client);
+
+                    List<AccountCard> accountCards = _StoredProcedure.Getbalance(clients[0].ClientID);
+                    accountCards.RemoveAll(s => s.Year > xCoordinates.Last());
+                    accountCards.RemoveAll(s => s.Year < xCoordinates[0]);
+
+                    foreach (AccountCard accCard in accountCards)
                     {
-                        yList.Add(accCard.Balance);
+                        yCoordinates.Add(accCard.Balance);
                     }
-                    yList.ToArray<int>();
-                    xList.ToArray<int>();
-                    LineGraph lg = new LineGraph();
-                    graphGrid.Children.Add(lg);
-                    lg.Description = graphData.Client;
-                    lg.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(graphData.Color);
-                    lg.StrokeThickness = 2;
-                    lg.Plot(xList, yList);
+
+                    yCoordinates.ToArray<int>();
+                    xCoordinates.ToArray<int>();
+
+                    LineGraph lg = new LineGraph
+                    {
+                        Description = data.Client,
+                        Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(data.Color),
+                        StrokeThickness = 2,
+                    };
+
+                    lg.Plot(xCoordinates, yCoordinates);
+                    GraphGrid.Children.Add(lg);
                 }
             }
         }
@@ -184,16 +189,16 @@ namespace RevisionFyn.BI_Pro.Controller
 
         private List<double> GetValueBasedOnCalculationSelection(CustomStatistics customStatisticsRelatedToKPI)
         {
-            List<double> valuesFromChoosenCompanies = new List<double>();
+            List<double> valuesFromChoosenClients = new List<double>();
             List<int> mappedClientID = _StoredProcedure.GetClientMapByStatisticsFavoriteID(customStatisticsRelatedToKPI.ID);
-            List<Client> tempCompanies = new List<Client>();
+            List<Client> tempClients = new List<Client>();
 
             foreach (int clientID in mappedClientID)
             {
-                tempCompanies.Add(_StoredProcedure.GetClientByID(clientID));
+                tempClients.Add(_StoredProcedure.GetClientByID(clientID));
             }
 
-            customStatisticsRelatedToKPI.ChoosenClients = tempCompanies;
+            customStatisticsRelatedToKPI.ChoosenClients = tempClients;
 
             foreach (Client client in customStatisticsRelatedToKPI.ChoosenClients)
             {
@@ -202,31 +207,31 @@ namespace RevisionFyn.BI_Pro.Controller
                     case 1:
                         foreach (double totalHoursValue in _StoredProcedure.GetTotalHoursByClientID(client.ClientID))
                         {
-                            valuesFromChoosenCompanies.Add(totalHoursValue);
+                            valuesFromChoosenClients.Add(totalHoursValue);
                         }
                         break;
                     case 2:
                         foreach (double salesAmountValue in _StoredProcedure.GetSalesAmountByClientID(client.ClientID))
                         {
-                            valuesFromChoosenCompanies.Add(salesAmountValue);
+                            valuesFromChoosenClients.Add(salesAmountValue);
                         }
                         break;
                     case 3:
                         foreach (double totalConsumptionValue in _StoredProcedure.GetTotalConsumptionByClientID(client.ClientID))
                         {
-                            valuesFromChoosenCompanies.Add(totalConsumptionValue);
+                            valuesFromChoosenClients.Add(totalConsumptionValue);
                         }
                         break;
                     case 4:
                         foreach (double balanceValue in _StoredProcedure.GetNegativeBalanceByClientID(client.ClientID))
                         {
-                            valuesFromChoosenCompanies.Add(balanceValue);
+                            valuesFromChoosenClients.Add(balanceValue);
                         }
                         break;
                     case 5:
                         foreach (double balanceValue in _StoredProcedure.GetPositiveBalanceByClientID(client.ClientID))
                         {
-                            valuesFromChoosenCompanies.Add(balanceValue);
+                            valuesFromChoosenClients.Add(balanceValue);
                         }
                         break;
                     default:
@@ -234,7 +239,7 @@ namespace RevisionFyn.BI_Pro.Controller
                 }
             }
 
-            return valuesFromChoosenCompanies;
+            return valuesFromChoosenClients;
         }
         #endregion
     }
